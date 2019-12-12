@@ -74,27 +74,34 @@
                 </div>
             </div>
         </nav>
-        @isset ($info_message)
+        @if(session('info'))
         <div class="container">
             <div class="alert alert-info">
-                <p>{{ $info_message }}</p>
+                <p>{{ session('info') }}</p>
             </div>
         </div>
-        @endisset
-        @isset ($success_message)
+        @endif
+        @if (session('success'))
         <div class="container">
             <div class="alert alert-success">
-                <p>{{ $success_message }}</p>
+                <p>{{ session('success') }}</p>
             </div>
         </div>
-        @endisset
-        @isset ($error_message)
+        @endif
+        @if (session('warning'))
+        <div class="container">
+            <div class="alert alert-warning">
+                <p>{{ session('warning') }}</p>
+            </div>
+        </div>
+        @endif
+        @if (session('error'))
         <div class="container">
             <div class="alert alert-danger">
-                <p>{{ $error_message }}</p>
+                <p>{{ session('danger') }}</p>
             </div>
         </div>
-        @endisset
+        @endif
         <main class="py-4">
             @yield('content')
         </main>
