@@ -33,7 +33,11 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-
+                        @role('admin')
+                            <li class="nav-item">
+                                <a href="{{ route('leden-toevoegen') }}" class="nav-link">Leden toevoegen</a>
+                            </li>
+                        @endrole
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -50,6 +54,10 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    @role('member')
+                                        <a class="dropdown-item" href="{{ route('change-password') }}">Verander wachtwoord</a>
+                                    @endrole
+
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -66,7 +74,27 @@
                 </div>
             </div>
         </nav>
-
+        @isset ($info_message)
+        <div class="container">
+            <div class="alert alert-info">
+                <p>{{ $info_message }}</p>
+            </div>
+        </div>
+        @endisset
+        @isset ($success_message)
+        <div class="container">
+            <div class="alert alert-success">
+                <p>{{ $success_message }}</p>
+            </div>
+        </div>
+        @endisset
+        @isset ($error_message)
+        <div class="container">
+            <div class="alert alert-danger">
+                <p>{{ $error_message }}</p>
+            </div>
+        </div>
+        @endisset
         <main class="py-4">
             @yield('content')
         </main>
