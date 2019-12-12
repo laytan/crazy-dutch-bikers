@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
@@ -22,3 +18,17 @@ Auth::routes([
 ]);
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/leden-toevoegen', 'AdminController@add_users')->name('leden-toevoegen');
+Route::post('/leden-toevoegen', 'AdminController@register');
+
+// Guest routes
+Route::get('/', function () {
+    return view('welcome');
+});
+
+// Logged in routes
+Route::group(['middleware' => ['role:member']], function() {
+    Route::get('/change-password', 'ChangePasswordController@view')->name('change-password');
+    Route::post('/change-password', 'ChangePasswordController@changePassword');
+});
