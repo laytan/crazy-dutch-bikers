@@ -23,9 +23,9 @@ class ChangePasswordController extends Controller
             $user->password = Hash::make($validatedData['password-new']);
             $user->save();
 
-            return view('auth.change-password', ['success_message' => 'Wachtwoord veranderd!']);
+            return back()->with('success', 'Wachtwoord veranderd');
         } else {
-            return view('auth.change-password', ['error_message' => 'het ingevulde wachtwoord is niet het wachtwoord van uw account.']);
+            return back()->with('error', 'Wachtwoord behoort niet tot dit account');
         }
     }
 }

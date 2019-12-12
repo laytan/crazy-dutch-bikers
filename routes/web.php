@@ -21,6 +21,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/leden-toevoegen', 'AdminController@add_users')->name('leden-toevoegen');
 Route::post('/leden-toevoegen', 'AdminController@register');
+Route::get('/leden', 'AdminController@viewUsers')->name('view-users');
+Route::post('/leden/verwijder', 'UserController@trash');
+Route::post('/leden/activeer', 'UserController@activate');
 
 // Guest routes
 Route::get('/', function () {
