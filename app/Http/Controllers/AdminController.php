@@ -8,6 +8,7 @@ use Mail;
 use Hash;
 use App\User;
 use App\Mail\UserRegistered;
+use Auth;
 
 class AdminController extends Controller
 {
@@ -19,6 +20,15 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware(['role:admin']);
+    }
+
+    public function viewUsers($message_type = null, $message = null) {
+        $active =  User::all()->except(Auth::id());
+        $trashed = User::onlyTrashed()->get();
+        if(strlen($message_type) > 0) {
+            return view('admin.users', ['active' => $active, 'trashed' => $trashed, $message_type => $message]);
+        }
+        return view('admin.users', compact('active', 'trashed'));
     }
 
     // Render form for adding new users
