@@ -11,27 +11,27 @@
 |
 */
 
+// All auth routes except registration, reset and verify
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
     'verify' => false, // Email Verification Routes...
 ]);
 
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/leden-toevoegen', 'AdminController@add_users')->name('leden-toevoegen');
-Route::post('/leden-toevoegen', 'AdminController@register');
-Route::get('/leden', 'AdminController@viewUsers')->name('view-users');
-Route::post('/leden/verwijder', 'UserController@trash');
-Route::post('/leden/activeer', 'UserController@activate');
-
-// Guest routes
+// Homepage
 Route::get('/', function () {
-    return view('welcome');
-});
+    return view('index');
+})->name('index');
 
-// Logged in routes
-Route::group(['middleware' => ['role:member']], function() {
-    Route::get('/change-password', 'ChangePasswordController@view')->name('change-password');
-    Route::post('/change-password', 'ChangePasswordController@changePassword');
-});
+// Leden
+Route::get('/leden', 'UserController@index')->name('users-index');
+Route::post('/leden/verwijder', 'UserController@destroy')->name('users-destroy');
+Route::get('/leden/{id}/bewerken', 'UserController@edit')->where('id', '[0-9]+')->name('users-edit');
+Route::patch('/leden/{id}/bewerken', 'UserController@update')->where('id', '[0-9]+')->name('users-update');
+Route::post('/leden/activeer', 'UserController@activate')->name('users-activate');
+Route::get('/leden/aanmaken', 'UserController@create')->name('users-create');
+Route::post('/leden', 'UserController@store')->name('users-store');
+
+// Passwords
+Route::get('/change-password', 'ChangePasswordController@index')->name('change-password-index');
+Route::post('/change-password', 'ChangePasswordController@changePassword')->name('change-password');
