@@ -23,3 +23,22 @@ if(!function_exists('resolveProfilePics')) {
     return $users;
   }
 }
+
+if(!function_exists('centsToEuro')) {
+  function centsToEuro($cents) {
+    return number_format(($cents /100), 2, '.', ' ');
+  }
+}
+
+if(!function_exists('orderAmt')) {
+  function orderAmt() {
+    $order_amt = \App\Order::where('fulfilled', '=', false)->count();
+    return $order_amt;
+  }
+}
+
+if(!function_exists('formatTimeForDisplay')) {
+  function formatTimeForDisplay($time) {
+    return $time->setTimeZone('Europe/paris')->toDateTimeString();
+  }
+}

@@ -103,6 +103,22 @@ ul {
      object-fit: cover;
 }
 
+.merchandise-picture {
+  height: 300px;
+  width: auto;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+#cart-items img {
+  max-height: 5rem;
+  max-width: 30%;
+}
+
+.cart-item {
+  border-bottom: 2px solid rgba(211, 211, 211, 0.2);
+}
+
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors
