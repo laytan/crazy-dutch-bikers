@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
         Role::create(['name' => 'admin']);
         Role::create(['name' => 'member']);
 
-        $super = new User();
+        $super = new User;
         $super->name = 'beheer';
         $super->email = 'beheer@crazydutchbikers.nl';
         $super->email_verified_at = now();

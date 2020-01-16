@@ -35,3 +35,18 @@ Route::post('/leden', 'UserController@store')->name('users-store');
 // Passwords
 Route::get('/change-password', 'ChangePasswordController@index')->name('change-password-index');
 Route::post('/change-password', 'ChangePasswordController@changePassword')->name('change-password');
+
+// Products
+Route::get('/merchandise', 'ProductController@index')->name('products.index');
+Route::get('/merchandise/aanmaken', 'ProductController@create')->name('products.create');
+Route::post('/merchandise', 'ProductController@store')->name('products.store');
+Route::get('/merchandise/{product}/bewerken', 'ProductController@edit')->name('products.edit');
+Route::patch('/merchandise/{product}', 'ProductController@update')->name('products.update');
+Route::delete('/merchandise/{product}', 'ProductController@destroy')->name('products.destroy');
+
+// Orders
+Route::post('/bestellingen', 'OrderController@store')->name('orders.store');
+Route::get('/bestellingen', 'OrderController@index')->name('orders.index');
+Route::get('/bestellingen/{order}', 'OrderController@show')->name('orders.show');
+Route::patch('/bestellingen/{order}', 'OrderController@update')->name('orders.update');
+Route::delete('/bestellingen/{order}', 'OrderController@destroy')->name('orders.destroy');

@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
+use Route;
+
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +25,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Route::resourceVerbs([
+            'create' => 'aanmaken',
+            'edit'   => 'bewerken',
+        ]);
     }
 }

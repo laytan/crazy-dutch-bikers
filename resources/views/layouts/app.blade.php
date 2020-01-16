@@ -28,7 +28,7 @@
             </audio> 
             @yield('above-nav')
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-                <div class="container">
+                <div class="container-fluid">
                     <a class="navbar-brand" href="{{ route('index') }}">
                         {{ config('app.name', 'Laravel') }}
                     </a>
@@ -43,10 +43,19 @@
                                 <li class="nav-item">
                                     <a href="{{ route('users-create') }}" class="nav-link">Leden toevoegen</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('products.create') }}" class="nav-link">Merchandise toevoegen</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('orders.index') }}" class="nav-link">Bestellingen ({{ orderAmt() }})</a>
+                                </li>
                             @endhasanyrole
                             @hasanyrole('member|admin|super-admin')
                                 <li class="nav-item">
                                     <a href="{{ route('users-index') }}" class="nav-link">Leden</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ route('products.index') }}" class="nav-link">Merchandise</a>
                                 </li>
                             @endhasanyrole
                         </ul>
@@ -59,7 +68,7 @@
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @else
-                                <li class="nav-item dropdown">
+                                <li class="nav-item dropdown ml-auto">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                         {{ Auth::user()->name }} <span class="caret"></span>
                                     </a>
