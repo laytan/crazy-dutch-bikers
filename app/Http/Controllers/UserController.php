@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Mail\UserRegistered;
+use Auth;
+use Mail;
 
 class UserController extends Controller
 {
@@ -91,12 +93,13 @@ class UserController extends Controller
     public function update(Request $request, $id) {
         // Validate request
         $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255|string',
-            'old_password' => 'nullable|min:8|string',
-            'password' => 'nullable|min:8|string',
-            'description' => 'nullable|string',
-            'profile_picture' => 'nullable|image'
+            'name'            => 'nullable|string|max:255',
+            'email'           => 'nullable|email|max:255|string',
+            'old_password'    => 'nullable|min:8|string',
+            'password'        => 'nullable|min:8|string',
+            'description'     => 'nullable|string',
+            'profile_picture' => 'nullable|image',
+            'role'            => 'nullable|in:member,admin',
         ]);
         
         $user = User::findOrFail($id);
@@ -141,6 +144,14 @@ class UserController extends Controller
             $user->profile_picture = $picture;
         }
 
+        if($validatedData['role'] !== null) {
+            if(Auth::user()->hasRole('super-admin') && $validatedData['role'] === 'admin') {
+                $user->syncRoles(['admin']);
+            } else {
+                $user->syncRoles(['member']);
+            }
+        }
+
         $user->save();
 
         return redirect()->route('users-index')->with('success', 'Lid is bewerkt');
@@ -155,12 +166,13 @@ class UserController extends Controller
     public function store(Request $request) {
         // Validate request
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|unique:users|email|max:255|string',
-            'password' => 'required_unless:generate-password,on|nullable|min:8|string',
+            'name'              => 'required|string|max:255',
+            'email'             => 'required|unique:users|email|max:255|string',
+            'password'          => 'required_unless:generate-password,on|nullable|min:8|string',
             'generate-password' => 'nullable',
-            'description' => 'nullable|string',
-            'profile_picture' => 'nullable|image'
+            'description'       => 'nullable|string',
+            'profile_picture'   => 'nullable|image',
+            'role'              => 'nullable|in:member,admin',
         ]);
 
         // Generated password?
@@ -171,8 +183,11 @@ class UserController extends Controller
             $password = $validatedData['password'];
         }
 
-        // Upload picture
-        $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
+        $picture = null;
+        if(isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
+            // Upload picture
+            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
+        }
 
         // Add to the database
         $user = User::create([
@@ -183,11 +198,15 @@ class UserController extends Controller
             'profile_picture' => $picture,
         ]);
 
-        // Give member role
-        $user->syncRoles(['member']);
+        if(Auth::user()->hasRole('super-admin') && $validatedData['role'] === 'admin') {
+            $user->syncRoles(['admin']);
+        } else {
+            // Give member role
+            $user->syncRoles(['member']);
+        }
 
         // Send Mail
-        \Mail::to($validatedData['email'], $validatedData['name'])->send(new UserRegistered($validatedData['name'], $validatedData['email'], $password));
+        Mail::to($validatedData['email'], $validatedData['name'])->queue(new UserRegistered($validatedData['name'], $validatedData['email'], $password));
         
         // Return view with appropiate message
         return redirect()->route('users-index')->with('info', 'Gebruiker geregistreerd!');

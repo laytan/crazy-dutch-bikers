@@ -14,7 +14,7 @@ class CreateOrdersTable extends Migration
     public function up()
     {
         Schema::create('orders', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->bigInteger('id')->unsigned()->primary();
             $table->bigInteger('user_id');
             $table->boolean('fulfilled')->default(false);
             $table->softDeletes();

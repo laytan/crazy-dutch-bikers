@@ -7,6 +7,9 @@ use App\Order;
 use App\OrderHasProduct;
 use App\Product;
 use Auth;
+use Mail;
+use App\Mail\OrderReceived;
+use App\Mail\OrderConfirmed;
 
 class OrderController extends Controller
 {
@@ -22,8 +25,7 @@ class OrderController extends Controller
     public function index() {
         $non_fulfilled = Order::where('fulfilled', '=', false)->get();
         $fulfilled = Order::where('fulfilled', '=', true)->get();
-        $deleted = Order::onlyTrashed()->get();
-        return view('orders.index', compact('non_fulfilled', 'fulfilled', 'deleted'));
+        return view('orders.index', compact('non_fulfilled', 'fulfilled'));
     }
 
     /**
@@ -84,9 +86,15 @@ class OrderController extends Controller
             $orderHasProduct->save();
         }
 
-        // TODO: Email admin about order
+        // Email admins about order
+        $receivers = config('app.order_receivers');
+        foreach($receivers as $receiver) {
+            Mail::to($receiver['email'], $receiver['name'])
+                ->queue(new OrderReceived($order));
+        }
 
-        // TODO: Email user about order
+        Mail::to(Auth::user()->email, Auth::user()->name)
+            ->queue(new OrderConfirmed($order));
 
         return back()->with('success', 'Bestelling geplaatst');
     }

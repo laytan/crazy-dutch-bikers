@@ -4,7 +4,7 @@
 <div class="container text-light">
   <p class="bg-info text-dark d-block px-2 py-3">Laat de velden leeg die niet bewerkt hoeven te worden!</p>
   <h2 class="d-inline-block">{{ $product->title }} bewerken</h2>
-  <small class="d-inline-block">Laatst bewerkt door {{ $product->user->name }} op {{ $product->updatedAtFormatted() }}</small>
+  <small class="d-inline-block">Laatst bewerkt door {{ $product->user->name }} op {{ formatTimeForDisplay($product->updated_at) }}</small>
   @include('partials.form-errors')
   <form action="{{ route('products.update', ['product' => $product->id]) }}" method="post" enctype="multipart/form-data">
     @csrf

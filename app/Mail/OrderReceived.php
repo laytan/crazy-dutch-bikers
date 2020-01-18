@@ -6,25 +6,22 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use App\Order;
 
-class UserRegistered extends Mailable
+class OrderReceived extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $name;
-    public $email;
-    public $password;
+    public $order;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($name, $email, $password)
+    public function __construct(Order $order)
     {
-        $this->name = $name;
-        $this->email = $email;
-        $this->password = $password;
+        $this->order = $order;
     }
 
     /**
@@ -34,8 +31,6 @@ class UserRegistered extends Mailable
      */
     public function build()
     {
-        // Send email
-        return $this->markdown('mail.register-mail')
-                    ->subject('Registratie op Crazy Dutch Bikers');
+        return $this->markdown('mail.orders.received')->subject('Nieuwe bestelling op Crazy Dutch Bikers');
     }
 }
