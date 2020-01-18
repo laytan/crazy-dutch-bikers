@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "09cff11cd8d6cabf0e4a4552b410cc66",
+    "content-hash": "5761bbcda0ba8a99c4340ce508a7684b",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -568,6 +568,65 @@
                 "url"
             ],
             "time": "2019-07-01T23:21:34+00:00"
+        },
+        {
+            "name": "hafael/laraflake",
+            "version": "v1.2.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/hafael/laraflake.git",
+                "reference": "371059ebb4b23bd9e7bf5a17720be5aedba39118"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/hafael/laraflake/zipball/371059ebb4b23bd9e7bf5a17720be5aedba39118",
+                "reference": "371059ebb4b23bd9e7bf5a17720be5aedba39118",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=5.3.0",
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "laravel/framework": ">=5.3.0",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": ">=4.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "Hafael\\LaraFlake\\LaraFlakeServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Hafael\\LaraFlake\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "Rafael Villa-Verde",
+                    "email": "villa655321verde@gmail.com"
+                }
+            ],
+            "description": "Laravel Package based on Twitter Snowflake ID Generator (64 bit ID).",
+            "keywords": [
+                "64bit",
+                "id",
+                "laravel",
+                "shard",
+                "snowflake"
+            ],
+            "time": "2019-08-22T02:41:43+00:00"
         },
         {
             "name": "jakub-onderka/php-console-color",
@@ -3368,6 +3427,60 @@
                 "environment"
             ],
             "time": "2019-09-10T21:37:39+00:00"
+        },
+        {
+            "name": "webpatser/laravel-uuid",
+            "version": "3.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webpatser/laravel-uuid.git",
+                "reference": "a7ce65cdabbc9970fc2a87fdf67b48e0b1641d23"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/a7ce65cdabbc9970fc2a87fdf67b48e0b1641d23",
+                "reference": "a7ce65cdabbc9970fc2a87fdf67b48e0b1641d23",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "phpunit/phpunit": "~6.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Webpatser\\Uuid\\UuidServiceProvider"
+                    ],
+                    "aliases": {
+                        "Uuid": "Webpatser\\Uuid\\Uuid"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Webpatser\\Uuid": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Kempen",
+                    "email": "christoph@downsized.nl"
+                }
+            ],
+            "description": "Laravel package to generate and to validate a universally unique identifier (UUID) according to the RFC 4122 standard. Support for version 1, 3, 4 and 5 UUIDs are built-in.",
+            "homepage": "https://github.com/webpatser/uuid",
+            "keywords": [
+                "UUID RFC4122"
+            ],
+            "time": "2017-10-04T07:47:40+00:00"
         }
     ],
     "packages-dev": [
