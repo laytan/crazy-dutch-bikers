@@ -15,7 +15,7 @@ class CreateOrderHasProductsTable extends Migration
     {
         Schema::create('order_has_products', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('order_id');
+            $table->bigInteger('order_id')->unsigned();
             $table->bigInteger('product_id');
             $table->timestamps();
         });
