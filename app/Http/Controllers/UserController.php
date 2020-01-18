@@ -47,15 +47,13 @@ class UserController extends Controller
         $validatedData = $request->validate([
             'email' => 'string|max:255|required|email|exists:users,email'
         ]);
-
-        $admin = new AdminController();
         
         $user = User::whereEmail($validatedData['email'])->get()->first();
         if($user->hasRole('super-admin')) {
             return back()->with('error', 'Hoofdgebruiker kan niet inactief worden gezet.');
         }
 
-        if($user->hasRole('admin') && !\Auth::user()->hasRole('super-admin')) {
+        if($user->hasRole('admin') && !Auth::user()->hasRole('super-admin')) {
             return back()->with('error', 'Gebruiker is ook een beheerder en kan dus alleen door de hoofdgebruiker verwijderd worden.');
         }
 
@@ -144,7 +142,7 @@ class UserController extends Controller
             $user->profile_picture = $picture;
         }
 
-        if($validatedData['role'] !== null) {
+        if(isset($validatedData['role']) && $validatedData['role'] !== null) {
             if(Auth::user()->hasRole('super-admin') && $validatedData['role'] === 'admin') {
                 $user->syncRoles(['admin']);
             } else {
