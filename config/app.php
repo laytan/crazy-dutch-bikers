@@ -13,7 +13,23 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Crazy Dutch Bikers'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Order Receivers
+    |--------------------------------------------------------------------------
+    |
+    | The email(s) that receive an Email when an order is placed
+    |
+    */
+
+    'order_receivers' => [
+        [
+            'name'  => 'Laytan Laats',
+            'email' => 'laytanlaats@hotmail.com',
+        ],
+    ],
 
     /*
     |--------------------------------------------------------------------------
@@ -175,6 +191,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        Hafael\LaraFlake\LaraFlakeServiceProvider::class,
 
     ],
 

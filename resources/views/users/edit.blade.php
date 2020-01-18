@@ -34,6 +34,16 @@
       </div>
     </div>
 
+    @hasrole('super-admin')
+    <div class="form-group">
+      <label for="role">Rol</label>
+      <select name="role" id="role" class="form-control">
+        <option value="member" {{ $user->hasRole('member') ? 'selected' : '' }}>Lid</option>
+        <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>Beheer</option>
+      </select>
+    </div>
+    @endhasrole
+
     <div id="old_password-form-group" class="form-group">
       <label for="old_password">Oud wachtwoord</label>
       <input type="old_password" name="old_password" id="old_password" class="form-control" placeholder="Oud wachtwoord">
