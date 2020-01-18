@@ -6,7 +6,7 @@
 @endforeach
 | Totaal | | | &euro; {{ centsToEuro($order->getTotal()) }} | 
 @endcomponent
-
+<br>
 @component('mail::button', ['url' => route('orders.show', ['order' => $order->id]), 'color' => 'primary'])
 Bekijk bestelling
 @endcomponent

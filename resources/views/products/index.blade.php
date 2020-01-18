@@ -8,7 +8,7 @@
       <h2>Merchandise</h2>
       <div class="row">
         @foreach($products as $product)
-        <div class="col-6 col-md-4 col-xl-3">
+        <div class="col-6">
           <div class="card text-dark">
             <img class="card-img-top merchandise-picture" src="{{ Storage::url($product->product_picture) }}" alt="{{ $product->title }}">
             <div class="card-body">

@@ -24,7 +24,6 @@
         <div class="top">
             <audio class="audio-theme" controls autoplay volume="0.2">
                 <source src="{{ url('/audio/theme.mpeg') }}" type="audio/mpeg">
-                Your browser does not support the audio element.
             </audio> 
             @yield('above-nav')
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
