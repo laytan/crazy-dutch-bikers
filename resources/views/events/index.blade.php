@@ -17,7 +17,7 @@
     <div class="bg-light text-dark border-right p-2">
       <ul class="list-group w-100">
         @foreach($futureEvents as $day => $events)
-          <li id="day-{{ $day }}" class="list-group-item text-center cdb-font">
+          <li id="day-{{ $day }}" class="list-group-item text-center">
             {{ $day }}
           </li>
           @foreach($events as $event)

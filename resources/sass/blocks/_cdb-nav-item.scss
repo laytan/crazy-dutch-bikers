@@ -1,0 +1,36 @@
+.cdb-nav-item {
+  &__icon {
+    border: 4px solid $cdb-gray;
+    border-radius: 50%;
+    transition: background ease-in-out .2s, transform ease-in-out .2s;
+    background-color: $cdb-black;
+    transform: translateX(1.3rem);
+
+    img {
+      max-height: 6rem;
+      width: 6rem;
+    }
+  }
+
+  &__inner {
+    min-width: 20rem;
+    color: $cdb-gray;
+    background-color: $cdb-black;
+    padding: 0 1rem 0 3rem;
+    border: 4px solid $cdb-gray;
+    border-radius: 0 10px 10px 0;
+    border-left: none;
+    transition: background ease-in-out .2s, color ease-in-out .2s;
+  }
+
+  &:hover {
+    .cdb-nav-item__icon {
+      background-color: $gray-900;
+      transform: translateX(1.3rem) scale(1.2);
+    }
+
+    .cdb-nav-item__inner {
+      background-color: $gray-900;
+    }
+  }
+}

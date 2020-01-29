@@ -14,7 +14,7 @@ class ChangePasswordController extends Controller
     }
 
     public function index() {
-        return view('users.change-password');
+        return view('index')->with('showChangePassword', 'true');
     }
 
     public function changePassword(Request $request) {
