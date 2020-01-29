@@ -43,6 +43,6 @@ class LoginController extends Controller
      */
     public function showLoginForm()
     {
-        return view('users.login');
+        return redirect()->route('index')->with('showLogin', 'true');
     }
 }

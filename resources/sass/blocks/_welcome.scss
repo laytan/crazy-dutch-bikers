@@ -1,0 +1,19 @@
+.welcome-background {
+  background-image: linear-gradient(black, black), url('/images/background-2.jpeg');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 100vh;
+  background-blend-mode: saturation;  
+}
+
+.welcome {
+  border-radius: 20px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(1.0);  
+
+  &__logo {
+    width: 20rem;
+  }
+}
