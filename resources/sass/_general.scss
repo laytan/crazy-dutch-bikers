@@ -1,0 +1,22 @@
+.cdb-font {
+  font-family: 'Cloister';
+  font-size: 2.5rem;
+}
+
+.text-shadow-red {
+  text-shadow: -1px -1px 0 $cdb-red, 1px -1px 0 $cdb-red, -1px 1px 0 $cdb-red, 1px 1px 0 $cdb-red;
+}
+
+.no-list-style {
+  list-style-type: none;
+}
+
+.object-fit-cover {
+  object-fit: cover;
+}
+
+.event-item {
+  padding-left: 0.9rem !important;
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
