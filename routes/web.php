@@ -51,8 +51,7 @@ Route::get('/bestellingen/{order}', 'OrderController@show')->name('orders.show')
 Route::patch('/bestellingen/{order}', 'OrderController@update')->name('orders.update');
 Route::delete('/bestellingen/{order}', 'OrderController@destroy')->name('orders.destroy');
 
-Route::get('mailable', function () {
-    $order = \App\Order::findOrFail(3);
-
-    return new \App\Mail\OrderConfirmed($order);
-});
+// Events
+Route::get('/evenementen', 'EventController@index')->name('events.index');
+Route::get('/evenementen/aanmaken', 'EventController@create')->name('events.create');
+Route::post('/evenementen', 'EventController@store')->name('events.store');
