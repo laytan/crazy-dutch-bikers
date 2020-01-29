@@ -42,3 +42,13 @@ if(!function_exists('formatTimeForDisplay')) {
     return $time->setTimeZone('Europe/paris')->toDateTimeString();
   }
 }
+
+if(!function_exists('formatFullDate')) {
+  function formatFullDate($dateTimeObj) {
+    return \IntlDateFormatter::formatObject(
+      $dateTimeObj,
+      'cccc, d MMMM yyyy',
+      'nl_NL'
+    );
+  }
+}
