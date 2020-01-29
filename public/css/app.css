@@ -1,4 +1,4 @@
-@charset "UTF-8";
+@import url(https://fonts.googleapis.com/css?family=Nunito);@charset "UTF-8";
 *,
 *::before,
 *::after {
@@ -9381,6 +9381,13 @@ a.text-cdbb:hover, a.text-cdbb:focus {
   visibility: hidden !important;
 }
 
+@font-face {
+  font-family: "Cloister";
+  src: url("/fonts/cloister-black/CloisterBlack-Light.eot");
+  src: local("Cloister Black Light"), local("CloisterBlack-Light"), url("/fonts/cloister-black/CloisterBlack-Light.eot?#iefix") format("embedded-opentype"), url("/fonts/cloister-black/CloisterBlack-Light.woff2") format("woff2"), url("/fonts/cloister-black/CloisterBlack-Light.woff") format("woff"), url("/fonts/cloister-black/CloisterBlack-Light.ttf") format("truetype"), url("/fonts/cloister-black/CloisterBlack-Light.svg#CloisterBlack-Light") format("svg");
+  font-weight: 300;
+  font-style: normal;
+}
 tbody tr th {
   font-weight: 400;
 }
