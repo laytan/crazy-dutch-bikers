@@ -11,20 +11,49 @@ ul {
   width: 30%;
 }
 
+.cdb-font {
+  font-family: "Cloister";
+  font-size: 2.5rem;
+}
+
+.text-shadow-red {
+  text-shadow: -1px -1px 0 #8D111B, 1px -1px 0 #8D111B, -1px 1px 0 #8D111B, 1px 1px 0 #8D111B;
+}
+
+.no-list-style {
+  list-style-type: none;
+}
+
+.object-fit-cover {
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.event-item {
+  padding-left: 0.9rem !important;
+  padding-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
 .audio-theme {
   position: fixed;
   right: 0;
   top: 0;
 }
 
-.logo {
-  height: 40vh;
-  width: auto;
+.header-center {
+  border-radius: 20px;
   position: absolute;
   left: 50%;
   top: 50%;
   -webkit-transform: translate(-50%, -50%) scale(1);
           transform: translate(-50%, -50%) scale(1);
+}
+.header-center .logo {
+  width: 20rem;
+}
+.header-center h1 {
+  font-size: 3rem;
 }
 
 .cdb-nav-item {
@@ -50,7 +79,7 @@ ul {
 .cdb-nav-item .icon-wrapper {
   -webkit-transform: translateX(1.3rem);
           transform: translateX(1.3rem);
-  border: 4px solid #8D111B;
+  border: 4px solid #B6BDC7;
   border-radius: 50%;
   background: #0A0A08;
   padding: 0.5rem;
@@ -61,24 +90,91 @@ ul {
 }
 .cdb-nav-item .icon-wrapper img {
   padding: 0.3rem;
-  max-height: 4rem;
+  max-height: 6rem;
   -o-object-fit: cover;
      object-fit: cover;
-  width: 4rem;
+  width: 6rem;
 }
 .cdb-nav-item span {
   min-width: 12rem;
   font-size: 2rem;
   font-family: "Cloister";
-  color: white;
+  color: #B6BDC7;
   background: #0A0A08;
   padding: 0 1rem 0 2.5rem;
-  border: 4px solid #8D111B;
+  border: 4px solid #B6BDC7;
+  border-radius: 0 10px 10px 0;
   border-left: none;
   -webkit-transition: background ease-in-out 0.2s, color ease-in-out 0.2s;
   transition: background ease-in-out 0.2s, color ease-in-out 0.2s;
 }
 
+.cdb-btn {
+  display: -webkit-box;
+  display: flex;
+  background: transparent;
+  border: none;
+  -webkit-box-align: start;
+          align-items: flex-start;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+.cdb-btn:hover img {
+  -webkit-animation: spin 0.5s infinite linear;
+          animation: spin 0.5s infinite linear;
+}
+.cdb-btn:hover span {
+  background-color: #282828;
+}
+.cdb-btn .img-one {
+  margin-right: -2.7rem;
+  z-index: 1;
+}
+.cdb-btn .img-two {
+  margin-left: -2.7rem;
+  z-index: 1;
+}
+.cdb-btn img {
+  height: 6rem;
+  width: 6rem;
+  display: block;
+  background: #0A0A08;
+  padding: 0.5rem;
+  border-radius: 50%;
+  border: 4px solid #B6BDC7;
+}
+.cdb-btn span {
+  border: 4px solid #B6BDC7;
+  padding: 0 3rem;
+  font-size: 2rem;
+  color: white;
+  font-family: "Cloister";
+  background: #0A0A08;
+  -webkit-transition: 0.2s ease-in-out background;
+  transition: 0.2s ease-in-out background;
+}
+
+@-webkit-keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
 .header-background {
   background-repeat: no-repeat;
   background-position: center;
@@ -87,6 +183,32 @@ ul {
   background-blend-mode: saturation;
 }
 
+.logo.pulse {
+  -webkit-animation: pulse 1 0.1s linear;
+          animation: pulse 1 0.1s linear;
+}
+
+@-webkit-keyframes pulse {
+  from {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes pulse {
+  from {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  to {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
 .member-profile-picture {
   width: 100%;
   height: 350px;

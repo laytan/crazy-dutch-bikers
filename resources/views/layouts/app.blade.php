@@ -22,9 +22,6 @@
 <body>
     <div id="app">
         <div class="top">
-            <audio class="audio-theme" controls autoplay volume="0.2">
-                <source src="{{ url('/audio/theme.mpeg') }}" type="audio/mpeg">
-            </audio> 
             @yield('above-nav')
             <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
                 <div class="container-fluid">
