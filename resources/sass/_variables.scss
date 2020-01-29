@@ -3,23 +3,63 @@ $cdb-red: #8D111B;
 $cdb-gray: #B6BDC7;
 
 // Bootstrap overrides
+
+// Colors
 $dark: $cdb-black;
 $primary: $cdb-red;
 $theme-colors: (
   'cdbb': $cdb-black
-);
-
-$spacers: (
+  );
+  
+  $spacers: (
   '6': 6rem
-);
-
-$sizes: (
-  'vw': 100vw,
-  'vh': 100vh
-);
-
-$body-bg: $cdb-black;
-$body-color: #f8f9fa; // Gray 100 in bootstrap
+  );
+  
+  $sizes: (
+    'vw': 100vw,
+    'vh': 100vh
+    );
+    
+// Typography
+$font-size-base: 1.1rem;
 
 $font-family-sans-serif: 'Nunito', sans-serif;
 $headings-font-family: 'Cloister';
+
+$body-bg: $cdb-black;
+$body-color: #dee2e6; // Gray 300
+$headings-color: #e9ecef; // Gray 200
+
+$paragraph-margin-bottom: 2rem;
+
+$link-hover-decoration: none;
+$link-hover-color: darken($cdb-red, 5%);
+
+$line-height-lg: 1.7;
+$line-height-sm: 1.7;
+$h1-font-size:                $font-size-base * 3.2;
+$h2-font-size:                $font-size-base * 3;
+$h3-font-size:                $font-size-base * 2.75;
+$h4-font-size:                $font-size-base * 2.5;
+$h5-font-size:                $font-size-base * 2.25;
+$h6-font-size:                $font-size-base * 2;
+
+// Navbar
+$navbar-brand-font-size:     2.5rem;
+$navbar-dark-brand-color:    $body-color;
+$navbar-nav-link-padding-x:  1.5rem;
+$navbar-dark-color:          $body-color;
+$navbar-dark-hover-color:    darken( $body-color, 10% );
+$navbar-dark-active-color:   darken( $body-color, 20% );
+$navbar-dark-disabled-color: rgba( $body-color, .3 );
+
+// Dropdown
+$dropdown-min-width:                15rem;
+$dropdown-bg:                       #212529; // Gray 900
+$dropdown-link-color:               $body-color;
+$dropdown-link-hover-color:         darken($body-color, 10%);
+$dropdown-link-hover-bg:            $dropdown-bg;
+
+// Modals
+$modal-content-color:                  $body-color;
+$modal-content-bg:                     #212529;
