@@ -96,7 +96,7 @@ return [
     |
     */
 
-    'locale' => 'nl_NL',
+    'locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -122,7 +122,7 @@ return [
     |
     */
 
-    'faker_locale' => 'nl_NL',
+    'faker_locale' => 'nl',
 
     /*
     |--------------------------------------------------------------------------
@@ -181,7 +181,6 @@ return [
         /*
          * Package Service Providers...
          */
-        Spatie\Permission\PermissionServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -192,6 +191,7 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
         Hafael\LaraFlake\LaraFlakeServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -243,6 +243,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
