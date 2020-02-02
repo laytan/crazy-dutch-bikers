@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use App\User;
 use App\Mail\UserRegistered;
 use Auth;
@@ -19,76 +20,50 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('role:super-admin|admin')->only(['trash', 'activate', 'create', 'store']);
-        $this->middleware('sameOrAdmin')->only(['edit', 'update']);
+        $this->middleware('can:update-user,user')->only(['edit', 'update']);
+        $this->middleware('can:manage')->only(['create', 'store']);
+        $this->middleware('can:destroy-user,user')->only('destroy');
     }
 
     /**
      * View all users
      */
     public function index($message_type = null, $message = null) {
-        $active  = User::all();
-        $trashed = User::onlyTrashed()->get();
-
-        // Resolve full profile picture or placeholder
-        $active  = resolveProfilePics($active);
-        $trashed = resolveProfilePics($trashed);
+        $users = resolveProfilePics(User::all());
         
         if(strlen($message_type) > 0) {
-            return view('users.index', ['active' => $active, 'trashed' => $trashed, $message_type => $message]);
+            return view('users.index', ['users' => $users, $message_type => $message]);
         }
-        return view('users.index', compact('active', 'trashed'));
+        return view('users.index', compact('users'));
     }
 
     /**
      * Put a user in the trash
      */
-    public function destroy(Request $request) {
-        $validatedData = $request->validate([
-            'email' => 'string|max:255|required|email|exists:users,email'
-        ]);
-        
-        $user = User::whereEmail($validatedData['email'])->get()->first();
-        if($user->hasRole('super-admin')) {
-            return back()->with('error', 'Hoofdgebruiker kan niet inactief worden gezet.');
-        }
-
-        if($user->hasRole('admin') && !Auth::user()->hasRole('super-admin')) {
-            return back()->with('error', 'Gebruiker is ook een beheerder en kan dus alleen door de hoofdgebruiker verwijderd worden.');
-        }
-
+    public function destroy(User $user) {
         $user->delete();
-        
-        return back()->with('success', 'Gebruiker op inactief gezet');
-    }
 
-    /**
-     * Reactivate user from trash
-     */
-    public function activate(Request $request) {
-        $validatedData = $request->validate([
-            'email' => 'string|max:255|required|email|exists:users,email'
-        ]);
+        // Send users that delete their own account back to the homepage
+        if($user->id === Auth::user()->id) {
+            return redirect()->route('index')->with('success', 'Uw account is verwijderd');
+        }
 
-        $admin = new AdminController();
-        
-        User::withTrashed()->whereEmail($validatedData['email'])->restore();
-
-        return back()->with('success', 'Gebruiker is geheractiveerd');
+        return redirect()->route('users.index')->with('success', 'Gebruiker verwijderd');
     }
 
     /**
      * View to edit a user
      */
-    public function edit(Request $request, $id) {
-        $user = resolveProfilePic(User::findOrFail($id));
+    public function edit(User $user) {
+        // Add placeholder image if there is no profile picture
+        $user = resolveProfilePic($user);
         return view('users.edit')->with('user', $user);
     }
 
     /**
      * Update user
      */
-    public function update(Request $request, $id) {
+    public function update(Request $request, User $user) {
         // Validate request
         $validatedData = $request->validate([
             'name'            => 'nullable|string|max:255',
@@ -99,8 +74,6 @@ class UserController extends Controller
             'profile_picture' => 'nullable|image',
             'role'            => 'nullable|in:member,admin',
         ]);
-        
-        $user = User::findOrFail($id);
 
         // Name
         if($validatedData['name'] !== null) {
@@ -142,17 +115,21 @@ class UserController extends Controller
             $user->profile_picture = $picture;
         }
 
-        if(isset($validatedData['role']) && $validatedData['role'] !== null) {
-            if(Auth::user()->hasRole('super-admin') && $validatedData['role'] === 'admin') {
-                $user->syncRoles(['admin']);
-            } else {
-                $user->syncRoles(['member']);
-            }
+        // If the user is assigned admin and the authorized user can to do that
+        if(
+            isset($validatedData['role'])      && 
+            $validatedData['role'] !== null    && 
+            $validatedData['role'] === 'admin' && 
+            Gate::allows('make-admin', $user)
+        ) {
+            $user->role = 'admin';
+        } else {
+            $user->role = 'member';
         }
 
         $user->save();
 
-        return redirect()->route('users-index')->with('success', 'Lid is bewerkt');
+        return redirect()->route('users.index')->with('success', 'Lid is bewerkt');
     }
 
     // Render form for adding new users
@@ -196,17 +173,22 @@ class UserController extends Controller
             'profile_picture' => $picture,
         ]);
 
-        if(Auth::user()->hasRole('super-admin') && $validatedData['role'] === 'admin') {
-            $user->syncRoles(['admin']);
+        // If the user is assigned admin and the authorized user can to do that
+        if(
+            isset($validatedData['role'])      && 
+            $validatedData['role'] !== null    && 
+            $validatedData['role'] === 'admin' && 
+            Gate::allows('make-admin', $user)
+        ) {
+            $user->role = 'admin';
         } else {
-            // Give member role
-            $user->syncRoles(['member']);
+            $user->role = 'member';
         }
 
         // Send Mail
         Mail::to($validatedData['email'], $validatedData['name'])->queue(new UserRegistered($validatedData['name'], $validatedData['email'], $password));
         
         // Return view with appropiate message
-        return redirect()->route('users-index')->with('info', 'Gebruiker geregistreerd!');
+        return redirect()->route('users.index')->with('success', 'Gebruiker geregistreerd');
     }
 }
