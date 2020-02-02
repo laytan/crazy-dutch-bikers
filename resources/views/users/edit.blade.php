@@ -4,7 +4,7 @@
 <div class="container text-light">
   @include('partials.form-errors')
   <h2>{{ $user->name }} bewerken</h2>
-  <form action="{{ route('users-update', ['id' => $user->id]) }}" method="post" enctype="multipart/form-data">
+  <form action="{{ route('users.update', ['user' => $user->id]) }}" method="post" enctype="multipart/form-data">
     @csrf
     @method('PATCH')
 
@@ -34,7 +34,7 @@
       </div>
     </div>
 
-    @hasrole('super-admin')
+    @can('manage-roles')
     <div class="form-group">
       <label for="role">Rol</label>
       <select name="role" id="role" class="form-control">
@@ -42,7 +42,7 @@
         <option value="admin" {{ $user->hasRole('admin') ? 'selected' : '' }}>Beheer</option>
       </select>
     </div>
-    @endhasrole
+    @endcan
 
     <div id="old_password-form-group" class="form-group">
       <label for="old_password">Oud wachtwoord</label>
