@@ -181,6 +181,7 @@ return [
         /*
          * Package Service Providers...
          */
+        BC\Laravel\DropboxDriver\ServiceProvider::class,
 
         /*
          * Application Service Providers...
