@@ -15,8 +15,8 @@ class OrderController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('sameOrAdmin')->only('show');
-        $this->middleware('role:admin|super-admin')->except('store', 'show');
+        $this->middleware('can:view-order,order')->only('show');
+        $this->middleware('can:manage')->except('store', 'show');
     }
 
     /**

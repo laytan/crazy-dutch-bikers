@@ -24,13 +24,13 @@ Route::get('/', function () {
 })->name('index');
 
 // Leden
-Route::get('/leden', 'UserController@index')->name('users-index');
-Route::post('/leden/verwijder', 'UserController@destroy')->name('users-destroy');
-Route::get('/leden/{id}/bewerken', 'UserController@edit')->where('id', '[0-9]+')->name('users-edit');
-Route::patch('/leden/{id}/bewerken', 'UserController@update')->where('id', '[0-9]+')->name('users-update');
-Route::post('/leden/activeer', 'UserController@activate')->name('users-activate');
-Route::get('/leden/aanmaken', 'UserController@create')->name('users-create');
-Route::post('/leden', 'UserController@store')->name('users-store');
+Route::get('/leden', 'UserController@index')->name('users.index');
+Route::delete('/leden/{user}', 'UserController@destroy')->name('users.destroy');
+Route::get('/leden/{user}/bewerken', 'UserController@edit')->name('users.edit');
+Route::patch('/leden/{user}/bewerken', 'UserController@update')->name('users.update');
+Route::post('/leden/activeer', 'UserController@activate')->name('users.activate');
+Route::get('/leden/aanmaken', 'UserController@create')->name('users.create');
+Route::post('/leden', 'UserController@store')->name('users.store');
 
 // Passwords
 Route::get('/change-password', 'ChangePasswordController@index')->name('change-password-index');

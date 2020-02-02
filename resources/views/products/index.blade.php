@@ -22,14 +22,14 @@
                 &euro;{{ centsToEuro($product->price) }}
               </p>
               <button onclick="addToCart({{ json_encode($product) }});" class="btn btn-primary">Winkelwagen</button>
-              @hasanyrole('admin|super-admin')
+              @can('manage', $product)
               <a href="{{ route('products.edit', ['product' => $product->id]) }}" class="btn btn-info">Bewerken</a>
               <button onclick="document.getElementById('destroy-{{ $product->id }}-product').submit();" class="btn btn-danger">Verwijderen</button>
               <form id="destroy-{{ $product->id }}-product" action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post" class="d-none">
                 @csrf
                 @method('DELETE')
               </form>
-              @endhasanyrole
+              @endcan
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
       <div class="d-flex justify-content-between align-items-center mb-3">
         <span>Totaalprijs: <span id="total">&euro; 0,00</span></span>
         <button onclick="clearCart();" class="btn btn-warning">Leegmaken</button>
-        <button onclick="order();" class="btn btn-primary">Bestellen</button>
+        <button onclick="$('#confirm-order').modal('show');" class="btn btn-primary">Bestellen</button>
       </div>
       <form class="d-none" id="order" action="{{ route('orders.store') }}" method="post">
         @csrf
@@ -55,6 +55,12 @@
       </form>
     </div>
   </div>
+  @component('components.modal', ['id' => 'confirm-order', 'title' => 'Bestellen'])
+    Weet u zeker dat u een bestelling wilt plaatsen?
+    @slot('footer')
+    <button class="btn btn-success" onclick="document.getElementById('order').submit();">Plaatsen</button>
+    @endslot
+  @endcomponent
 </div>
 @endsection
 <script>
@@ -70,6 +76,7 @@ function clearCart() {
 }
 
 function onCartChange() {
+  updateCartProductIds();
   updateCartVisual();
 }
 
@@ -116,12 +123,5 @@ function centsToEuro(cents) {
 function updateCartProductIds() {
   const input = document.getElementById('cart-product-ids');
   input.value = cart.reduce((prev, curr) => prev.length > 0 ? prev + ',' + curr.id : prev + curr.id, '');
-}
-
-function order() {
-  updateCartProductIds();
-  if(confirm('Bestelling plaatsen?')) {
-    document.getElementById('order').submit();
-  }
 }
 </script>

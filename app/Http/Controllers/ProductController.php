@@ -11,13 +11,13 @@ class ProductController extends Controller
 {
     public function __construct() {
         $this->middleware('auth');
-        $this->middleware('role:super-admin|admin')->except(['index', 'show']);
+        $this->middleware('can:manage')->except(['index', 'show']);
     }
 
     /**
      * Show all products
      */
-    public function index(Request $request) {
+    public function index() {
         $products = Product::all();
         return view('products.index', compact('products'));
     }
@@ -54,20 +54,17 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product aangemaakt');
     }
 
-    public function edit(Request $request, $product) {
-        $product = Product::findOrFail($product);
+    public function edit(Product $product) {
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request, $product) {
+    public function update(Product $product) {
         $validatedData = $request->validate([
             'title'           => 'nullable|string|max:255',
             'description'     => 'nullable|string',
             'price'           => 'nullable|integer',
             'product_picture' => 'nullable|image',
         ]);
-
-        $product = Product::findOrFail($product);
 
         if($validatedData['title'] !== null) {
             $product->title = $validatedData['title'];
@@ -96,15 +93,13 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product bewerkt');
     }
 
-    public function destroy(Request $request, $product) {
-        $product = Product::findOrFail($product);
-
+    public function destroy(Product $product) {
         // Remove picture
         if($product->product_picture !== null) {
             Storage::disk('public')->delete($product->product_picture);
         }
 
         $product->delete();
-        return back()->with('success', 'Product verwijderd');
+        return redirect()->route('products.index')->with('success', 'Product verwijderd');
     }
 }

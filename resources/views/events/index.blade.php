@@ -10,9 +10,9 @@
   @endforeach
   <div class="d-flex align-items-center border-bottom mb-4">
     <h2 class="text-center pt-2">Evenementen</h2>
-    @hasanyrole('admin|super-admin')
+    @can('manage')
     <a href="{{ route('events.create') }}" class="ml-auto btn btn-light">+</a>
-    @endhasanyrole
+    @endcan
   </div>
     <div class="bg-light text-dark border-right p-2">
       <ul class="list-group w-100">
@@ -45,9 +45,9 @@
                   </div>
                   <div class="d-flex">
                     @if($event->facebook_link)
-                      @hasanyrole('admin|super-admin|member')
+                      @can('manage', $event)
                         <a target="_BLANK" rel="noopener noreferrer" href="{{ $event->facebook_link }}" class="btn btn-primary w-50">Bekijk op Facebook</a>
-                      @endhasanyrole
+                      @endcan
                     @endif
                   </div>
                 </div>
