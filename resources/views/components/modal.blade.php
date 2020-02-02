@@ -8,7 +8,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <p>{{ $slot }}</p>
+        <p class="m-0">{{ $slot }}</p>
       </div>
       <div class="modal-footer">
         <button class="btn btn-link" data-dismiss="modal">Annuleer</button>

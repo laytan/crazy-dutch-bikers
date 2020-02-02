@@ -10,7 +10,7 @@ class EventController extends Controller
 {
     public function __constructor() {
         $this->middleware('auth')->except('index');
-        $this->middleware('role:admin|super-admin')->except('index');
+        $this->middleware('can:manage')->except('index');
     }
 
     private function dateTimeFieldsToTimestamp($date, $time) {

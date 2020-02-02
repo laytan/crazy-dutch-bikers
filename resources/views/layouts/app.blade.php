@@ -36,10 +36,10 @@
             </button>
             <div id="navigation" class="navbar-collapse collapse w-100 order-1 order-lg-0 dual-collapse2">
                 <ul class="navbar-nav mr-auto">
-                    @hasanyrole('admin|super-admin')
+                    @can('manage')
                         @component('components.dropdown', ['title' => 'Leden'])
-                            <a href="{{ route('users-create') }}" class="dropdown-item">Leden toevoegen</a>
-                            <a href="{{ route('users-index') }}" class="dropdown-item">Leden overzicht</a>
+                            <a href="{{ route('users.create') }}" class="dropdown-item">Leden toevoegen</a>
+                            <a href="{{ route('users.index') }}" class="dropdown-item">Leden overzicht</a>
                         @endcomponent
                         @component('components.dropdown', ['title' => 'Evenementen'])
                             <a href="{{ route('events.create') }}" class="dropdown-item">Evenementen toevoegen</a>
@@ -64,7 +64,7 @@
                         </li>
                     @else
                         <li class="nav-item">
-                            <a href="{{ route('users-index') }}" class="nav-link text-decoration-none">Leden</a>
+                            <a href="{{ route('users.index') }}" class="nav-link text-decoration-none">Leden</a>
                         </li>
                         <li class="nav-item">
                             <a href="{{ route('events.index') }}" class="nav-link text-decoration-none">Evenementen</a>
@@ -75,7 +75,7 @@
                         <li class="nav-item">
                             <a href="#" class="nav-link text-decoration-none">Gallerij</a>
                         </li>
-                    @endhasanyrole
+                    @endcan
                 </ul>
             </div>
             <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
@@ -86,7 +86,7 @@
                         </li>
                     @else
                         @component('components.dropdown', ['title' => Auth::user()->name, 'right' => true])
-                            <a href="{{ route('users-edit', ['id' => Auth::user()->id]) }}" class="dropdown-item">Profiel</a>
+                            <a href="{{ route('users.edit', ['user' => Auth::user()->id]) }}" class="dropdown-item">Profiel</a>
                             @include('partials.change-password')
                             <a class="dropdown-item" href="#"
                                 onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

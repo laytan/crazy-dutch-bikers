@@ -3,7 +3,7 @@
 @section('content')
 <div class="container text-light">
     @include('partials.form-errors')
-    <form action="{{ route('users-store') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
       @csrf
 
       <div class="form-group">
@@ -36,7 +36,7 @@
         <input type="file" name="profile_picture" id="profile_picture" class="form-control-file">
       </div>
 
-      @hasrole('super-admin')
+      @can('manage-roles')
       <div class="form-group">
         <label for="role">Rol</label>
         <select name="role" id="role" class="form-control">
@@ -44,7 +44,7 @@
           <option value="admin">Beheer</option>
         </select>
       </div>
-      @endhasrole
+      @endcan
 
       <button type="submit" class="btn btn-primary">Voeg toe</button>
     </form>

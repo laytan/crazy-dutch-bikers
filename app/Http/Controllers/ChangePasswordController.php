@@ -9,7 +9,6 @@ use App\User;
 class ChangePasswordController extends Controller
 {
     public function __construct() {
-        // Need to be logged in to change your password
         $this->middleware('auth');
     }
 
