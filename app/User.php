@@ -5,14 +5,11 @@ namespace App;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Authenticatable
 {
     use Notifiable;
-    use HasRoles;
-    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -47,5 +44,18 @@ class User extends Authenticatable
 
     public function products() {
         return $this->hasMany('App\Product');
+    }
+
+    public function hasRole(string $role) {
+        return $this->role === $role;
+    }
+
+    public function hasAnyRole(array $roles) {
+        foreach($roles as $role) {
+            if($role === $this->role) {
+                return true;
+            }
+        }
+        return false;
     }
 }
