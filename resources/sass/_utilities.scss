@@ -1,7 +1,25 @@
+@use "sass:map";
+
 .no-list-style {
   list-style-type: none;
 }
 
 .object-fit-cover {
   object-fit: cover;
+}
+
+.bg-cdbg-opaque {
+  background-color: rgba(map.get($theme-colors, 'cdbg'), 0.8);
+}
+
+.top-0 {
+  top: 0;
+}
+
+.right-0 {
+  right: 0;
+}
+
+.v-align-middle {
+  vertical-align: middle;
 }
