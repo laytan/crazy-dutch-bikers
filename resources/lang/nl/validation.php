@@ -192,5 +192,6 @@ return [
         'end_date'              => 'eind datum',
         'end_time'              => 'eind tijd',
         'picture'               => 'foto',
+        'profile_picture'       => 'profielfoto',
     ],
 ];

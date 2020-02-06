@@ -60,4 +60,7 @@ Route::post('/evenementen', 'EventController@store')->name('events.store');
 Route::get('/gallerij', function() {
     $galleries = Gallery::all();
     return view('galleries.index', compact('galleries'));
-});
+})->name('galleries.index');
+Route::get('/gallerij/aanmaken', 'GalleryController@create')->name('galleries.create');
+Route::post('/gallerij/aanmaken', 'GalleryController@store')->name('galleries.store');
+Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');

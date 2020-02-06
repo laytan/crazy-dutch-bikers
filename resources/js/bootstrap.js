@@ -16,6 +16,7 @@ try {
     require('bootstrap/js/dist/collapse');
     require('bootstrap/js/dist/dropdown');
     require('bootstrap/js/dist/modal');
+    require('bootstrap/js/dist/carousel');
 } catch (e) {}
 
 /**
