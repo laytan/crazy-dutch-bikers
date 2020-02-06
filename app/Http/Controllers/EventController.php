@@ -59,7 +59,7 @@ class EventController extends Controller
             'end_date'      => 'nullable|date',
             'time'          => ['nullable', 'string', 'regex:/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/'],
             'end_time'      => ['nullable', 'string', 'regex:/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/'],
-            'picture'       => 'required|image',
+            'picture'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $event = new Event;

@@ -14,4 +14,6 @@ const mix = require('laravel-mix');
 mix.options({ processCssUrls: false });
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .sass('resources/sass/app.scss', 'public/css')
+    .copy('vendor/glhd/aire/js/dist/aire.min.js', 'public/js/aire/aire.min.js')
+    .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');

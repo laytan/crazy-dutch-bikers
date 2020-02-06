@@ -37,7 +37,7 @@ class ProductController extends Controller
             'title'           => 'required|string|max:255',
             'description'     => 'required|string',
             'price'           => 'required|integer',
-            'product_picture' => 'required|image',
+            'product_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
@@ -63,7 +63,7 @@ class ProductController extends Controller
             'title'           => 'nullable|string|max:255',
             'description'     => 'nullable|string',
             'price'           => 'nullable|integer',
-            'product_picture' => 'nullable|image',
+            'product_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if($validatedData['title'] !== null) {
