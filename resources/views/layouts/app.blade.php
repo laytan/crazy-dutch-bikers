@@ -50,7 +50,7 @@
                             <a href="{{ route('products.index') }}" class="dropdown-item">Merchandise overzicht</a>
                         @endcomponent
                         @component('components.dropdown', ['title' => 'Gallerij'])
-                            <a href="#" class="dropdown-item">Gallerij toevoegen</a>
+                            <a href="{{ route('galleries.create') }}" class="dropdown-item">Gallerij toevoegen</a>
                             <a href="#" class="dropdown-item">Gallerijen overzicht</a>
                             <a href="#" class="dropdown-item">Foto's toevoegen</a>
                             <a href="#" class="dropdown-item">Foto's overzicht</a>

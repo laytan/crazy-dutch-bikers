@@ -1,0 +1,13 @@
+.image-upload {
+  background-size: cover;
+  background-position: center;
+
+  .image-upload__remove-icon {
+    z-index: 5;
+    cursor: pointer;
+  }
+
+  &.is-invalid {
+    border: 2px solid $danger;
+  }
+}

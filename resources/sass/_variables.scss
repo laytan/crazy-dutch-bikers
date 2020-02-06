@@ -8,7 +8,9 @@ $cdb-gray: #B6BDC7;
 $dark: $cdb-black;
 $primary: $cdb-red;
 $theme-colors: (
-  'cdbb': $cdb-black
+  'cdbb': $cdb-black,
+  'cdbg': #212529,
+  'cdblg': $cdb-gray
   );
   
   $spacers: (

@@ -8,6 +8,7 @@ use App\User;
 use App\Mail\UserRegistered;
 use Auth;
 use Mail;
+use App\Http\Requests\CreateUserRequest;
 
 class UserController extends Controller
 {
@@ -71,7 +72,7 @@ class UserController extends Controller
             'old_password'    => 'nullable|min:8|string',
             'password'        => 'nullable|min:8|string',
             'description'     => 'nullable|string',
-            'profile_picture' => 'nullable|image',
+            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'role'            => 'nullable|in:member,admin',
         ]);
 
@@ -138,17 +139,9 @@ class UserController extends Controller
     }
 
     // On submit of register form
-    public function store(Request $request) {
+    public function store(CreateUserRequest $request) {
         // Validate request
-        $validatedData = $request->validate([
-            'name'              => 'required|string|max:255',
-            'email'             => 'required|unique:users|email|max:255|string',
-            'password'          => 'required_unless:generate-password,on|nullable|min:8|string',
-            'generate-password' => 'nullable',
-            'description'       => 'nullable|string',
-            'profile_picture'   => 'nullable|image',
-            'role'              => 'nullable|in:member,admin',
-        ]);
+        $validatedData = $request->validated();
 
         // Generated password?
         if(array_key_exists('generate-password', $validatedData) && $validatedData['generate-password'] == "on") {
