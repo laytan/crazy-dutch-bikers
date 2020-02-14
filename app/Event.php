@@ -7,6 +7,8 @@ use Carbon\Carbon;
 
 class Event extends Model
 {
+    protected $fillable = ['title', 'description', 'location', 'location_link', 'facebook_link'];
+
     public function getFormattedTimeAttribute()
     {
         $carb = new Carbon($this->timestamp);
@@ -32,6 +34,11 @@ class Event extends Model
             }
         }
         return $ret;
+    }
+
+    public function uploadPicture($pictureFile)
+    {
+        $this->picture = $pictureFile->store('event-pictures', ['disk' => 'public']);
     }
 
     public static function getFutureOrdered()
