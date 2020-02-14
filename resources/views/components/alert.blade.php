@@ -1,4 +1,4 @@
-<div role="alert" class="alert-dismissible fade show alert alert-{{ $type }}">
+<div role="alert" class="alert-dismissible fade show alert alert-{{ $type }} mt-4">
     <p class="mb-0"> {{ $slot }} </p>
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
