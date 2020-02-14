@@ -54,8 +54,8 @@ class EventController extends Controller
     {
         $validatedData = $request->validated();
 
-        $event = new Event;
-        
+        $event = new Event($validatedData);
+
         $fullDay = true;
         $time = '00:00';
         if ($validatedData['time'] !== null) {
@@ -73,18 +73,9 @@ class EventController extends Controller
         }
 
         $event->timestamp   = $this->dateTimeFieldsToTimestamp($validatedData['date'], $time);
-        $event->picture     = $request->file('picture')->store('event-pictures', ['disk' => 'public']);
-        $event->title       = $validatedData['title'];
-        $event->description = $validatedData['description'];
-        $event->location    = $validatedData['location'];
         $event->full_day    = $fullDay;
 
-        if ($validatedData['location_link'] !== null) {
-            $event->location_link = $validatedData['location_link'];
-        }
-        if ($validatedData['facebook_link'] !== null) {
-            $event->facebook_link = $validatedData['facebook_link'];
-        }
+        $event->uploadPicture($request->file('picture'));
 
         $event->save();
 
