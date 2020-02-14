@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Event;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Http\Requests\CreateEventRequest;
 
 class EventController extends Controller
 {
@@ -49,20 +50,9 @@ class EventController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateEventRequest $request)
     {
-        $validatedData = $request->validate([
-            'title'         => 'required|string|max:255|min:1',
-            'description'   => 'required|string|min:1|max:1000',
-            'location'      => 'required|string|min:1|max:255',
-            'location_link' => 'nullable|url',
-            'facebook_link' => 'nullable|url',
-            'date'          => 'required|date',
-            'end_date'      => 'nullable|date',
-            'time'          => ['nullable', 'string', 'regex:/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/'],
-            'end_time'      => ['nullable', 'string', 'regex:/^([0-9]|0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/'],
-            'picture'       => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $validatedData = $request->validated();
 
         $event = new Event;
         

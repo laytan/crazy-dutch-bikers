@@ -33,7 +33,7 @@
             @yield('content')
         </main>
     </div>
-    <footer class="bg-cdblg footer">
+    <footer class="bg-cdblg footer mt-5">
         <i class="fab fa-facebook"></i>
         <div class="copyright py-1">
             <p class="text-center text-cdbg">
