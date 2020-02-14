@@ -35593,6 +35593,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 (function () {
   $(window).on('load', function () {
     copyModalsToFooter();
+    matchHeights();
   });
 
   function copyModalsToFooter() {
@@ -35601,6 +35602,20 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
       var content = modal.cloneNode(true);
       modal.remove();
       $(content).appendTo('footer');
+    });
+  }
+  /**
+   * Match the height of data-match elements to the accumalated height of the children of the element to match
+   */
+
+
+  function matchHeights() {
+    document.querySelectorAll('[data-match]').forEach(function (el) {
+      var toMatch = document.querySelector(el.dataset.match);
+      var height = Array.from(toMatch.children).reduce(function (aggr, el) {
+        return aggr + el.scrollHeight;
+      }, 0);
+      el.style.height = height + 'px';
     });
   }
 })();
