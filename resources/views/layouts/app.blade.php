@@ -101,46 +101,9 @@
                 </ul>
             </div>
         </nav>
-        @if(session('info'))
-        <div class="container mt-4">
-            <div role="alert" class="alert-dismissible fade show alert alert-info">
-                <p class="mb-0">{{ session('info') }}</p>
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+        <div class="container">
+            @include('partials.alerts')
         </div>
-        @endif
-        @if (session('success'))
-        <div class="container mt-4">
-            <div role="alert" class="alert-dismissible fade show alert alert-success">
-                <p class="mb-0">{{ session('success') }}</p>
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-        @endif
-        @if (session('warning'))
-        <div class="container mt-4">
-            <div role="alert" class="alert-dismissible fade show alert alert-warning">
-                <p class="mb-0">{{ session('warning') }}</p>
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-        @endif
-        @if (session('error'))
-        <div class="container mt-4">
-            <div role="alert" class="alert-dismissible fade show alert alert-danger">
-                <p class="mb-0">{{ session('error') }}</p>
-                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        </div>
-        @endif
         <main>
             @yield('content')
         </main>
