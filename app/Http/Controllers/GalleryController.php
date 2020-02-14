@@ -10,16 +10,19 @@ use App\Picture;
 
 class GalleryController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('can:manage')->except(['index', 'show']);
     }
 
-    public function index() {
+    public function index()
+    {
         $galleries = Gallery::all();
         return view('galleries.index', compact('galleries'));
     }
 
-    public function show($galleryName) {
+    public function show($galleryName)
+    {
         $gallery = Gallery::where('title', '=', $galleryName)->firstOrFail();
         $updateRequest = new UpdateGalleryRequest();
         $updateRequest = $updateRequest->rules();
@@ -61,16 +64,17 @@ class GalleryController extends Controller
         return redirect()->route('galleries.index')->with('success', 'Gallerij aangemaakt');
     }
 
-    public function update(UpdateGalleryRequest $request, Gallery $gallery) {
+    public function update(UpdateGalleryRequest $request, Gallery $gallery)
+    {
         $validatedData = $request->validated();
 
         dd($validatedData);
 
-        if(isset($validatedData['title'])) {
+        if (isset($validatedData['title'])) {
             $gallery->title = $validatedData['title'];
         }
 
-        if(isset($validatedData['is_private'])) {
+        if (isset($validatedData['is_private'])) {
             $gallery->is_private = true;
         } else {
             $gallery->is_private = false;
@@ -80,9 +84,10 @@ class GalleryController extends Controller
         return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
     }
 
-    public function destroy(Gallery $gallery) {
+    public function destroy(Gallery $gallery)
+    {
         // Remove all pictures
-        foreach($gallery->pictures as $picture) {
+        foreach ($gallery->pictures as $picture) {
             Storage::disk('public')->delete($picture->url);
             $picture->delete();
         }
