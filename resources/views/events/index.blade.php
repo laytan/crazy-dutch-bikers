@@ -11,17 +11,17 @@
   <div class="d-flex align-items-center border-bottom mb-4">
     <h2 class="text-center pt-2">Evenementen</h2>
     @can('manage')
-    <a href="{{ route('events.create') }}" class="ml-auto btn btn-light">+</a>
+    <a href="{{ route('events.create') }}" class="ml-auto btn btn-primary"><i class="fas fa-plus"></i></a>
     @endcan
   </div>
-    <div class="bg-light text-dark border-right p-2">
+    <div class="bg-cdbg-opaque p-4">
       <ul class="list-group w-100">
         @foreach($futureEvents as $day => $events)
-          <li id="day-{{ $day }}" class="list-group-item text-center">
+          <li id="day-{{ $day }}" class="list-group-item border-cdblg text-center bg-cdbg">
             {{ $day }}
           </li>
           @foreach($events as $event)
-            <li class="list-group-item event-item">
+            <li class="list-group-item border-cdblg event-item bg-cdbg">
               <div class="row">
                 <div class="col-6 p-0 m-0">
                   <img class="w-100 h-100 object-fit-cover" src="{{ Storage::url($event->picture) }}" alt="{{ $event->title }}">

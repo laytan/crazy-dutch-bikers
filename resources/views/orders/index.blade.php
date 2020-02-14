@@ -4,7 +4,7 @@
 <div class="container text-light">
   @include('partials.form-errors')
   <h2>bestellingen</h2>
-  <table class="table table-light table-striped">
+  <table class="table table-dark table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -25,7 +25,7 @@
         <td class="text-right">&euro; {{ centsToEuro($order->getTotal()) }}</td>
         <td>{{ formatTimeForDisplay($order->created_at) }}</td>
         <td>
-          <button onclick="document.getElementById('fulfill-{{ $order->id }}').submit();" class="btn btn-primary">Vervul</button>
+          <button onclick="document.getElementById('fulfill-{{ $order->id }}').submit();" class="btn btn-primary btn-sm">Vervul</button>
           <form id="fulfill-{{ $order->id }}" action="{{ route('orders.update', ['order' => $order->id]) }}" method="post" class="d-none">
             @csrf
             @method('PATCH')
@@ -33,7 +33,7 @@
           </form>
         </td>
         <td>
-          <button onclick="if(confirm('Bestelling verwijderen?')) { document.getElementById('delete-{{ $order->id }}').submit(); }" class="btn btn-danger">Verwijder</button>
+          <button onclick="if(confirm('Bestelling verwijderen?')) { document.getElementById('delete-{{ $order->id }}').submit(); }" class="btn btn-danger btn-sm">Verwijder</button>
           <form id="delete-{{ $order->id }}" action="{{ route('orders.destroy', ['order' => $order->id]) }}" method="post" class="d-none">
             @csrf
             @method('DELETE')
@@ -44,7 +44,7 @@
     </tbody>
   </table>
   <h2>Vervuld</h2>
-  <table class="table table-light table-striped">
+  <table class="table table-dark table-striped">
     <thead>
       <tr>
         <th scope="col">#</th>
@@ -67,7 +67,7 @@
         <td>{{ formatTimeForDisplay($order->created_at) }}</td>
         <td>{{ formatTimeForDisplay($order->updated_at) }}</td>
         <td>
-          <button onclick="document.getElementById('fulfill-{{ $order->id }}').submit();" class="btn btn-primary">Onvervul</button>
+          <button onclick="document.getElementById('fulfill-{{ $order->id }}').submit();" class="btn btn-primary btn-sm">Onvervul</button>
           <form id="fulfill-{{ $order->id }}" action="{{ route('orders.update', ['order' => $order->id]) }}" method="post" class="d-none">
             @csrf
             @method('PATCH')
@@ -75,7 +75,7 @@
           </form>
         </td>
         <td>
-          <button onclick="if(confirm('Bestelling verwijderen?')) { document.getElementById('delete-{{ $order->id }}').submit(); }" class="btn btn-danger">Verwijder</button>
+          <button onclick="if(confirm('Bestelling verwijderen?')) { document.getElementById('delete-{{ $order->id }}').submit(); }" class="btn btn-danger btn-sm">Verwijder</button>
           <form id="delete-{{ $order->id }}" action="{{ route('orders.destroy', ['order' => $order->id]) }}" method="post" class="d-none">
             @csrf
             @method('DELETE')
