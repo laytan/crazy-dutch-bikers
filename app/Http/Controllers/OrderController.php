@@ -25,8 +25,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $non_fulfilled = Order::with('users')->where('fulfilled', '=', false)->get();
-        $fulfilled = Order::with('users')->where('fulfilled', '=', true)->get();
+        $non_fulfilled = Order::with('user')->where('fulfilled', '=', false)->get();
+        $fulfilled = Order::with('user')->where('fulfilled', '=', true)->get();
         return view('orders.index', compact('non_fulfilled', 'fulfilled'));
     }
 
