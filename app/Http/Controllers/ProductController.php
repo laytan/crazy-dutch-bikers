@@ -63,7 +63,7 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(Product $product)
+    public function update(Request $request, Product $product)
     {
         $validatedData = $request->validate([
             'title'           => 'nullable|string|max:255',
