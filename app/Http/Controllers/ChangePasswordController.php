@@ -8,22 +8,25 @@ use App\User;
 
 class ChangePasswordController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
     }
 
-    public function index() {
+    public function index()
+    {
         return view('index')->with('showChangePassword', 'true');
     }
 
-    public function changePassword(Request $request) {
+    public function changePassword(Request $request)
+    {
         $validatedData = $request->validate([
             'password-old' => 'required|min:8|string',
             'password-new' => 'required|min:8|string',
         ]);
 
         $user = $request->user();
-        if(Hash::check($validatedData['password-old'], $user->password)) {
+        if (Hash::check($validatedData['password-old'], $user->password)) {
             $user->password = Hash::make($validatedData['password-new']);
             $user->save();
 
