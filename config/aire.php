@@ -63,7 +63,7 @@ return [
 	| and load them via `<script>` tags to take advantage of HTTP caching.
 	|
 	*/
-	'inline_validation' => false,
+	'inline_validation' => true,
 	'validation_script_path' => env('APP_URL').'/js/aire/aire.js',
 	
 	/*
