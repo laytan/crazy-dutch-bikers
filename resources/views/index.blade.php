@@ -28,25 +28,50 @@
 @endsection
 
 @section('content')
-<div id="content" class="container text-light mt-5 text-lg">
-  <div class="row">
-    <div class="col-5">
-      <h2>De Club</h2>
-      <p>
-        Lorem ipsum dolor sit, amet <a href="#">consectetur</a> adipisicing elit. <strong>Fugit</strong> consectetur labore reiciendis, tempore voluptate cumque expedita error ipsa maxime perspiciatis atque nesciunt dolores libero iure vero vel delectus quisquam itaque similique! Cum placeat totam amet earum aspem recusandae!
-        <button type="button" class="btn m-1 btn-primary">Primary</button>
-        <button type="button" class="btn m-1 btn-secondary">Secondary</button>
-        <button type="button" class="btn m-1 btn-success">Success</button>
-        <button type="button" class="btn m-1 btn-danger">Danger</button>
-        <button type="button" class="btn m-1 btn-warning">Warning</button>
-        <button type="button" class="btn m-1 btn-info">Info</button>
-        <button type="button" class="btn m-1 btn-light">Light</button>
-        <button type="button" class="btn m-1 btn-dark">Dark</button>
-        <button type="button" class="btn m-1 btn-link">Link</button>
-      </p>
+<div id="content">
+  <div class="container-fluid text-light text-lg">
+    <div class="row">
+      <div class="col-12 d-none col-md-6 d-md-block p-0 overflow-hidden" data-match="#home-about-section">
+        <img class="w-100 h-100 object-fit-cover" src="{{ url('/images/background-2.jpeg') }}" alt="Motor">
+      </div>
+      <div id="home-about-section" class="col-12 col-md-6 bg-cdbg-opaque">
+        <div class="p-5">
+          <h2 class="border-bottom pb-3 border-primary border-4">De <span class="h1 text-primary">Cra<span class="h5 text-primary">Z</span>y</span><br>Dutch Bikers</h2>
+          <p class="pt-3 lead">
+            Welkom bij MTC Crazy Dutch Bikers.
+          </p>
+          <p>
+            Wij zijn een Motor Touring Club dat graag zijn passie voor motoren en motorrijden deelt met andere motorrijders.
+          </p>
+          <button class="btn btn-primary"><i class="fas fa-calendar-week"></i> Bekijk onze evenementen</button>
+        </div>
+      </div>
     </div>
-    <div class="col-7">
-      <img class="w-100" src="{{ url('/images/background-2.jpeg') }}" alt="Motor">
+  </div>
+  <p class="bg-primary p-5 my-6 d-flex justify-content-around lead">
+    <span class="px-2">Broederschap</span>
+    <span class="px-2">Vertrouwen</span>
+    <span class="px-2">Gezelligheid</span>
+  </p>
+  <div class="bg-cdbg-opaque py-5">
+    <div class="text-center">
+      <h2 class="p-0 m-0">Nieuwste foto's</h2>
+    </div>
+    <div class="container">
+      <div class="row">
+        @for($i = 0; $i < 4; $i++)
+        <div class="col-6">
+          <div class="mt-4 p-4 bg-cdbg">
+            <p class="m-0">Openingsfeest</p>
+            <img class="w-100 my-2" src="{{ url('/images/background-2.jpeg') }}" alt="Motor">
+            <div class="d-flex justify-content-between align-items-center">
+              <small>20 september 2020</small>
+              <a href="#">Bekijk volledige gallerij</a>
+            </div>
+          </div>
+        </div>
+        @endfor
+      </div>
     </div>
   </div>
 </div>
