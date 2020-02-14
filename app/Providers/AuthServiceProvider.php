@@ -60,7 +60,8 @@ class AuthServiceProvider extends ServiceProvider
 
         Gate::define(
             'make-admin',
-            fn(User $user, User $otherUser) => !$otherUser->hasRole('super-admin') && $user->hasRole('super-admin')
+            fn(User $user,
+            User $otherUser) => !$otherUser->hasRole('super-admin') && $user->hasRole('super-admin')
         );
 
         Gate::define('destroy-user', function (User $user, User $otherUser) {

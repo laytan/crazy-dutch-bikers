@@ -11,8 +11,9 @@ class Picture extends Model
         return $this->belongsTo('App\Gallery');
     }
 
-    public function getDimensionsAttribute() {
-        list($width, $height, $type, $attr) = getimagesize(public_path( 'storage/' . $this->url ));
+    public function getDimensionsAttribute()
+    {
+        list($width, $height, $type, $attr) = getimagesize(public_path('storage/' . $this->url));
         return [$width, $height];
     }
 }
