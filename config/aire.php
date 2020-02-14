@@ -98,8 +98,9 @@ return [
 	|
 	*/
 	'default_classes' => [
-		'input'   => 'bg-cdbb text-cdblg border-cdblg',
-		'summary' => 'alert alert-danger',
+		'input'    => 'bg-cdbb text-cdblg border-cdblg',
+		'summary'  => 'alert alert-danger',
+		'textarea' => 'bg-cdbb text-cdblg border-cdblg',
 	],
 	
 	/*
