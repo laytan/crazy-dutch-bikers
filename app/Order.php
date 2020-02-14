@@ -27,13 +27,11 @@ class Order extends Model
         return $this->belongsTo('App\User');
     }
 
+    /**
+     * Count up all product prices in the order
+     */
     public function getTotal()
     {
-        $total = 0;
-        foreach ($this->orderHasProducts as $ohp) {
-            $product = $ohp->product;
-            $total += $ohp->product->price;
-        }
-        return $total;
+        return $this->orderHasProducts->reduce(fn($carry, $item) => $carry + $item->product->price, 0);
     }
 }
