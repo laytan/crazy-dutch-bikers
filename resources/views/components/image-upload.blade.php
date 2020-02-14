@@ -17,10 +17,11 @@
 @enderror
 <script>
 @if($initSelf === true)
-window.addEventListener('load', () => initImageUpload('#' + {{ $id }}));
+window.addEventListener('load', () => initImageUpload('#' + '{{ $id }}'));
 @endif
 
 function initImageUpload(selector) {
+  console.log(selector);
   const container = document.querySelector(selector);
   const input = container.querySelector('input');
   console.log(container, input);
@@ -36,7 +37,6 @@ function initImageUpload(selector) {
 }
 
 function populateOnImage(imageUpload, input) {
-  
   input.addEventListener('change', e => {
     if(!e.target.files || !e.target.files[0]) {
       return;
