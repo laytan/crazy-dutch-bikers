@@ -15,4 +15,18 @@ mix.options({ processCssUrls: false });
 
 mix.js('resources/js/app.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css')
-    .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts');
+    .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
+    .webpackConfig({
+        module: {
+            rules: [
+                {
+                test: /\.tsx?$/,
+                loader: "ts-loader",
+                exclude: /node_modules/
+                }
+            ]
+        },
+        resolve: {
+            extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
+        }
+    });
