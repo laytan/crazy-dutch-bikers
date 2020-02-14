@@ -76,26 +76,3 @@
   </div>
 </div>
 @endsection
-
-<script>
-window.onload = function() {
-  const audio = document.querySelector('.js-audio-theme');
-  const logo = document.querySelector('.js-logo');
-  const pulse = (60 / Number(audio.dataset.bpm)) * 1000;
-  console.log(logo, pulse);
-
-  audio.play();
-  audio.classList.add('playing');
-
-  pulsing(logo, pulse);
-  setInterval(function() { pulsing(logo, pulse) }, pulse);
-};
-
-function pulsing(logo, pulse) {
-  logo.classList.add('pulse');
-
-  setTimeout(() => {
-    logo.classList.remove('pulse');
-  }, pulse - 100);
-}
-</script>
