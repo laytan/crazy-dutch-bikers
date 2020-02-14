@@ -9,14 +9,14 @@ class Event extends Model
 {
     public function getFormattedTimeAttribute()
     {
-        $carb = new \Carbon\Carbon($this->timestamp);
+        $carb = new Carbon($this->timestamp);
         $ret = formatFullDate($carb);
         if (!$this->full_day) {
             $ret .= ' van ' . $carb->format('H:i');
         }
 
         if ($this->timestamp_end !== null) {
-            $carb_end = new \Carbon\Carbon($this->timestamp_end);
+            $carb_end = new Carbon($this->timestamp_end);
 
             $start_day = $carb->format('Y-m-d');
             $end_day = $carb_end->format('Y-m-d');
