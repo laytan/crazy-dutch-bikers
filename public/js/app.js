@@ -35609,9 +35609,12 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vanilla-lazyload */ "./node_modules/vanilla-lazyload/dist/lazyload.min.js");
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vanilla_lazyload__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cart */ "./resources/js/cart.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
+
+window.Cart = _cart__WEBPACK_IMPORTED_MODULE_1__["default"];
 
 (function () {
   $(window).on('load', function () {
@@ -35749,6 +35752,198 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 //     cluster: process.env.MIX_PUSHER_APP_CLUSTER,
 //     encrypted: true
 // });
+
+/***/ }),
+
+/***/ "./resources/js/cart.js":
+/*!******************************!*\
+  !*** ./resources/js/cart.js ***!
+  \******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Cart; });
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+// @ts-check
+
+/**
+ * @typedef {Object} Product
+ * @property {number} id - Product ID.
+ * @property {number} updated_by - User ID of last updater.
+ * @property {string} title - Product title.
+ * @property {(string|null)} description - Product description. 
+ * @property {number} price - Product price in cents.
+ * @property {string} product_picture - Storage path of picture (prepend /storage for relative path).
+ * @property {string} created_at - When the product was created yyyy-mm-dd hh:mm:ss
+ * @property {string} updated_at - When the product was last updated yyyy-mm-dd hh:mm:ss
+ */
+
+/**
+ * @typedef {Object} CartOptions
+ * @property {string} [productsSelector] - The selector to query for product elements.
+ * @property {string} [totalReceivers] - The selector to query for all elements that need the total.
+ * @property {Product} [initialProducts] - Products to begin with
+ * @property {string} [addToCartSelector] - Selector within product which will add product to cart onclick.
+ */
+
+/**
+ * @typedef {Element} ProductElement
+ * @property {Object} dataset
+ * @property {string} dataset.product
+ */
+
+/**
+ * Simple Cart implementation
+ */
+var Cart =
+/*#__PURE__*/
+function () {
+  /**
+   * Set initial cart state and get needed elements
+   *
+   * @param {Element} wrapper - An element wrapping all products and the cart.
+   * @param {HTMLInputElement} productIdsReceiver - Input element to add id's of products in the cart to.
+   * @param {CartOptions} opts - Extra options
+   */
+  function Cart(wrapper, productIdsReceiver) {
+    var _this = this;
+
+    var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
+
+    _classCallCheck(this, Cart);
+
+    this.wrapper = wrapper;
+    this.productIdsReceiver = productIdsReceiver;
+    this.productElements = wrapper.querySelectorAll(opts.productsSelector || '.js-product');
+    this.totalReceivers = wrapper.querySelectorAll(opts.totalReceivers || '.js-total-receiver');
+    this.cart = opts.initialProducts || [];
+    this.productElements.forEach(function (productElement) {
+      productElement.querySelector(opts.addToCartSelector || '.js-add-to-cart').addEventListener('click', function (_) {
+        _this.addToCart(productElement.dataset.product);
+      });
+    });
+  }
+  /**
+   * Add a product to the cart
+   * @param {Product} product - The product to add.
+   */
+
+
+  _createClass(Cart, [{
+    key: "addToCart",
+    value: function addToCart(product) {
+      this.cart.push(product);
+      this.onCartChange();
+    }
+    /**
+     * Removes all items from the cart
+     */
+
+  }, {
+    key: "clearCart",
+    value: function clearCart() {
+      this.cart.length = 0;
+      this.onCartChange();
+    }
+    /**
+     * Syncs the html with this.cart
+     */
+
+  }, {
+    key: "onCartChange",
+    value: function onCartChange() {
+      this.updateProductIds();
+      this.renderItems();
+      this.renderTotal();
+    }
+    /**
+     * Clears the cartItemsContainer and adds all products in the cart to it
+     */
+
+  }, {
+    key: "renderItems",
+    value: function renderItems() {
+      var _this2 = this;
+
+      this.cartItemsContainer.innerHTML = '';
+      this.cart.forEach(function (product) {
+        _this2.cartItemsContainer.appendChild(_this2.getElement(product));
+      });
+    }
+    /**
+     * Calculates the total price and sets it on the element
+     */
+
+  }, {
+    key: "renderTotal",
+    value: function renderTotal() {
+      var total = this.centsToEuro(this.cart.reduce(function (prev, curr) {
+        return prev + curr.price;
+      }, 0));
+      this.totalReceiver.textContent = total;
+    }
+    /**
+     * Converts cents to euros for display
+     * @param {number} cents - The cents to convert to euros.
+     */
+
+  }, {
+    key: "centsToEuro",
+    value: function centsToEuro(cents) {
+      var euro = cents / 100;
+      return euro.toLocaleString("nl-NL", {
+        style: "currency",
+        currency: "EUR"
+      });
+    }
+    /**
+     * Puts a comma seperated list of all product ids into the ids element
+     */
+
+  }, {
+    key: "updateProductIds",
+    value: function updateProductIds() {
+      this.productIdsReceiver.value = this.cart.reduce(function (prev, curr) {
+        return prev.length > 0 ? prev + ',' + curr.id : prev + curr.id;
+      }, '');
+    }
+    /**
+     * Return product markup
+     * @param {Product} product - The product's information to use.
+     */
+
+  }, {
+    key: "getElement",
+    value: function getElement(product) {
+      var element = document.createElement('div');
+      element.classList.add('cart-item', 'd-flex', 'align-items-center', 'justify-content-between');
+      var image = document.createElement('img');
+      image.src = '/storage/' + product.product_picture;
+      image.classList.add('cart-ítem-img');
+      element.appendChild(image);
+      var title = document.createElement('span');
+      title.textContent = product.title.length > 50 ? product.title.substring(0, 50) + '...' : product.title;
+      title.classList.add('cart-item-title');
+      element.appendChild(title);
+      var price = document.createElement('span');
+      price.textContent = this.centsToEuro(product.price);
+      title.classList.add('cart-item-price');
+      element.appendChild(price);
+      return element;
+    }
+  }]);
+
+  return Cart;
+}();
+
+
 
 /***/ }),
 
