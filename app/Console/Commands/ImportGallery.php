@@ -16,7 +16,10 @@ class ImportGallery extends Command
      *
      * @var string
      */
-    protected $signature = 'gallery:import {name : Gallery name} {path : Path where images are stored} {--isPrivate : Private galleries will only be shown to logged in users}';
+    protected $signature = 'gallery:import 
+    {name : Gallery name} 
+    {path : Path where images are stored} 
+    {--isPrivate : Private galleries will only be shown to logged in users}';
 
     /**
      * The console command description.
@@ -28,7 +31,24 @@ class ImportGallery extends Command
     /**
      * Filetypes to allow in our galleries
      */
-    protected array $imageTypes = ['jpg', 'svg', 'jpeg', 'png', 'gif', 'webp', 'jp2', 'j2k', 'jpf', 'jpx', 'jpm', 'mj2', 'jpe', 'jif', 'jfif', 'jfi'];
+    protected array $imageTypes = [
+        'jpg',
+        'svg',
+        'jpeg',
+        'png',
+        'gif',
+        'webp',
+        'jp2',
+        'j2k',
+        'jpf',
+        'jpx',
+        'jpm',
+        'mj2',
+        'jpe',
+        'jif',
+        'jfif',
+        'jfi'
+    ];
 
     /**
      * What to call the root folder of all galleries
@@ -60,9 +80,10 @@ class ImportGallery extends Command
     /**
      * Get galleries folder path, if it doesn't exist we create it here
      */
-    protected function getGalleriesFolder(): string {
+    protected function getGalleriesFolder(): string
+    {
         $path = storage_path() . '/app/public/' . $this->galleriesFolder;
-        if(!is_dir($path)) {
+        if (!is_dir($path)) {
             $this->info('Creating galleries folder');
             mkdir($path);
         }
@@ -72,13 +93,14 @@ class ImportGallery extends Command
     /**
      * Bail if gallery exists, else create it
      */
-    protected function createGalleryIfNotExists(string $name, string $folder): string {
+    protected function createGalleryIfNotExists(string $name, string $folder): string
+    {
         $galleryFolder = $folder . '/' . $name . '/';
-        if($this->calledCreateGalleryIfNotExists === true) {
+        if ($this->calledCreateGalleryIfNotExists === true) {
             return $galleryFolder;
         }
 
-        if(is_dir($galleryFolder)) {
+        if (is_dir($galleryFolder)) {
             $this->error('Gallery with name: ' . $name . ' already exists, bailing');
             exit;
         }
@@ -100,7 +122,8 @@ class ImportGallery extends Command
     /**
      * Import the image into the designated folder and add to the database
      */
-    protected function import(SplFileInfo $imageInfo, string $imagePath, string $folderPath): void {
+    protected function import(SplFileInfo $imageInfo, string $imagePath, string $folderPath): void
+    {
         $uniqueName = time() . '_' . Str::random(5) . '_' . $imageInfo->getFileName();
         $newPath = $folderPath . '/' . $uniqueName;
         copy($imagePath, $newPath);
@@ -111,7 +134,7 @@ class ImportGallery extends Command
         $pic->save();
 
         // Log what we are importing on verbose mode
-        if($this->option('verbose')) {
+        if ($this->option('verbose')) {
             $this->info('Imported: ' . $imagePath);
         }
     }
@@ -147,7 +170,7 @@ class ImportGallery extends Command
             $fullPath = $fileinfo->getPath() . '/' . $fileinfo->getFileName();
             // If the file is not . (current directory), .. (up directory) and the file is an image
             if (!$fileinfo->isDot()) {
-                if(in_array($fileinfo->getExtension(), $this->imageTypes)) {
+                if (in_array($fileinfo->getExtension(), $this->imageTypes)) {
                     $this->import($fileinfo, $fullPath, $galleryFolder);
                 } else {
                     $this->info("\n" . 'File: ' . $fileinfo->getFileName() . ' is not an image, skipping');

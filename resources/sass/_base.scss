@@ -34,3 +34,11 @@ strong {
   letter-spacing: 0.1rem;
   text-transform: uppercase;
 }
+
+a {
+  transition: background-color 0.15s ease-in-out;
+
+  &:hover {
+    background-color: rgba(map-get($theme-colors, 'primary'), 0.05);
+  }
+}

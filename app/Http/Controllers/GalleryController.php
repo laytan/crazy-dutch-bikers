@@ -28,7 +28,8 @@ class GalleryController extends Controller
         return view('galleries.show', compact('gallery', 'updateRequest'));
     }
 
-    public function create() {
+    public function create()
+    {
         // Remove unsupported images.* request validation for client-side validation
         $req = new CreateGalleryRequest();
         $rules = $req->rules();
@@ -37,7 +38,8 @@ class GalleryController extends Controller
         return view('galleries.create', compact('rules'));
     }
 
-    public function store(CreateGalleryRequest $request) {
+    public function store(CreateGalleryRequest $request)
+    {
         $validated = $request->validated();
 
         // Create the gallery
@@ -47,7 +49,7 @@ class GalleryController extends Controller
         $gallery->save();
 
         // Add the images
-        foreach($validated['images'] as $image) {
+        foreach ($validated['images'] as $image) {
             // dd($image);
             $pictureUrl = $image->store("galleries/$gallery->title", ['disk' => 'public']);
             $picture             = new Picture();
