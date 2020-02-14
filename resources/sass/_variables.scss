@@ -32,10 +32,10 @@ $body-bg: $cdb-black;
 $body-color: #dee2e6; // Gray 300
 $headings-color: #e9ecef; // Gray 200
 
-$paragraph-margin-bottom: 2rem;
+$paragraph-margin-bottom: 1.5rem;
 
 $link-hover-decoration: none;
-$link-hover-color: darken($cdb-red, 5%);
+$link-hover-color: lighten($cdb-red, 5%);
 
 $line-height-lg: 1.7;
 $line-height-sm: 1.7;

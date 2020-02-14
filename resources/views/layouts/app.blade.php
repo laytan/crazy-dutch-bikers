@@ -141,11 +141,17 @@
             </div>
         </div>
         @endif
-        <main class="py-4">
+        <main>
             @yield('content')
         </main>
     </div>
-    <footer>
+    <footer class="bg-cdblg">
+        <i class="fab fa-facebook"></i>
+        <div class="copyright py-1">
+            <p class="text-center text-cdbg">
+                Powered by <a href="https://github.com/laytan">Laytan Laats</a>
+            </p>
+        </div>
         @yield('footer')
     </footer>
 </body>

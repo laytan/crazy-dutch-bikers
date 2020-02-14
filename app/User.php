@@ -38,21 +38,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function orders() {
+    public function orders()
+    {
         return $this->hasMany('App\Order');
     }
 
-    public function products() {
+    public function products()
+    {
         return $this->hasMany('App\Product');
     }
 
-    public function hasRole(string $role) {
+    public function hasRole(string $role)
+    {
         return $this->role === $role;
     }
 
-    public function hasAnyRole(array $roles) {
-        foreach($roles as $role) {
-            if($role === $this->role) {
+    public function hasAnyRole(array $roles)
+    {
+        foreach ($roles as $role) {
+            if ($role === $this->role) {
                 return true;
             }
         }

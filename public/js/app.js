@@ -35625,6 +35625,8 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
       var wrap = $(e.target).parents('.gallery-grid__image-wrap');
       wrap.toggleClass('gallery-grid__image-wrap--full');
     });
+    matchHeights();
+    pulsateLogo();
   });
   /**
    * Puts all modals on the page into the footer, so we can initialize them everywhere and the z-index will works
@@ -35654,6 +35656,42 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
         next.removeAttr('data-src');
       }
     });
+  }
+  /**
+   * Match the height of data-match elements to the accumalated height of the children of the element to match
+   */
+
+
+  function matchHeights() {
+    document.querySelectorAll('[data-match]').forEach(function (el) {
+      var toMatch = document.querySelector(el.dataset.match);
+      var height = Array.from(toMatch.children).reduce(function (aggr, el) {
+        return aggr + el.scrollHeight;
+      }, 0);
+      el.style.height = height + 'px';
+    });
+  }
+
+  function pulsateLogo() {
+    var audio = document.querySelector('.js-audio-theme');
+    var logo = document.querySelector('.js-logo');
+
+    if (audio && logo) {
+      var pulse = 60 / Number(audio.dataset.bpm) * 1000;
+      audio.play();
+      audio.classList.add('playing');
+      pulsing(logo, pulse);
+      setInterval(function () {
+        pulsing(logo, pulse);
+      }, pulse);
+    }
+  }
+
+  function pulsing(logo, pulse) {
+    logo.classList.add('pulse');
+    setTimeout(function () {
+      logo.classList.remove('pulse');
+    }, pulse - 100);
   }
 })();
 

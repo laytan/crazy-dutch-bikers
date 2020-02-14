@@ -44,7 +44,7 @@ h1, h2, h3, h4, h5, h6 {
 
 p {
   margin-top: 0;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
 }
 
 abbr[title],
@@ -122,7 +122,7 @@ a {
   background-color: transparent;
 }
 a:hover {
-  color: #760e17;
+  color: #a4141f;
   text-decoration: none;
 }
 
@@ -3219,7 +3219,7 @@ fieldset:disabled a.btn {
   text-decoration: none;
 }
 .btn-link:hover {
-  color: #760e17;
+  color: #a4141f;
   text-decoration: none;
 }
 .btn-link:focus, .btn-link.focus {
@@ -18772,6 +18772,14 @@ strong {
   text-transform: uppercase;
 }
 
+a {
+  -webkit-transition: background-color 0.15s ease-in-out;
+  transition: background-color 0.15s ease-in-out;
+}
+a:hover {
+  background-color: rgba(141, 17, 27, 0.05);
+}
+
 .no-list-style {
   list-style-type: none;
 }
@@ -18795,6 +18803,10 @@ strong {
 
 .v-align-middle {
   vertical-align: middle;
+}
+
+.border-4 {
+  border-width: 4px !important;
 }
 
 .js-audio-theme {
@@ -19108,4 +19120,8 @@ strong {
   width: 100%;
   -o-object-fit: cover;
      object-fit: cover;
+}
+
+.masonry__tile {
+  margin-bottom: 1rem;
 }

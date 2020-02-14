@@ -9,7 +9,8 @@ use Storage;
 
 class ProductController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('can:manage')->except(['index', 'show']);
     }
@@ -17,7 +18,8 @@ class ProductController extends Controller
     /**
      * Show all products
      */
-    public function index() {
+    public function index()
+    {
         $products = Product::all();
         return view('products.index', compact('products'));
     }
@@ -25,14 +27,16 @@ class ProductController extends Controller
     /**
      * Show a creation form
      */
-    public function create() {
+    public function create()
+    {
         return view('products.create');
     }
 
     /**
      * Store new product in database
      */
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             'title'           => 'required|string|max:255',
             'description'     => 'required|string',
@@ -54,11 +58,13 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product aangemaakt');
     }
 
-    public function edit(Product $product) {
+    public function edit(Product $product)
+    {
         return view('products.edit', compact('product'));
     }
 
-    public function update(Product $product) {
+    public function update(Product $product)
+    {
         $validatedData = $request->validate([
             'title'           => 'nullable|string|max:255',
             'description'     => 'nullable|string',
@@ -66,23 +72,23 @@ class ProductController extends Controller
             'product_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        if($validatedData['title'] !== null) {
+        if ($validatedData['title'] !== null) {
             $product->title = $validatedData['title'];
         }
 
-        if($validatedData['description'] !== null) {
+        if ($validatedData['description'] !== null) {
             $product->description = $validatedData['description'];
         }
 
-        if($validatedData['price'] !== null) {
+        if ($validatedData['price'] !== null) {
             $product->price = $validatedData['price'];
         }
 
-        if(isset($validatedData['product_picture']) && $validatedData['product_picture'] !== null) {
+        if (isset($validatedData['product_picture']) && $validatedData['product_picture'] !== null) {
             // Store picture
             $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
             // Remove old picture
-            if($product->product_picture !== null) {
+            if ($product->product_picture !== null) {
                 Storage::disk('public')->delete($product->product_picture);
             }
             // Update path
@@ -93,9 +99,10 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product bewerkt');
     }
 
-    public function destroy(Product $product) {
+    public function destroy(Product $product)
+    {
         // Remove picture
-        if($product->product_picture !== null) {
+        if ($product->product_picture !== null) {
             Storage::disk('public')->delete($product->product_picture);
         }
 
