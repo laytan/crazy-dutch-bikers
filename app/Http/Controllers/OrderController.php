@@ -13,7 +13,8 @@ use App\Mail\OrderConfirmed;
 
 class OrderController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('auth');
         $this->middleware('can:view-order,order')->only('show');
         $this->middleware('can:manage')->except('store', 'show');
@@ -22,7 +23,8 @@ class OrderController extends Controller
     /**
      * Admin view for all orders
      */
-    public function index() {
+    public function index()
+    {
         $non_fulfilled = Order::with('users')->where('fulfilled', '=', false)->get();
         $fulfilled = Order::with('users')->where('fulfilled', '=', true)->get();
         return view('orders.index', compact('non_fulfilled', 'fulfilled'));
@@ -31,20 +33,22 @@ class OrderController extends Controller
     /**
      * Details about own order or admin view of order with option to fulfill
      */
-    public function show(Request $request, Order $order) {
+    public function show(Request $request, Order $order)
+    {
         return view('orders.show', compact('order'));
     }
 
     /**
      * Ability to set fulfilled
      */
-    public function update(Request $request, Order $order) {
+    public function update(Request $request, Order $order)
+    {
         $validatedData = $request->validate([
             'fulfilled' => 'nullable|in:1,0,toggle',
         ]);
 
-        if($validatedData['fulfilled'] !== null) {
-            if($validatedData['fulfilled'] === 'toggle') {
+        if ($validatedData['fulfilled'] !== null) {
+            if ($validatedData['fulfilled'] === 'toggle') {
                 $order->fulfilled = !$order->fulfilled;
             } else {
                 $order->fulfilled = $validatedData['fulfilled'];
@@ -59,12 +63,14 @@ class OrderController extends Controller
     /**
      * Delete an order (soft delete)
      */
-    public function destroy(Request $request, Order $order) {
+    public function destroy(Request $request, Order $order)
+    {
         $order->delete();
         return back()->with('success', 'Bestelling verwijderd');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $validatedData = $request->validate([
             // Don't allow anything other than: 1,1,2,33,4544,324,12
             'product-ids' => array('required', 'string', 'not_regex:/([^0-9,]|,,)/'),
@@ -78,7 +84,7 @@ class OrderController extends Controller
 
         // Add all products to the order
         $ids = explode(',', $validatedData['product-ids']);
-        foreach($ids as $productId) {
+        foreach ($ids as $productId) {
             $orderHasProduct             = new OrderHasProduct;
             $orderHasProduct->product_id = $productId;
             $orderHasProduct->order_id   = $order->id;
@@ -88,7 +94,7 @@ class OrderController extends Controller
 
         // Email admins about order
         $receivers = config('app.order_receivers');
-        foreach($receivers as $receiver) {
+        foreach ($receivers as $receiver) {
             Mail::to($receiver['email'], $receiver['name'])
                 ->queue(new OrderReceived($order));
         }
