@@ -3,11 +3,11 @@
 @section('content')
 <div class="container text-light">
   @include('partials.form-errors')
-  <h2>Bestelling #{{ $order->id }}</h2>
+  <h2 class="mb-0">Bestelling #{{ $order->id }}</h2>
   <p>
     Status: {{ $order->fulfilled ? 'Vervuld' : 'In behandeling' }}
   </p>
-  <table class="table table-striped table-light">
+  <table class="table table-striped table-dark">
     <thead>
       <tr>
         <th scope="col">#</th>
