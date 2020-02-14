@@ -1,5 +1,7 @@
 require('./bootstrap');
 import LazyLoad from "vanilla-lazyload";
+import Cart from './cart';
+window.Cart = Cart;
 
 (() => {
   $(window).on('load', () => {
