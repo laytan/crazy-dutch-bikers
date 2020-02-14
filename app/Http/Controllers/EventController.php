@@ -8,12 +8,14 @@ use Carbon\Carbon;
 
 class EventController extends Controller
 {
-    public function __constructor() {
+    public function __constructor()
+    {
         $this->middleware('auth')->except('index');
         $this->middleware('can:manage')->except('index');
     }
 
-    private function dateTimeFieldsToTimestamp($date, $time) {
+    private function dateTimeFieldsToTimestamp($date, $time)
+    {
         $dateParts = explode('-', $date);
         $timeParts = explode(':', $time);
         return Carbon::create($dateParts[0], $dateParts[1], $dateParts[2], $timeParts[0], $timeParts[1], null, 'CET');
@@ -66,17 +68,17 @@ class EventController extends Controller
         
         $fullDay = true;
         $time = '00:00';
-        if($validatedData['time'] !== null) {
+        if ($validatedData['time'] !== null) {
             $time = $validatedData['time'];
             $fullDay = false;
         }
 
         $endTime = '00:00';
-        if($validatedData['end_time'] !== null) {
+        if ($validatedData['end_time'] !== null) {
             $endTime = $validatedData['end_time'];
         }
 
-        if($validatedData['end_date'] !== null) {
+        if ($validatedData['end_date'] !== null) {
             $event->timestamp_end = $this->dateTimeFieldsToTimestamp($validatedData['end_date'], $endTime);
         }
 
@@ -87,10 +89,10 @@ class EventController extends Controller
         $event->location    = $validatedData['location'];
         $event->full_day    = $fullDay;
 
-        if($validatedData['location_link'] !== null) {
+        if ($validatedData['location_link'] !== null) {
             $event->location_link = $validatedData['location_link'];
         }
-        if($validatedData['facebook_link'] !== null) {
+        if ($validatedData['facebook_link'] !== null) {
             $event->facebook_link = $validatedData['facebook_link'];
         }
 

@@ -29,10 +29,11 @@ class UserController extends Controller
     /**
      * View all users
      */
-    public function index($message_type = null, $message = null) {
+    public function index($message_type = null, $message = null)
+    {
         $users = resolveProfilePics(User::all());
         
-        if(strlen($message_type) > 0) {
+        if (strlen($message_type) > 0) {
             return view('users.index', ['users' => $users, $message_type => $message]);
         }
         return view('users.index', compact('users'));
@@ -41,11 +42,12 @@ class UserController extends Controller
     /**
      * Put a user in the trash
      */
-    public function destroy(User $user) {
+    public function destroy(User $user)
+    {
         $user->delete();
 
         // Send users that delete their own account back to the homepage
-        if($user->id === Auth::user()->id) {
+        if ($user->id === Auth::user()->id) {
             return redirect()->route('index')->with('success', 'Uw account is verwijderd');
         }
 
@@ -55,7 +57,8 @@ class UserController extends Controller
     /**
      * View to edit a user
      */
-    public function edit(User $user) {
+    public function edit(User $user)
+    {
         // Add placeholder image if there is no profile picture
         $user = resolveProfilePic($user);
         return view('users.edit')->with('user', $user);
@@ -64,7 +67,8 @@ class UserController extends Controller
     /**
      * Update user
      */
-    public function update(Request $request, User $user) {
+    public function update(Request $request, User $user)
+    {
         // Validate request
         $validatedData = $request->validate([
             'name'            => 'nullable|string|max:255',
@@ -77,21 +81,21 @@ class UserController extends Controller
         ]);
 
         // Name
-        if($validatedData['name'] !== null) {
+        if ($validatedData['name'] !== null) {
             $user->name = $validatedData['name'];
         }
 
         // Email
-        if($validatedData['email'] !== null && $user->email !== $validatedData['email']) {
+        if ($validatedData['email'] !== null && $user->email !== $validatedData['email']) {
             if (User::whereEmail($validatedData['email'])->count() === 0) {
                 $user->email = $validatedData['email'];
             }
         }
 
         // Password
-        if($validatedData['password'] !== null && $validatedData['old_password'] !== null) {
+        if ($validatedData['password'] !== null && $validatedData['old_password'] !== null) {
             // Check password
-            if(\Hash::check($validatedData['old_password'], $user->password)) {
+            if (\Hash::check($validatedData['old_password'], $user->password)) {
                 // Update password
                 $user->password = \Hash::make($validatedData['password']);
             } else {
@@ -100,16 +104,16 @@ class UserController extends Controller
         }
 
         // Description
-        if($validatedData['description'] !== null) {
+        if ($validatedData['description'] !== null) {
             $user->description = $validatedData['description'];
         }
 
         // Profile picture
-        if(isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
+        if (isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
             // Store picture
             $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
             // Remove old picture
-            if($user->profile_picture !== null) {
+            if ($user->profile_picture !== null) {
                 \Storage::disk('public')->delete($user->profile_picture);
             }
             // Edit user profile picture path
@@ -117,10 +121,9 @@ class UserController extends Controller
         }
 
         // If the user is assigned admin and the authorized user can to do that
-        if(
-            isset($validatedData['role'])      && 
-            $validatedData['role'] !== null    && 
-            $validatedData['role'] === 'admin' && 
+        if (isset($validatedData['role'])      &&
+            $validatedData['role'] !== null    &&
+            $validatedData['role'] === 'admin' &&
             Gate::allows('make-admin', $user)
         ) {
             $user->role = 'admin';
@@ -134,17 +137,19 @@ class UserController extends Controller
     }
 
     // Render form for adding new users
-    public function create() {
+    public function create()
+    {
         return view('users.create');
     }
 
     // On submit of register form
-    public function store(CreateUserRequest $request) {
+    public function store(CreateUserRequest $request)
+    {
         // Validate request
         $validatedData = $request->validated();
 
         // Generated password?
-        if(array_key_exists('generate-password', $validatedData) && $validatedData['generate-password'] == "on") {
+        if (array_key_exists('generate-password', $validatedData) && $validatedData['generate-password'] == "on") {
             // Generate password
             $password = \Str::random(8);
         } else {
@@ -152,7 +157,7 @@ class UserController extends Controller
         }
 
         $picture = null;
-        if(isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
+        if (isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
             // Upload picture
             $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
         }
@@ -167,10 +172,9 @@ class UserController extends Controller
         ]);
 
         // If the user is assigned admin and the authorized user can to do that
-        if(
-            isset($validatedData['role'])      && 
-            $validatedData['role'] !== null    && 
-            $validatedData['role'] === 'admin' && 
+        if (isset($validatedData['role'])      &&
+            $validatedData['role'] !== null    &&
+            $validatedData['role'] === 'admin' &&
             Gate::allows('make-admin', $user)
         ) {
             $user->role = 'admin';
@@ -179,7 +183,8 @@ class UserController extends Controller
         }
 
         // Send Mail
-        Mail::to($validatedData['email'], $validatedData['name'])->queue(new UserRegistered($validatedData['name'], $validatedData['email'], $password));
+        Mail::to($validatedData['email'], $validatedData['name'])
+            ->queue(new UserRegistered($validatedData['name'], $validatedData['email'], $password));
         
         // Return view with appropiate message
         return redirect()->route('users.index')->with('success', 'Gebruiker geregistreerd');

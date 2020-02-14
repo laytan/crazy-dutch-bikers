@@ -57,7 +57,7 @@ Route::get('/evenementen', 'EventController@index')->name('events.index');
 Route::get('/evenementen/aanmaken', 'EventController@create')->name('events.create');
 Route::post('/evenementen', 'EventController@store')->name('events.store');
 
-Route::get('/gallerij', function() {
+Route::get('/gallerij', function () {
     $galleries = Gallery::all();
     return view('galleries.index', compact('galleries'));
 })->name('galleries.index');
