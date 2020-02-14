@@ -4,13 +4,28 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\CreateGalleryRequest;
+use App\Http\Requests\UpdateGalleryRequest;
 use App\Gallery;
 use App\Picture;
 
 class GalleryController extends Controller
 {
-    public function show(Gallery $gallery) {
-        return view('galleries.show', compact('gallery'));
+    public function __construct() {
+        $this->middleware('can:manage')->except(['index', 'show']);
+    }
+
+    public function index() {
+        $galleries = Gallery::all();
+        return view('galleries.index', compact('galleries'));
+    }
+
+    public function show($galleryName) {
+        $gallery = Gallery::where('title', '=', $galleryName)->firstOrFail();
+        $updateRequest = new UpdateGalleryRequest();
+        $updateRequest = $updateRequest->rules();
+        unset($updateRequest['images.*']);
+        unset($updateRequest['images']);
+        return view('galleries.show', compact('gallery', 'updateRequest'));
     }
 
     public function create() {
@@ -42,5 +57,34 @@ class GalleryController extends Controller
         }
 
         return redirect()->route('galleries.index')->with('success', 'Gallerij aangemaakt');
+    }
+
+    public function update(UpdateGalleryRequest $request, Gallery $gallery) {
+        $validatedData = $request->validated();
+
+        dd($validatedData);
+
+        if(isset($validatedData['title'])) {
+            $gallery->title = $validatedData['title'];
+        }
+
+        if(isset($validatedData['is_private'])) {
+            $gallery->is_private = true;
+        } else {
+            $gallery->is_private = false;
+        }
+
+        $gallery->save();
+        return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
+    }
+
+    public function destroy(Gallery $gallery) {
+        // Remove all pictures
+        foreach($gallery->pictures as $picture) {
+            Storage::disk('public')->delete($picture->url);
+            $picture->delete();
+        }
+
+        $gallery->delete();
     }
 }
