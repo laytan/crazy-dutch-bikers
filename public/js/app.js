@@ -35594,6 +35594,7 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
   $(window).on('load', function () {
     copyModalsToFooter();
     matchHeights();
+    pulsateLogo();
   });
 
   function copyModalsToFooter() {
@@ -35617,6 +35618,28 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
       }, 0);
       el.style.height = height + 'px';
     });
+  }
+
+  function pulsateLogo() {
+    var audio = document.querySelector('.js-audio-theme');
+    var logo = document.querySelector('.js-logo');
+
+    if (audio && logo) {
+      var pulse = 60 / Number(audio.dataset.bpm) * 1000;
+      audio.play();
+      audio.classList.add('playing');
+      pulsing(logo, pulse);
+      setInterval(function () {
+        pulsing(logo, pulse);
+      }, pulse);
+    }
+  }
+
+  function pulsing(logo, pulse) {
+    logo.classList.add('pulse');
+    setTimeout(function () {
+      logo.classList.remove('pulse');
+    }, pulse - 100);
   }
 })();
 
