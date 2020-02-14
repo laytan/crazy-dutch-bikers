@@ -18993,16 +18993,119 @@ strong {
   border: 2px solid #dc3545;
 }
 
-@media (min-width: 768px) {
-  .masonry {
-    -webkit-column-count: 2;
-       -moz-column-count: 2;
-            column-count: 2;
-    -webkit-column-gap: 1rem;
-       -moz-column-gap: 1rem;
-            column-gap: 1rem;
+.gallery-grid {
+  display: -webkit-box;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 10px;
+}
+
+/* Create four equal columns that sits next to each other */
+.gallery-grid__column {
+  -webkit-box-flex: 100%;
+          flex: 100%;
+  max-width: 100%;
+  padding: 0 10px;
+}
+@media (min-width: 576px) {
+  .gallery-grid__column {
+    -webkit-box-flex: 50%;
+            flex: 50%;
+    max-width: 50%;
   }
 }
-.masonry__tile {
-  margin-bottom: 1rem;
+@media (min-width: 768px) {
+  .gallery-grid__column {
+    -webkit-box-flex: 33.333%;
+            flex: 33.333%;
+    max-width: 33.333%;
+  }
+}
+@media (min-width: 1200px) {
+  .gallery-grid__column {
+    -webkit-box-flex: 25%;
+            flex: 25%;
+    max-width: 25%;
+  }
+}
+
+.gallery-grid__image-wrap {
+  margin-top: 20px;
+  width: 100%;
+  height: 0;
+  position: relative;
+}
+.gallery-grid__image-wrap img {
+  vertical-align: middle;
+  width: 100%;
+  height: auto;
+  position: absolute;
+}
+.gallery-grid__image-wrap i {
+  display: none;
+  color: #dc3545;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin: 1rem;
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.gallery-grid__image-wrap--full {
+  padding-bottom: 0 !important;
+  height: 95vh;
+  width: 95vw;
+  margin: 2.5vh 2.5vw;
+  position: fixed;
+  z-index: 9000;
+  left: 0;
+  top: 0;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: center;
+          justify-content: center;
+}
+.gallery-grid__image-wrap--full img {
+  height: 100%;
+  max-width: 100%;
+  width: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.gallery-grid__image-wrap--full i {
+  display: block;
+}
+
+.masonry .masonry__tile-wrapper {
+  position: relative;
+}
+
+.masonry .masonry__tile-wrapper > .masonry__tile-inner {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.masonry .masonry__tile {
+  width: 49.3%;
+  margin: 3px 0% 3px 0%;
+  border: 1px solid grey;
+}
+
+.masonry .masonry__tile img {
+  /*display: none;*/
+  display: block;
+  width: 100%;
+  height: auto !important;
+  opacity: 1;
+}
+
+.carousel__image {
+  height: 400px;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
