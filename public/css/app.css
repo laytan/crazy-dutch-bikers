@@ -19089,6 +19089,15 @@ a:hover {
   display: block;
 }
 
+#app {
+  -webkit-box-flex: 1;
+          flex: 1 0 auto;
+}
+
+.footer {
+  flex-shrink: 0;
+}
+
 .masonry .masonry__tile-wrapper {
   position: relative;
 }

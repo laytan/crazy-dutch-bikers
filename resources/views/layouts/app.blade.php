@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="h-100" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -21,7 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body>
+<body class="d-flex flex-column h-100">
     <div id="app">
         <div class="top">
             @yield('above-nav')
@@ -145,7 +145,7 @@
             @yield('content')
         </main>
     </div>
-    <footer class="bg-cdblg">
+    <footer class="bg-cdblg footer">
         <i class="fab fa-facebook"></i>
         <div class="copyright py-1">
             <p class="text-center text-cdbg">
