@@ -21,7 +21,7 @@
       Events
     @endcomponent
     @component('components.nav-button', ['engine' => '2', 'link' => route('login')])
-      Members only
+      <span dusk="home-login-btn">Members only</span>
     @endcomponent
     @component('components.nav-button', ['engine' => '4', 'link' => url('/aanmelden')])
       Join us
