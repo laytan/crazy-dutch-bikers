@@ -101,6 +101,7 @@ return [
 		'input'    => 'bg-cdbb text-cdblg border-cdblg',
 		'summary'  => 'alert alert-danger',
 		'textarea' => 'bg-cdbb text-cdblg border-cdblg',
+		'form'     => 'bg-cdbg-opaque p-3',
 	],
 	
 	/*
