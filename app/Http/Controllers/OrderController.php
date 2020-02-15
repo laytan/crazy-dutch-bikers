@@ -102,6 +102,8 @@ class OrderController extends Controller
         Mail::to(Auth::user()->email, Auth::user()->name)
             ->queue(new OrderConfirmed($order));
 
-        return back()->with('success', 'Bestelling geplaatst');
+        return redirect()
+            ->route('orders.show', ['order' => $order->id])
+            ->with('success', 'Wij gaan zo snel mogelijk aan de slag!');
     }
 }

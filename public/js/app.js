@@ -35609,12 +35609,13 @@ module.exports = function(module) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vanilla-lazyload */ "./node_modules/vanilla-lazyload/dist/lazyload.min.js");
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vanilla_lazyload__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cart */ "./resources/js/cart.js");
+/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./cart */ "./resources/js/cart.ts");
+/* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_cart__WEBPACK_IMPORTED_MODULE_1__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-window.Cart = _cart__WEBPACK_IMPORTED_MODULE_1__["default"];
+window.Cart = _cart__WEBPACK_IMPORTED_MODULE_1___default.a;
 
 (function () {
   $(window).on('load', function () {
@@ -35755,194 +35756,171 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /***/ }),
 
-/***/ "./resources/js/cart.js":
+/***/ "./resources/js/cart.ts":
 /*!******************************!*\
-  !*** ./resources/js/cart.js ***!
+  !*** ./resources/js/cart.ts ***!
   \******************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Cart; });
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
-
-function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
-
-// @ts-check
-
-/**
- * @typedef {Object} Product
- * @property {number} id - Product ID.
- * @property {number} updated_by - User ID of last updater.
- * @property {string} title - Product title.
- * @property {(string|null)} description - Product description. 
- * @property {number} price - Product price in cents.
- * @property {string} product_picture - Storage path of picture (prepend /storage for relative path).
- * @property {string} created_at - When the product was created yyyy-mm-dd hh:mm:ss
- * @property {string} updated_at - When the product was last updated yyyy-mm-dd hh:mm:ss
- */
-
-/**
- * @typedef {Object} CartOptions
- * @property {string} [productsSelector] - The selector to query for product elements.
- * @property {string} [totalReceivers] - The selector to query for all elements that need the total.
- * @property {Product} [initialProducts] - Products to begin with
- * @property {string} [addToCartSelector] - Selector within product which will add product to cart onclick.
- */
-
-/**
- * @typedef {Element} ProductElement
- * @property {Object} dataset
- * @property {string} dataset.product
- */
-
+Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Simple Cart implementation
  */
-var Cart =
-/*#__PURE__*/
-function () {
-  /**
-   * Set initial cart state and get needed elements
-   *
-   * @param {Element} wrapper - An element wrapping all products and the cart.
-   * @param {HTMLInputElement} productIdsReceiver - Input element to add id's of products in the cart to.
-   * @param {CartOptions} opts - Extra options
-   */
-  function Cart(wrapper, productIdsReceiver) {
-    var _this = this;
-
-    var opts = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {};
-
-    _classCallCheck(this, Cart);
-
-    this.wrapper = wrapper;
-    this.productIdsReceiver = productIdsReceiver;
-    this.productElements = wrapper.querySelectorAll(opts.productsSelector || '.js-product');
-    this.totalReceivers = wrapper.querySelectorAll(opts.totalReceivers || '.js-total-receiver');
-    this.cart = opts.initialProducts || [];
-    this.productElements.forEach(function (productElement) {
-      productElement.querySelector(opts.addToCartSelector || '.js-add-to-cart').addEventListener('click', function (_) {
-        _this.addToCart(productElement.dataset.product);
-      });
-    });
-  }
-  /**
-   * Add a product to the cart
-   * @param {Product} product - The product to add.
-   */
-
-
-  _createClass(Cart, [{
-    key: "addToCart",
-    value: function addToCart(product) {
-      this.cart.push(product);
-      this.onCartChange();
+var Cart = /** @class */ (function () {
+    /**
+     * Set initial cart state and get needed elements
+     */
+    function Cart(wrapper, productIdsReceiver, _a) {
+        var _b = _a.productsSelector, productsSelector = _b === void 0 ? '.js-product' : _b, _c = _a.totalReceiverSelector, totalReceiverSelector = _c === void 0 ? '.js-cart-total' : _c, _d = _a.initialProducts, initialProducts = _d === void 0 ? [] : _d, _e = _a.addToCartSelector, addToCartSelector = _e === void 0 ? '.js-product__add-to-cart' : _e, _f = _a.cartItemsContainerSelector, cartItemsContainerSelector = _f === void 0 ? '.js-cart-items' : _f, _g = _a.orderBtn, orderBtn = _g === void 0 ? '.js-order-btn' : _g, _h = _a.clearCartBtn, clearCartBtn = _h === void 0 ? '.js-clear-cart-btn' : _h, _j = _a.confirmOrder, confirmOrder = _j === void 0 ? true : _j;
+        var _k, _l;
+        this.productIdsReceiver = productIdsReceiver;
+        this.productElements = wrapper.querySelectorAll(productsSelector);
+        this.totalReceiver = wrapper.querySelector(totalReceiverSelector);
+        this.itemsContainer = wrapper.querySelector(cartItemsContainerSelector);
+        this.cart = initialProducts;
+        this.addToCartSelector = addToCartSelector;
+        this.shouldConfirmOrder = confirmOrder;
+        (_k = wrapper.querySelector(orderBtn)) === null || _k === void 0 ? void 0 : _k.addEventListener('click', this.order.bind(this));
+        (_l = wrapper.querySelector(clearCartBtn)) === null || _l === void 0 ? void 0 : _l.addEventListener('click', this.clearCart.bind(this));
+        // Bind events to the product elements
+        this.productElements.forEach(this.bindProductEvents.bind(this));
+        // Call onchange when we have initial products
+        if (this.cart.length > 0) {
+            this.onCartChange();
+        }
     }
+    /**
+     * Binds the events(add to cart click) to the element
+     * @param productElement Element to initialize
+     */
+    Cart.prototype.bindProductEvents = function (productElement) {
+        var _this = this;
+        var addToCartButton = productElement.querySelector(this.addToCartSelector);
+        if (!addToCartButton) {
+            return;
+        }
+        addToCartButton.addEventListener('click', function (_) {
+            var product = JSON.parse(productElement.dataset.product);
+            _this.addToCart(product);
+        });
+    };
+    /**
+     * Add a product to the cart
+     * @param {Product} product - The product to add.
+     */
+    Cart.prototype.addToCart = function (product) {
+        this.cart.push(product);
+        this.onCartChange();
+    };
     /**
      * Removes all items from the cart
      */
-
-  }, {
-    key: "clearCart",
-    value: function clearCart() {
-      this.cart.length = 0;
-      this.onCartChange();
-    }
+    Cart.prototype.clearCart = function () {
+        this.cart.length = 0;
+        this.onCartChange();
+    };
+    /**
+     * Removes a product from the cart
+     * @param product Product to remove
+     */
+    Cart.prototype.removeProduct = function (product) {
+        // Loop untill we find the product with this id, remove it and break so we only remove it once
+        for (var i = 0; i < this.cart.length; i++) {
+            if (this.cart[i].id === product.id) {
+                this.cart.splice(i, 1);
+                break;
+            }
+        }
+        this.onCartChange();
+    };
+    /**
+     * Confirm order if we should and then submit the form
+     */
+    Cart.prototype.order = function () {
+        if (this.shouldConfirmOrder === false || confirm('Bestelling plaatsen?')) {
+            // TODO: Remove JQuery
+            var form = $(this.productIdsReceiver).parents('form');
+            form.submit();
+        }
+    };
     /**
      * Syncs the html with this.cart
      */
-
-  }, {
-    key: "onCartChange",
-    value: function onCartChange() {
-      this.updateProductIds();
-      this.renderItems();
-      this.renderTotal();
-    }
+    Cart.prototype.onCartChange = function () {
+        this.updateProductIds();
+        this.renderItems();
+        this.renderTotal();
+    };
     /**
      * Clears the cartItemsContainer and adds all products in the cart to it
      */
-
-  }, {
-    key: "renderItems",
-    value: function renderItems() {
-      var _this2 = this;
-
-      this.cartItemsContainer.innerHTML = '';
-      this.cart.forEach(function (product) {
-        _this2.cartItemsContainer.appendChild(_this2.getElement(product));
-      });
-    }
+    Cart.prototype.renderItems = function () {
+        var _this = this;
+        if (!this.itemsContainer) {
+            console.error("No cart items container found");
+            return;
+        }
+        this.itemsContainer.innerHTML = '';
+        this.cart.forEach(function (product) {
+            var _a;
+            var el = _this.getElement(product);
+            if (el) {
+                (_a = _this.itemsContainer) === null || _a === void 0 ? void 0 : _a.appendChild(el);
+            }
+        });
+    };
     /**
      * Calculates the total price and sets it on the element
      */
-
-  }, {
-    key: "renderTotal",
-    value: function renderTotal() {
-      var total = this.centsToEuro(this.cart.reduce(function (prev, curr) {
-        return prev + curr.price;
-      }, 0));
-      this.totalReceiver.textContent = total;
-    }
+    Cart.prototype.renderTotal = function () {
+        if (!this.totalReceiver) {
+            return;
+        }
+        var total = this.centsToEuro(this.cart.reduce(function (prev, curr) { return prev + curr.price; }, 0));
+        this.totalReceiver.textContent = total;
+    };
     /**
-     * Converts cents to euros for display
-     * @param {number} cents - The cents to convert to euros.
+     * Converts cents to display friendly euros
+     * @param cents Cents to convert
      */
-
-  }, {
-    key: "centsToEuro",
-    value: function centsToEuro(cents) {
-      var euro = cents / 100;
-      return euro.toLocaleString("nl-NL", {
-        style: "currency",
-        currency: "EUR"
-      });
-    }
+    Cart.prototype.centsToEuro = function (cents) {
+        var euro = cents / 100;
+        return euro.toLocaleString("nl-NL", { style: "currency", currency: "EUR" });
+    };
     /**
      * Puts a comma seperated list of all product ids into the ids element
      */
-
-  }, {
-    key: "updateProductIds",
-    value: function updateProductIds() {
-      this.productIdsReceiver.value = this.cart.reduce(function (prev, curr) {
-        return prev.length > 0 ? prev + ',' + curr.id : prev + curr.id;
-      }, '');
-    }
+    Cart.prototype.updateProductIds = function () {
+        this.productIdsReceiver.value = this.cart.reduce(function (prev, curr) { return prev.length > 0 ? prev + ',' + curr.id : prev + curr.id; }, '');
+    };
     /**
      * Return product markup
-     * @param {Product} product - The product's information to use.
+     * @param product - The product's information to use.
      */
-
-  }, {
-    key: "getElement",
-    value: function getElement(product) {
-      var element = document.createElement('div');
-      element.classList.add('cart-item', 'd-flex', 'align-items-center', 'justify-content-between');
-      var image = document.createElement('img');
-      image.src = '/storage/' + product.product_picture;
-      image.classList.add('cart-ítem-img');
-      element.appendChild(image);
-      var title = document.createElement('span');
-      title.textContent = product.title.length > 50 ? product.title.substring(0, 50) + '...' : product.title;
-      title.classList.add('cart-item-title');
-      element.appendChild(title);
-      var price = document.createElement('span');
-      price.textContent = this.centsToEuro(product.price);
-      title.classList.add('cart-item-price');
-      element.appendChild(price);
-      return element;
-    }
-  }]);
-
-  return Cart;
-}();
-
+    Cart.prototype.getElement = function (product) {
+        var _this = this;
+        var _a;
+        var template = document.createElement('template');
+        var html = "\n    <div class=\"cart-item d-flex align-items-center justify-content-between mt-2\">\n      <div class=\"d-flex flex-column\">\n        <span class=\"cart-item__title\">" + product.title + "</span>\n        <small class=\"cart-item__description\">" + this.getShortDescription(product.description) + "</small>\n      </div>\n      <span class=\"cart-item__price\">" + this.centsToEuro(product.price) + "</span>\n      <i class=\"fas fa-trash hover-primary\"></i>\n    </div>\n    ";
+        template.innerHTML = html.trim();
+        var element = template.content.firstChild;
+        // Bind trash icon to removing this product from the cart
+        var trashIcon = element.querySelector('.fa-trash');
+        (_a = trashIcon) === null || _a === void 0 ? void 0 : _a.addEventListener('click', function () { return _this.removeProduct(product); });
+        return element;
+    };
+    Cart.prototype.getShortDescription = function (description) {
+        if (!description) {
+            return '';
+        }
+        return description.length > 25 ? description.substring(0, 25) + '...' : description;
+    };
+    return Cart;
+}());
+exports.default = Cart;
 
 
 /***/ }),
