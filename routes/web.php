@@ -57,6 +57,7 @@ Route::get('/evenementen', 'EventController@index')->name('events.index');
 Route::get('/evenementen/aanmaken', 'EventController@create')->name('events.create');
 Route::post('/evenementen', 'EventController@store')->name('events.store');
 
+Route::get('/gallerij', 'GalleryController@index')->name('galleries.index');
 Route::get('/gallerij/aanmaken', 'GalleryController@create')->name('galleries.create');
 Route::post('/gallerij/aanmaken', 'GalleryController@store')->name('galleries.store');
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');

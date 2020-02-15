@@ -65,6 +65,79 @@ return [
 	*/
 	'inline_validation' => true,
 	'validation_script_path' => env('APP_URL').'/js/aire/aire.js',
+
+	/*
+	|--------------------------------------------------------------------------
+	| Client-Side Validation Localization
+	|--------------------------------------------------------------------------
+	|
+	| The client-side validation of aire is English by default.
+	| If you wish to change it you can download a language file from:
+	| https://unpkg.com/browse/validatorjs/dist/lang/
+	|
+	| Aire uses this script when validation_lang_path is changed to it's URL
+	| and validation_lang_locale is changed to the desired locale.
+	|
+	| Aire also allows you to change the attribute names to something more
+	| "friendly" in error messages by adding them to validation_custom_attributes.
+	| The keys should be the actual attribute name and the values will be what is
+	| displayed.
+	|
+	*/
+	'validation_lang_locale'       => 'nl',
+	'validation_lang_path'         => env('APP_URL') . '/lang/nl.js',
+	'validation_custom_attributes' => [
+		'address'               => 'adres',
+		'age'                   => 'leeftijd',
+		'amount'                => 'bedrag',
+		'available'             => 'beschikbaar',
+		'city'                  => 'stad',
+		'content'               => 'inhoud',
+		'country'               => 'land',
+		'currency'              => 'valuta',
+		'date'                  => 'datum',
+		'date_of_birth'         => 'geboortedatum',
+		'day'                   => 'dag',
+		'duration'              => 'tijdsduur',
+		'email'                 => 'e-mailadres',
+		'excerpt'               => 'uittreksel',
+		'first_name'            => 'voornaam',
+		'gender'                => 'geslacht',
+		'group'                 => 'groep',
+		'hour'                  => 'uur',
+		'last_name'             => 'achternaam',
+		'lesson'                => 'les',
+		'message'               => 'bericht',
+		'minute'                => 'minuut',
+		'mobile'                => 'mobiel',
+		'month'                 => 'maand',
+		'name'                  => 'naam',
+		'password'              => 'wachtwoord',
+		'password_confirmation' => 'wachtwoordbevestiging',
+		'phone'                 => 'telefoonnummer',
+		'price'                 => 'prijs',
+		'second'                => 'seconde',
+		'sex'                   => 'geslacht',
+		'size'                  => 'grootte',
+		'street'                => 'straatnaam',
+		'student'               => 'student',
+		'subject'               => 'onderwerp',
+		'teacher'               => 'Docent',
+		'time'                  => 'tijd',
+		'title'                 => 'titel',
+		'username'              => 'gebruikersnaam',
+		'year'                  => 'jaar',
+		'password-old'          => 'oud wachtwoord',
+		'password-new'          => 'nieuw wachtwoord',
+		'location'              => 'locatie',
+		'location_link'         => 'locatie link',
+		'facebook_link'         => 'facebook link',
+		'end_date'              => 'eind datum',
+		'end_time'              => 'eind tijd',
+		'picture'               => 'foto',
+		'profile_picture'       => 'profielfoto',
+		'description'           => 'beschrijving',
+	],
 	
 	/*
 	|--------------------------------------------------------------------------
