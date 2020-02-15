@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Product;
 use Auth;
 use Storage;
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -35,14 +37,9 @@ class ProductController extends Controller
     /**
      * Store new product in database
      */
-    public function store(Request $request)
+    public function store(CreateProductRequest $request)
     {
-        $validatedData = $request->validate([
-            'title'           => 'required|string|max:255',
-            'description'     => 'required|string',
-            'price'           => 'required|integer',
-            'product_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
+        $validatedData = $request->validated();
 
         $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
 
@@ -63,15 +60,10 @@ class ProductController extends Controller
         return view('products.edit', compact('product'));
     }
 
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $validatedData = $request->validate([
-            'title'           => 'nullable|string|max:255',
-            'description'     => 'nullable|string',
-            'price'           => 'nullable|integer',
-            'product_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-        ]);
-
+        $validatedData = $request->validated();
+        
         if ($validatedData['title'] !== null) {
             $product->title = $validatedData['title'];
         }
