@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "@types/jquery": "^3.3.32",
         "cross-env": "^6.0.3",
         "vanilla-lazyload": "^12.4.0"
     }
