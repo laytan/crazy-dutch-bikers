@@ -171,10 +171,11 @@ return [
 	|
 	*/
 	'default_classes' => [
-		'input'    => 'bg-cdbb text-cdblg border-cdblg',
-		'summary'  => 'alert alert-danger',
-		'textarea' => 'bg-cdbb text-cdblg border-cdblg',
-		'form'     => 'bg-cdbg-opaque p-3',
+		'input'          => 'bg-cdbb text-cdblg border-cdblg',
+		'summary'        => 'alert alert-danger',
+		'textarea'       => 'bg-cdbb text-cdblg border-cdblg',
+		'form'           => 'bg-cdbg-opaque p-3',
+		'group_errors'   => 'text-danger text-sm',
 	],
 	
 	/*

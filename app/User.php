@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Gate;
 
 class User extends Authenticatable
 {
@@ -61,5 +62,13 @@ class User extends Authenticatable
             }
         }
         return false;
+    }
+
+    public function updatePassword($old, $new)
+    {
+        if (Gate::denies('change-password', $old)) {
+            return back()->with('error', 'Wachtwoorden komen niet overeen');
+        }
+        $this->password = $new;
     }
 }

@@ -9,6 +9,7 @@ use App\User;
 use App\Product;
 use App\Order;
 use App\Event;
+use Hash;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -105,6 +106,18 @@ class AuthServiceProvider extends ServiceProvider
                 return null;
             } else {
                 return true;
+            }
+        });
+
+        /**
+         * Check old password and only allow updating if that matches
+         */
+        Gate::define('change-password', function (User $user, string $old_password) {
+            $this->message = 'Wachtwoorden komen niet overeen';
+            if (Hash::check($old_password, $user->password)) {
+                return true;
+            } else {
+                return Response::deny($message);
             }
         });
         
