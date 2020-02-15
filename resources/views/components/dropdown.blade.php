@@ -1,5 +1,5 @@
 <li class="nav-item dropdown">
-  <a id="{{ $title }}Dropdown" class="nav-link dropdown-toggle text-decoration-none" role="button"
+  <a id="{{ $title }}-dropdown" class="nav-link dropdown-toggle text-decoration-none" role="button"
   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{ $title }} <span class="caret"></span>
   </a>
