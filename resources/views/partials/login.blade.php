@@ -1,4 +1,4 @@
-<a id="login-link" class="nav-link" href="#login" data-toggle="modal" data-target="#login">Login</a>
+<a dusk="login-link" class="nav-link" href="#login" data-toggle="modal" data-target="#login">Login</a>
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
 <form method="POST" action="{{ route('login') }}" id="loginForm">
   @csrf
@@ -36,7 +36,7 @@
   </div>
 </form>
 @slot('footer')
-<button id="login-submit" class="btn-cdbb btn" onclick="document.getElementById('loginForm').submit();">Log in!</button>
+<button dusk="login-submit" class="btn-cdbb btn" onclick="document.getElementById('loginForm').submit();">Log in!</button>
 @endslot
 @endcomponent
 

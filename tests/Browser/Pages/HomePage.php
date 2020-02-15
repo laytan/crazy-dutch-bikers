@@ -38,4 +38,14 @@ class HomePage extends Page
             '@element' => '#selector',
         ];
     }
+
+    /**
+     * Assert that the login modal is shown
+     */
+    public function assertLoginModal(Browser $browser)
+    {
+        $browser->assertSee('E-Mail')
+                ->assertSee('Wachtwoord')
+                ->assertSee('LOG IN!');
+    }
 }
