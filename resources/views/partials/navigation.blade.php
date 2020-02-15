@@ -9,19 +9,19 @@
   <div id="navigation" class="navbar-collapse collapse w-100 order-1 order-lg-0 dual-collapse2">
       <ul class="navbar-nav mr-auto">
           @can('manage')
-              @component('components.dropdown', ['title' => 'Leden'])
+              @component('components.dropdown', ['id' => 'members-dropdown', 'title' => 'Leden'])
                   <a href="{{ route('users.create') }}" class="dropdown-item">Leden toevoegen</a>
                   <a href="{{ route('users.index') }}" class="dropdown-item">Leden overzicht</a>
               @endcomponent
-              @component('components.dropdown', ['title' => 'Evenementen'])
+              @component('components.dropdown', ['id' => 'events-dropdown', 'title' => 'Evenementen'])
                   <a href="{{ route('events.create') }}" class="dropdown-item">Evenementen toevoegen</a>
                   <a href="{{ route('events.index') }}" class="dropdown-item">Evenementen overzicht</a>
               @endcomponent
-              @component('components.dropdown', ['title' => 'Merchandise'])
+              @component('components.dropdown', ['id' => 'merchandise-dropdown', 'title' => 'Merchandise'])
                   <a href="{{ route('products.create') }}" class="dropdown-item">Merchandise toevoegen</a>
                   <a href="{{ route('products.index') }}" class="dropdown-item">Merchandise overzicht</a>
               @endcomponent
-              @component('components.dropdown', ['title' => 'Gallerij'])
+              @component('components.dropdown', ['id' => 'gallery-dropdown', 'title' => 'Gallerij'])
                   <a href="{{ route('galleries.create') }}" class="dropdown-item">Gallerij toevoegen</a>
                   <a href="#" class="dropdown-item">Gallerijen overzicht</a>
                   <a href="#" class="dropdown-item">Foto's toevoegen</a>
