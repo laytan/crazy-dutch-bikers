@@ -14,14 +14,17 @@
     </button>
   </div>
   <ul class="d-flex justify-content-center flex-column h-100 no-list-style">
-    @component('components.nav-button', ['engine' => '1', 'link' => url('/gallerij')])
-      Gallerij
-    @endcomponent
-    @component('components.nav-button', ['engine' => '2', 'link' => url('/aanmelden')])
-      Aanmelden
+    @component('components.nav-button', ['engine' => '1', 'link' => route('galleries.index')])
+      Gallery
     @endcomponent
     @component('components.nav-button', ['engine' => '3', 'link' => route('events.index')])
-      Evenementen
+      Events
+    @endcomponent
+    @component('components.nav-button', ['engine' => '2', 'link' => route('login')])
+      Members only
+    @endcomponent
+    @component('components.nav-button', ['engine' => '4', 'link' => url('/aanmelden')])
+      Join us
     @endcomponent
   </ul>
 </div>
@@ -43,15 +46,15 @@
           <p>
             Wij zijn een Motor Touring Club dat graag zijn passie voor motoren en motorrijden deelt met andere motorrijders.
           </p>
-          <button class="btn btn-primary"><i class="fas fa-calendar-week"></i> Bekijk onze evenementen</button>
+          <button class="btn btn-primary">Meer informatie</button>
         </div>
       </div>
     </div>
   </div>
   <p class="bg-primary p-5 my-6 d-flex justify-content-around lead">
-    <span class="px-2">Broederschap</span>
-    <span class="px-2">Vertrouwen</span>
-    <span class="px-2">Gezelligheid</span>
+    <span class="px-2 h3">Broederschap</span>
+    <span class="px-2 h3">Vertrouwen</span>
+    <span class="px-2 h3">Gezelligheid</span>
   </p>
   <div class="bg-cdbg-opaque py-5">
     <div class="text-center">
