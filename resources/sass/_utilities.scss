@@ -27,3 +27,12 @@
 .border-4 {
   border-width: 4px !important;
 }
+
+.hover-primary {
+  transition: color ease-in .15s;
+  cursor: pointer;
+
+  &:hover {
+    color: map-get($theme-colors, 'primary') !important;
+  }
+}
