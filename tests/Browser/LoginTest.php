@@ -8,7 +8,6 @@ use Tests\DuskTestCase;
 
 class LoginTest extends DuskTestCase
 {
-
     use DatabaseMigrations;
 
     /**

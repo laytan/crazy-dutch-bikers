@@ -57,7 +57,7 @@
                   @include('partials.login')
               </li>
           @else
-              @component('components.dropdown', ['title' => Auth::user()->name, 'right' => true])
+              @component('components.dropdown', ['title' => 'user', 'right' => true])
                   <a href="{{ route('users.edit', ['user' => Auth::user()->id]) }}" class="dropdown-item">Profiel</a>
                   @include('partials.change-password')
                   <a class="dropdown-item" href="#"
