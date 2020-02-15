@@ -42,7 +42,7 @@
                   <a href="{{ route('events.index') }}" class="nav-link text-decoration-none">Evenementen</a>
               </li>
               <li class="nav-item">
-                  <a href="{{ route('products.index') }}" class="nav-link text-decoration-none">Merchandise</a>
+                  <a dusk="merchandise-btn" href="{{ route('products.index') }}" class="nav-link text-decoration-none">Merchandise</a>
               </li>
               <li class="nav-item">
                   <a href="#" class="nav-link text-decoration-none">Gallerij</a>
@@ -57,7 +57,7 @@
                   @include('partials.login')
               </li>
           @else
-              @component('components.dropdown', ['title' => 'user', 'right' => true])
+              @component('components.dropdown', ['id' => 'user-dropdown', 'title' => Auth::user()->name, 'right' => true])
                   <a href="{{ route('users.edit', ['user' => Auth::user()->id]) }}" class="dropdown-item">Profiel</a>
                   @include('partials.change-password')
                   <a class="dropdown-item" href="#"
