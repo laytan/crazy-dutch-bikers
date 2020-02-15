@@ -34,6 +34,11 @@ function initImageUpload(selector) {
     container.querySelector('.js-upload-button').classList.remove('d-none');
     e.target.setAttribute('data-has-image', 'false');
   });
+
+  const old = {!! isset($old) ? '"'.$old.'"' : 'false' !!};
+  if(old) {
+    setImage(container, old);
+  }
 }
 
 function populateOnImage(imageUpload, input) {
@@ -43,13 +48,17 @@ function populateOnImage(imageUpload, input) {
     }
     const reader = new FileReader();
     reader.onload = e => {
-      const imageEl =  imageUpload.querySelector('img');
-      imageEl.src = e.target.result;
-      imageEl.classList.remove('d-none');
-      imageUpload.querySelector('.js-upload-button').classList.add('d-none');
-      imageUpload.querySelector('i').setAttribute('data-has-image', 'true');
+      setImage(imageUpload, e.target.result);
     };
     reader.readAsDataURL(e.target.files[0]);  
   });
+}
+
+function setImage(imageUpload, src) {
+  const imageEl =  imageUpload.querySelector('img');
+  imageEl.src = src;
+  imageEl.classList.remove('d-none');
+  imageUpload.querySelector('.js-upload-button').classList.add('d-none');
+  imageUpload.querySelector('i').setAttribute('data-has-image', 'true');
 }
 </script>
