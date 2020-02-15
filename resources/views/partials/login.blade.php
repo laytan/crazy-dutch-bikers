@@ -2,6 +2,9 @@
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
 <form method="POST" action="{{ route('login') }}" id="loginForm">
   @csrf
+  <p>
+    Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
+  </p>
   <div class="form-group">
     <label for="email">E-Mail</label>
     <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
