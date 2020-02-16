@@ -13,7 +13,7 @@ class Picture extends Model
 
     public function getDimensionsAttribute()
     {
-        list($width, $height, $type, $attr) = getimagesize(public_path('storage/' . $this->url));
+        list($width, $height, $type, $attr) = getimagesize(storage_path('app/private/' . $this->url));
         return [$width, $height];
     }
 }

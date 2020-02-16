@@ -32,6 +32,7 @@ Route::patch('/leden/{user}/bewerken', 'UserController@update')->name('users.upd
 Route::post('/leden/activeer', 'UserController@activate')->name('users.activate');
 Route::get('/leden/aanmaken', 'UserController@create')->name('users.create');
 Route::post('/leden', 'UserController@store')->name('users.store');
+Route::get('/storage/profile-pictures/{profile_picture}', 'UserController@picture');
 
 // Passwords
 Route::get('/change-password', 'ChangePasswordController@index')->name('change-password-index');
@@ -44,6 +45,7 @@ Route::post('/merchandise', 'ProductController@store')->name('products.store');
 Route::get('/merchandise/{product}/bewerken', 'ProductController@edit')->name('products.edit');
 Route::patch('/merchandise/{product}', 'ProductController@update')->name('products.update');
 Route::delete('/merchandise/{product}', 'ProductController@destroy')->name('products.destroy');
+Route::get('/storage/product-pictures/{product_picture}', 'ProductController@picture');
 
 // Orders
 Route::post('/bestellingen', 'OrderController@store')->name('orders.store');
@@ -63,3 +65,20 @@ Route::post('/gallerij/aanmaken', 'GalleryController@store')->name('galleries.st
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');
 Route::patch('/gallerij/{gallery}', 'GalleryController@update')->name('galleries.update');
 Route::delete('/gallerij/{gallery}', 'GalleryController@destroy')->name('galleries.destroy');
+Route::get('/storage/galleries/{gallery}/{picture}', 'GalleryController@picture');
+
+// Route::group(['middleware' => ['auth']], function () {
+//     Route::get('/storage/product-pictures/{picture}', function ($file) {
+//      //This method will look for the file and get it from drive
+//     $path = storage_path('app/uploads/product-pictures/' . $file);
+//     try {
+//         $file = File::get($path);
+//         $type = File::mimeType($path);
+//         $response = Response::make($file, 200);
+//         $response->header("Content-Type", $type);
+//         return $response;
+//     } catch (FileNotFoundException $exception) {
+//         abort(404);
+//     }
+//     });
+// });
