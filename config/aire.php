@@ -1,7 +1,7 @@
 <?php
 
 return [
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Grouping Behavior
@@ -14,7 +14,7 @@ return [
 	|
 	*/
 	'group_by_default' => true,
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Automatically generate input IDs
@@ -26,7 +26,7 @@ return [
 	|
 	*/
 	'auto_id' => true,
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default to Verbose Summaries
@@ -39,7 +39,7 @@ return [
 	|
 	*/
 	'verbose_summaries_by_default' => false,
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Client-Side Validation
@@ -52,7 +52,7 @@ return [
 	|
 	*/
 	'validate_by_default' => true,
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Client-Side Validation Scripts
@@ -64,7 +64,7 @@ return [
 	|
 	*/
 	'inline_validation' => true,
-	'validation_script_path' => env('APP_URL').'/js/aire/aire.js',
+	'validation_script_path' => env('APP_URL') . '/js/aire/aire.js',
 
 	/*
 	|--------------------------------------------------------------------------
@@ -85,7 +85,7 @@ return [
 	|
 	*/
 	'validation_lang_locale'       => 'nl',
-	'validation_lang_path'         => env('APP_URL') . '/lang/nl.js',
+	'validation_lang_path'         => '/lang/nl.js',
 	'validation_custom_attributes' => [
 		'address'               => 'adres',
 		'age'                   => 'leeftijd',
@@ -138,7 +138,7 @@ return [
 		'profile_picture'       => 'profielfoto',
 		'description'           => 'beschrijving',
 	],
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Attributes
@@ -154,7 +154,7 @@ return [
 			'method' => 'POST',
 		],
 	],
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Default Classes
@@ -177,7 +177,7 @@ return [
 		'form'           => 'bg-cdbg-opaque p-3',
 		'group_errors'   => 'text-danger text-sm',
 	],
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Variant Classes
@@ -188,7 +188,7 @@ return [
 	|
 	*/
 	'variant_classes' => [],
-	
+
 	/*
 	|--------------------------------------------------------------------------
 	| Validation Classes
@@ -205,7 +205,7 @@ return [
 	|
 	*/
 	'validation_classes' => [
-		
+
 		/*
 		|--------------------------------------------------------------------------
 		| Not Validated
@@ -220,7 +220,7 @@ return [
 		|
 		*/
 		'none' => [],
-		
+
 		/*
 		|--------------------------------------------------------------------------
 		| Valid
@@ -235,7 +235,7 @@ return [
 		|
 		*/
 		'valid' => [],
-		
+
 		/*
 		|--------------------------------------------------------------------------
 		| Invalid
@@ -251,5 +251,5 @@ return [
 		*/
 		'invalid' => [],
 	],
-	
+
 ];
