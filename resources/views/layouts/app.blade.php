@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="h-100" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
-<body class="d-flex flex-column h-100">
+<body class="d-flex flex-column">
     <div id="app">
         <div class="top">
             @yield('above-nav')
