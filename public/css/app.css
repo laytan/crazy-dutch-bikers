@@ -19919,6 +19919,16 @@ readers do not read off random characters that represent icons */
 }
 body {
   background-image: url("/images/pattern.svg");
+  overflow-x: hidden;
+  overflow-y: scroll !important;
+}
+body.modal-open {
+  position: fixed;
+}
+@media (min-width: 992px) {
+  body.modal-open {
+    position: initial;
+  }
 }
 
 tbody tr th {
@@ -20053,13 +20063,19 @@ a:hover {
   letter-spacing: 0.1rem;
 }
 
+.navbar-brand {
+  font-size: 1.7rem;
+}
 .navbar-brand .navbar-brand__z {
-  font-size: 1.8rem;
+  font-size: 1.2rem;
 }
 
 .navigation {
-  background-color: rgba(10, 10, 8, 0.6);
-  border-bottom: rgba(182, 189, 199, 0.4) 2px solid;
+  background-color: #0A0A08;
+}
+
+.navbar-toggler i {
+  font-size: 1.5rem;
 }
 
 .dropdown-menu {
