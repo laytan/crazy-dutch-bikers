@@ -35,7 +35,7 @@ Route::get('/storage/profile-pictures/{profile_picture}', 'UserController@pictur
 
 // Passwords
 Route::get('/change-password', 'ChangePasswordController@index')->name('change-password-index');
-Route::post('/change-password', 'ChangePasswordController@changePassword')->name('change-password');
+Route::post('/change-password', 'ChangePasswordController@ChangePassword')->name('change-password');
 
 // Products
 Route::get('/merchandise', 'ProductController@index')->name('products.index');
