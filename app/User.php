@@ -2,11 +2,10 @@
 
 namespace App;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Gate;
+use Hash;
 
 class User extends Authenticatable
 {
@@ -64,11 +63,16 @@ class User extends Authenticatable
         return false;
     }
 
-    public function updatePassword($old, $new)
+    /**
+     * Change the users password if the old password is the current password.
+     * Return wether it was succesfull
+     */
+    public function updatePassword(string $old, string $new): bool
     {
         if (Gate::denies('change-password', $old)) {
-            return back()->with('error', 'Wachtwoorden komen niet overeen');
+            return false;
         }
-        $this->password = $new;
+        $this->password = Hash::make($new);
+        return true;
     }
 }
