@@ -1,5 +1,4 @@
 <?php
-use App\Gallery;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,7 +51,6 @@ Route::post('/bestellingen', 'OrderController@store')->name('orders.store');
 Route::get('/bestellingen', 'OrderController@index')->name('orders.index');
 Route::get('/bestellingen/{order}', 'OrderController@show')->name('orders.show');
 Route::patch('/bestellingen/{order}', 'OrderController@update')->name('orders.update');
-Route::delete('/bestellingen/{order}', 'OrderController@destroy')->name('orders.destroy');
 
 // Events
 Route::get('/evenementen', 'EventController@index')->name('events.index');
