@@ -111,10 +111,10 @@ class UserController extends Controller
         // Profile picture
         if (isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
             // Store picture
-            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
+            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'private']);
             // Remove old picture
             if ($user->profile_picture !== null) {
-                \Storage::disk('public')->delete($user->profile_picture);
+                \Storage::disk('private')->delete($user->profile_picture);
             }
             // Edit user profile picture path
             $user->profile_picture = $picture;
@@ -159,7 +159,7 @@ class UserController extends Controller
         $picture = null;
         if (isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
             // Upload picture
-            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
+            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'private']);
         }
 
         // Add to the database
@@ -188,5 +188,11 @@ class UserController extends Controller
         
         // Return view with appropiate message
         return redirect()->route('users.index')->with('success', 'Gebruiker geregistreerd');
+    }
+
+    public function picture($profile_picture)
+    {
+        $path = "app/private/profile-pictures/$profile_picture";
+        return file_response($path);
     }
 }

@@ -8,6 +8,7 @@ use Illuminate\Auth\Access\Response;
 use App\User;
 use App\Product;
 use App\Order;
+use app\Picture;
 use App\Event;
 use Hash;
 
@@ -129,6 +130,16 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
             $this->message = 'Deze bestelling kan je niet bekijken';
+        });
+
+        Gate::define('access-image', function (?User $user, Picture $picture) {
+            $this->message = 'Deze foto is alleen voor members';
+            // If the gallery is private and the user is not logged in
+            if ($picture->gallery->is_private && !$user) {
+                return null;
+            } else {
+                return true;
+            }
         });
     }
 }
