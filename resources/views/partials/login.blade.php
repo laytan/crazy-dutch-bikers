@@ -1,4 +1,4 @@
-<a dusk="login-link" class="nav-link" href="#login" data-toggle="modal" data-target="#login">Login</a>
+<a dusk="login-link" class="nav-link" href="#login" data-toggle="modal" data-target="#login">Members only</a>
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
 <form method="POST" action="{{ route('login') }}" id="loginForm">
   @csrf
