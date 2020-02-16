@@ -2,11 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Hash;
-use App\User;
 use App\Http\Requests\changePasswordRequest;
-use Gate;
 
 class ChangePasswordController extends Controller
 {

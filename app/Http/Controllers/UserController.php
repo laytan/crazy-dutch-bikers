@@ -32,7 +32,7 @@ class UserController extends Controller
     public function index($message_type = null, $message = null)
     {
         $users = resolveProfilePics(User::all());
-        
+
         if (strlen($message_type) > 0) {
             return view('users.index', ['users' => $users, $message_type => $message]);
         }
@@ -120,13 +120,13 @@ class UserController extends Controller
             $user->profile_picture = $picture;
         }
 
-        // If the user is assigned admin and the authorized user can to do that
-        if (isset($validatedData['role'])      &&
-            $validatedData['role'] !== null    &&
-            $validatedData['role'] === 'admin' &&
-            Gate::allows('make-admin', $user)
-        ) {
-            $user->role = 'admin';
+        // TODO: Exact same if else statement as the store method, DRY
+        // If the role field has been set
+        if (isset($validatedData['role']) && $validatedData['role'] !== null) {
+            // If the user is assigned admin and the authorized user can to do that
+            if ($validatedData['role'] === 'admin' && Gate::allows('make-admin', $user)) {
+                $user->role = 'admin';
+            }
         } else {
             $user->role = 'member';
         }
@@ -171,13 +171,12 @@ class UserController extends Controller
             'profile_picture' => $picture,
         ]);
 
-        // If the user is assigned admin and the authorized user can to do that
-        if (isset($validatedData['role'])      &&
-            $validatedData['role'] !== null    &&
-            $validatedData['role'] === 'admin' &&
-            Gate::allows('make-admin', $user)
-        ) {
-            $user->role = 'admin';
+        // If the role field has been set
+        if (isset($validatedData['role']) && $validatedData['role'] !== null) {
+            // If the user is assigned admin and the authorized user can to do that
+            if ($validatedData['role'] === 'admin' && Gate::allows('make-admin', $user)) {
+                $user->role = 'admin';
+            }
         } else {
             $user->role = 'member';
         }
@@ -185,7 +184,7 @@ class UserController extends Controller
         // Send Mail
         Mail::to($validatedData['email'], $validatedData['name'])
             ->queue(new UserRegistered($validatedData['name'], $validatedData['email'], $password));
-        
+
         // Return view with appropiate message
         return redirect()->route('users.index')->with('success', 'Gebruiker geregistreerd');
     }
