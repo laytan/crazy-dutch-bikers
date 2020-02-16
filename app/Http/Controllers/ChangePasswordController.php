@@ -20,7 +20,7 @@ class ChangePasswordController extends Controller
     {
         $validatedData = $request->validated();
         $user = $request->user();
-        $user->updatePassword($validatedData['password-new']);
+        $user->updatePassword($validatedData['password-old'], $validatedData['password-new']);
         $user->save();
         return back()->with('success', 'Wachtwoord veranderd');
     }
