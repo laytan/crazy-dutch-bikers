@@ -18818,6 +18818,10 @@ a:hover {
   color: #8D111B !important;
 }
 
+.whitespace-nowrap {
+  white-space: nowrap;
+}
+
 .js-audio-theme {
   position: fixed;
   right: 0;
