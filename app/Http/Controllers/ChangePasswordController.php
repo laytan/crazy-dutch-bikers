@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\changePasswordRequest;
+use App\Http\Requests\ChangePasswordRequest;
 
 class ChangePasswordController extends Controller
 {
