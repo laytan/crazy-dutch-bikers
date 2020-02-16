@@ -59,15 +59,6 @@ class OrderController extends Controller
         return back()->with('success', 'Bestelling bewerkt');
     }
 
-    /**
-     * Delete an order (soft delete)
-     */
-    public function destroy(Request $request, Order $order)
-    {
-        $order->delete();
-        return back()->with('success', 'Bestelling verwijderd');
-    }
-
     public function store(Request $request)
     {
         $validatedData = $request->validate([
