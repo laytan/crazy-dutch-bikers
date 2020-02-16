@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Order;
 use App\OrderHasProduct;
-use App\Product;
 use Auth;
 use Mail;
 use App\Mail\OrderReceived;
@@ -75,7 +74,7 @@ class OrderController extends Controller
             // Don't allow anything other than: 1,1,2,33,4544,324,12
             'product-ids' => array('required', 'string', 'not_regex:/([^0-9,]|,,)/'),
         ]);
-        
+
         // Create a new order
         $order          = new Order;
         $order->user_id = Auth::user()->id;
