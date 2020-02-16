@@ -2,14 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Product;
 use Auth;
 use Storage;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
-use File;
-use Response;
 
 class ProductController extends Controller
 {
@@ -65,7 +62,7 @@ class ProductController extends Controller
     public function update(UpdateProductRequest $request, Product $product)
     {
         $validatedData = $request->validated();
-        
+
         if ($validatedData['title'] !== null) {
             $product->title = $validatedData['title'];
         }

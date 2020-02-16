@@ -29,7 +29,7 @@ if (!function_exists('resolveProfilePics')) {
 if (!function_exists('centsToEuro')) {
     function centsToEuro($cents)
     {
-        return number_format(($cents /100), 2, '.', ' ');
+        return number_format(($cents / 100), 2, '.', ' ');
     }
 }
 

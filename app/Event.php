@@ -22,10 +22,10 @@ class Event extends Model
 
             $start_day = $carb->format('Y-m-d');
             $end_day = $carb_end->format('Y-m-d');
-        
+
             if ($start_day !== $end_day) {
                 $ret .= ' tot ' . formatFullDate($carb_end);
-    
+
                 if (!$this->full_day) {
                     $ret .= ' van ' . $carb_end->format('H:i');
                 }

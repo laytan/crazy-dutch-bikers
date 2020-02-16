@@ -32,6 +32,6 @@ class Order extends Model
      */
     public function getTotal()
     {
-        return $this->orderHasProducts->reduce(fn($carry, $item) => $carry + $item->product->price, 0);
+        return $this->orderHasProducts->reduce(fn ($carry, $item) => $carry + $item->product->price, 0);
     }
 }
