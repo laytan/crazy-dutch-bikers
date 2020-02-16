@@ -36,3 +36,7 @@
     color: map-get($theme-colors, 'primary') !important;
   }
 }
+
+.whitespace-nowrap {
+  white-space: nowrap;
+}
