@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use App\Gallery;
@@ -79,7 +78,7 @@ class GalleryController extends Controller
             $gallery->is_private = false;
         }
 
-        debug('TODO: handle adding pictures');
+        // TODO: Add new pictures to the gallery
 
         $gallery->save();
         return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
