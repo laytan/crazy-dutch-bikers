@@ -1,6 +1,9 @@
 .navigation {
-  background-color: rgba( $cdb-black, .6 );
-  border-bottom: rgba( $cdb-gray, .4 ) 2px solid;
+  background-color: map-get($theme-colors, "cdbb");
+}
+
+.navbar-toggler i {
+  font-size: 1.5rem;
 }
 
 .dropdown-menu {
