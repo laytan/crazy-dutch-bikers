@@ -8,13 +8,15 @@ use Auth;
 use Storage;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use File;
+use Response;
 
 class ProductController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware('can:manage')->except(['index', 'show']);
+        $this->middleware('can:manage')->except(['index', 'show', 'picture']);
     }
 
     /**
@@ -41,7 +43,7 @@ class ProductController extends Controller
     {
         $validatedData = $request->validated();
 
-        $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
+        $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'private']);
 
         $product                  = new Product;
         $product->title           = $validatedData['title'];
@@ -78,10 +80,10 @@ class ProductController extends Controller
 
         if (isset($validatedData['product_picture']) && $validatedData['product_picture'] !== null) {
             // Store picture
-            $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
+            $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'private']);
             // Remove old picture
             if ($product->product_picture !== null) {
-                Storage::disk('public')->delete($product->product_picture);
+                Storage::disk('private')->delete($product->product_picture);
             }
             // Update path
             $product->product_picture = $picture;
@@ -95,10 +97,16 @@ class ProductController extends Controller
     {
         // Remove picture
         if ($product->product_picture !== null) {
-            Storage::disk('public')->delete($product->product_picture);
+            Storage::disk('private')->delete($product->product_picture);
         }
 
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product verwijderd');
+    }
+
+    public function picture($product_picture)
+    {
+        $path = 'app/private/product-pictures/' . $product_picture;
+        return file_response($path);
     }
 }

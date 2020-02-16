@@ -12,7 +12,8 @@ class GalleryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:manage')->except(['index', 'show']);
+        $this->middleware('can:access-image,picture')->only('picture');
+        $this->middleware('can:manage')->except(['index', 'show', 'picture']);
     }
 
     public function index()
@@ -54,7 +55,7 @@ class GalleryController extends Controller
         // Add the images
         foreach ($validated['images'] as $image) {
             // dd($image);
-            $pictureUrl = $image->store("galleries/$gallery->title", ['disk' => 'public']);
+            $pictureUrl = $image->store("galleries/$gallery->title", ['disk' => 'private']);
             $picture             = new Picture();
             $picture->gallery_id = $gallery->id;
             $picture->url        = $pictureUrl;
@@ -68,8 +69,6 @@ class GalleryController extends Controller
     {
         $validatedData = $request->validated();
 
-        dd($validatedData);
-
         if (isset($validatedData['title'])) {
             $gallery->title = $validatedData['title'];
         }
@@ -80,6 +79,8 @@ class GalleryController extends Controller
             $gallery->is_private = false;
         }
 
+        debug('TODO: handle adding pictures');
+
         $gallery->save();
         return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
     }
@@ -88,10 +89,16 @@ class GalleryController extends Controller
     {
         // Remove all pictures
         foreach ($gallery->pictures as $picture) {
-            Storage::disk('public')->delete($picture->url);
+            Storage::disk('private')->delete($picture->url);
             $picture->delete();
         }
 
         $gallery->delete();
+    }
+
+    public function picture($gallery, Picture $picture)
+    {
+        $path = "app/private/$picture->url";
+        return file_response($path);
     }
 }
