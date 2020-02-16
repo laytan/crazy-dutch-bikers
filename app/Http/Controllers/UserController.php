@@ -94,11 +94,7 @@ class UserController extends Controller
 
         // Password
         if ($validatedData['password'] !== null && $validatedData['old_password'] !== null) {
-            // Check password
-            if (\Hash::check($validatedData['old_password'], $user->password)) {
-                // Update password
-                $user->password = \Hash::make($validatedData['password']);
-            } else {
+            if (!$user->updatePassword($validatedData['old_password'], $validatedData['password'])) {
                 return back()->with('error', 'Wachtwoord is niet juist');
             }
         }
