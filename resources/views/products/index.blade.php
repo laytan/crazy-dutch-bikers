@@ -28,7 +28,7 @@
               <a href="{{ route('products.edit', ['product' => $product->id]) }}" class="btn btn-info btn-sm w-100">
                 <i class="fas fa-edit"></i> Bewerken
               </a>
-              <button onclick="document.getElementById('destroy-{{ $product->id }}-product').submit();" class="btn w-100 btn-danger btn-sm mt-2">
+              <button data-submit="#destroy-{{ $product->id }}-product" class="btn w-100 btn-danger btn-sm mt-2">
                 <i class="fas fa-trash"></i> Verwijderen
               </button>
               {{ Aire::open()->id("destroy-{$product->id}-product")->route('products.destroy', ['product' => $product->id]) }}

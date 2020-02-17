@@ -25,7 +25,7 @@
         <td class="text-right whitespace-nowrap">&euro; {{ centsToEuro($order->getTotal()) }}</td>
         <td>{{ formatTimeForDisplay($order->created_at) }}</td>
         <td>
-          <button onclick="document.getElementById('fulfill-{{ $order->id }}').submit();" class="d-block w-100 btn btn-primary btn-sm cursor-pointer">Vervul</button>
+          <button data-submit="#fulfill-{{ $order->id }}" class="d-block w-100 btn btn-primary btn-sm cursor-pointer">Vervul</button>
           {{ Aire::open()->route('orders.update', ['order' => $order->id])->id("fulfill-$order->id")->class('d-none') }}
           {{ Aire::input('fulfilled')->value('toggle') }}
           {{ Aire::close() }}
@@ -58,7 +58,7 @@
         <td>{{ formatTimeForDisplay($order->created_at) }}</td>
         <td>{{ formatTimeForDisplay($order->updated_at) }}</td>
         <td>
-          <button onclick="document.getElementById('fulfill-{{ $order->id }}').submit();" class="btn btn-primary btn-sm">Onvervul</button>
+          <button data-submit="#fulfill-{{ $order->id }}" class="btn btn-primary btn-sm">Onvervul</button>
           {{ Aire::open()->route('orders.update', ['order' => $order->id])->id("fulfill-$order->id")->class('d-none') }}
           {{ Aire::input('fulfilled')->value('toggle') }}
           {{ Aire::close() }}

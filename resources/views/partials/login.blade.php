@@ -36,7 +36,7 @@
   </div>
 </form>
 @slot('footer')
-<button dusk="login-submit" class="btn-cdbb btn" onclick="document.getElementById('loginForm').submit();">Log in!</button>
+<button dusk="login-submit" class="btn-cdbb btn" data-submit="#loginForm">Log in!</button>
 @endslot
 @endcomponent
 
