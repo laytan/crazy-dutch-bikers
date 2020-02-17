@@ -1,11 +1,53 @@
 .navigation {
-  background-color: map-get($theme-colors, "cdbb");
+  &__logo {
+    img {
+      height: 2.5rem;
+      width: auto;
+      display: inline-block;
+    }
+  }
+
+  .nav-link {
+    color: map-get($theme-colors, 'cdblg');
+  }
 }
 
-.navbar-toggler i {
-  font-size: 1.5rem;
-}
+.navigation-toggler {
+  width: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  transition: transform .3s ease-in-out;
 
-.dropdown-menu {
-  margin-top: 1.7rem;
+  &__bar {
+    display: block;
+    width: 100%;
+    height: calc(1rem / 3);
+    background-color: map-get($theme-colors, 'cdblg');
+    border-radius: 1px;
+    transition: transform .3s ease-in-out;
+  }
+
+  // Animate the bars so when the navigation is shown it is an x sign and if it is not shown a regular hamburger icon
+  &:not(.collapsed) {
+    // The other transforms make it a plus sign, rotate a plus sign 45 degrees and you get an x
+    transform: rotateZ(45deg);
+
+    .navigation-toggler__bar {
+      &:nth-child(1) {
+        // Translate out of the screen
+        transform: translateX(100px);
+      }
+
+      &:nth-child(2) {
+        // Rotate so it is a vertical bar
+        transform: rotateZ(90deg);
+      }
+
+      &:nth-child(3) {
+        // Translate this bar to the center of the other bar
+        transform: translateY(-150%);
+      }
+    }
+  }
 }
