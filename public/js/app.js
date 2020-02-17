@@ -17920,15 +17920,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./cart */ "./resources/js/cart.ts");
 /* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_cart__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _audio_theme__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./audio-theme */ "./resources/js/audio-theme.ts");
+/* harmony import */ var _audio_theme__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_audio_theme__WEBPACK_IMPORTED_MODULE_3__);
 
 
 
 window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
 
+
 (function () {
   $(window).on('load', function () {
     copyModalsToFooter();
     setupLazyCarousels();
+    new _audio_theme__WEBPACK_IMPORTED_MODULE_3___default.a(document.querySelector('.js-audio-player'), document.querySelector('.js-audio-player__hint'));
     new vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1___default.a({
       elements_selector: 'img.lazy'
     }); // Handle fullscreening gallery images
@@ -17994,9 +17998,9 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
     var logo = document.querySelector('.js-logo');
 
     if (audio && logo) {
-      var pulse = 60 / Number(audio.dataset.bpm) * 1000;
-      audio.play();
-      audio.classList.add('playing');
+      var pulse = 60 / Number(audio.dataset.bpm) * 1000; // audio.play();
+      // audio.classList.add('playing');
+
       pulsing(logo, pulse);
       setInterval(function () {
         pulsing(logo, pulse);
@@ -18012,6 +18016,101 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
   }
 })();
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
+
+/***/ }),
+
+/***/ "./resources/js/audio-theme.ts":
+/*!*************************************!*\
+  !*** ./resources/js/audio-theme.ts ***!
+  \*************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var AudioTheme = /** @class */ (function () {
+    function AudioTheme(wrapper, hint) {
+        var _a;
+        this.wrapper = wrapper;
+        this.hint = hint;
+        this.state = 'start'; // start, pause, playing, ended
+        this.audioElement = wrapper.getElementsByTagName('audio')[0];
+        this.playButton = wrapper.querySelector('.js-audio-player__play');
+        this.progress = wrapper.getElementsByTagName('progress')[0];
+        this.currentTime = wrapper.querySelector('.js-audio-player__current');
+        var duration = wrapper.querySelector('.js-audio-player__duration');
+        if (duration) {
+            duration.textContent = AudioTheme.parseTime(this.audioElement.duration);
+        }
+        (_a = this.playButton) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.play.bind(this));
+        this.audioElement.addEventListener('ended', this.ended.bind(this));
+        this.tryAutoplay();
+        setInterval(this.updateProgress.bind(this), 1000);
+    }
+    // TODO: Clean up
+    AudioTheme.parseTime = function (val) {
+        var string = val.toString();
+        var numberOfSeconds = parseInt(string, 10); // don't forget the second param
+        var hours = Math.floor(numberOfSeconds / 3600);
+        var minutes = Math.floor((numberOfSeconds - (hours * 3600)) / 60);
+        var seconds = numberOfSeconds - (hours * 3600) - (minutes * 60);
+        var stringMinutes = minutes.toString();
+        var stringSeconds = seconds.toString();
+        if (minutes < 10) {
+            stringMinutes = "0" + minutes;
+        }
+        if (seconds < 10) {
+            stringSeconds = "0" + seconds;
+        }
+        return stringMinutes + ':' + stringSeconds;
+    };
+    AudioTheme.prototype.tryAutoplay = function () {
+        var _this = this;
+        this.audioElement.play()
+            .then(function () {
+            _this.play();
+        })
+            .catch(function () {
+            _this.hintPlay();
+        });
+    };
+    AudioTheme.prototype.hintPlay = function () {
+        this.hint.classList.add('d-block');
+    };
+    // TODO: setState function so state is in one place
+    AudioTheme.prototype.play = function () {
+        switch (this.state) {
+            case 'playing':
+                this.audioElement.pause();
+                this.state = 'pause';
+                break;
+            case 'ended':
+                this.audioElement.currentTime = 0;
+                this.audioElement.play();
+                this.state = 'playing';
+                break;
+            default:
+                this.audioElement.play();
+                this.state = 'playing';
+                break;
+        }
+    };
+    AudioTheme.prototype.ended = function () {
+        this.state = 'ended';
+    };
+    // TODO: rename
+    AudioTheme.prototype.updateProgress = function () {
+        this.wrapper.setAttribute('data-state', this.state);
+        this.progress.value = (this.audioElement.currentTime / this.audioElement.duration);
+        if (this.currentTime) {
+            this.currentTime.textContent = AudioTheme.parseTime(this.audioElement.currentTime);
+        }
+    };
+    return AudioTheme;
+}());
+exports.default = AudioTheme;
+
 
 /***/ }),
 
@@ -18203,8 +18302,8 @@ exports.default = Cart;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

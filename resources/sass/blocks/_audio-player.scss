@@ -1,0 +1,15 @@
+.audio-player {
+  width: 270px;
+
+  &__play {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    i {
+      font-size: 2.5rem;
+    }
+  }
+}
