@@ -1,5 +1,5 @@
-require('./bootstrap');
-import LazyLoad from "vanilla-lazyload";
+import 'bootstrap';
+import LazyLoad from 'vanilla-lazyload';
 import Cart from './cart';
 window.Cart = Cart;
 
@@ -9,7 +9,7 @@ window.Cart = Cart;
     setupLazyCarousels();
 
     new LazyLoad({
-      elements_selector: "img.lazy"
+      elements_selector: 'img.lazy'
     });
 
     // Handle fullscreening gallery images
