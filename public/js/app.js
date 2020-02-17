@@ -35943,8 +35943,8 @@ exports.default = Cart;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
