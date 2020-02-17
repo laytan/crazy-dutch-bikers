@@ -21,7 +21,10 @@ window.Cart = Cart;
     pulsateLogo();
 
     // data-submit submits the form with that selector on click
-    $('[data-submit]').click(e => document.querySelector(e.target.dataset.submit).submit());
+    $('[data-submit]').click(e => {
+      e.preventDefault();
+      document.querySelector(e.target.dataset.submit).submit();
+    });
   });
 
   /**

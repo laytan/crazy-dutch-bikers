@@ -17941,7 +17941,8 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
     pulsateLogo(); // data-submit submits the form with that selector on click
 
     $('[data-submit]').click(function (e) {
-      return document.querySelector(e.target.dataset.submit).submit();
+      e.preventDefault();
+      document.querySelector(e.target.dataset.submit).submit();
     });
   });
   /**
