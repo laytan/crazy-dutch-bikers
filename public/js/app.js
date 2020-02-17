@@ -17914,7 +17914,7 @@ module.exports = g;
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
 /* harmony import */ var bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(bootstrap__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vanilla-lazyload */ "./node_modules/vanilla-lazyload/dist/lazyload.min.js");
 /* harmony import */ var vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1__);
@@ -17938,7 +17938,11 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
       wrap.toggleClass('gallery-grid__image-wrap--full');
     });
     matchHeights();
-    pulsateLogo();
+    pulsateLogo(); // data-submit submits the form with that selector on click
+
+    $('[data-submit]').click(function (e) {
+      return document.querySelector(e.target.dataset.submit).submit();
+    });
   });
   /**
    * Puts all modals on the page into the footer, so we can initialize them everywhere and the z-index will works
@@ -18006,6 +18010,7 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
     }, pulse - 100);
   }
 })();
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
 
@@ -18017,7 +18022,7 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-
+/* WEBPACK VAR INJECTION */(function($) {
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
  * Simple Cart implementation
@@ -18175,6 +18180,7 @@ var Cart = /** @class */ (function () {
 }());
 exports.default = Cart;
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js")))
 
 /***/ }),
 
