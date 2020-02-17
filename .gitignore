@@ -12,3 +12,5 @@ npm-debug.log
 yarn-error.log
 /laradock-crazy-dutch-bikers
 password.md
+
+.vscode
