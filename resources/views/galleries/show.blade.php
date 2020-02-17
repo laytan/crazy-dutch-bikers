@@ -5,7 +5,7 @@
   <h2>{{ $gallery->title }} {{ $gallery->is_private ? '(prive)' : '(publiekelijk)' }}</h2>
   {{ Aire::open()->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form-' . $gallery->id) }}
   {{ Aire::close() }}
-  <button class="btn btn-warning" onclick="$('#gallery-destroy-form-{{ $gallery->id }}').submit();">Verwijder gallerij</button>
+  <button class="btn btn-warning" data-submit="#gallery-destroy-form-{{ $gallery->id }}">Verwijder gallerij</button>
   <button class="btn btn-primary" data-toggle="modal" data-target="#gallery-update-{{ $gallery->id }}">Gallerij bewerken</button>
   <div class="gallery-grid">
     <div class="gallery-grid__column">
@@ -69,7 +69,7 @@
     </div>
   </div>
   @slot('footer')
-  <button class="btn btn-primary" onclick="$('#gallery-update-form-{{ $gallery->id }}').submit();">Gallerij bewerken</button>
+  <button class="btn btn-primary" data-submit="#gallery-update-form-{{ $gallery->id }}">Gallerij bewerken</button>
   @endslot
 @endcomponent
 <script>

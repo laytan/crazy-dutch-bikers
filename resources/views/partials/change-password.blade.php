@@ -5,7 +5,7 @@
   {{ Aire::password('password-new', 'Nieuw wachtwoord') }}
   {{ Aire::close() }}
   @slot('footer')
-    <button onclick="document.getElementById('password-change-form').submit();" class="btn btn-cdbb">Verander wachtwoord</button>
+    <button data-submit="#password-change-form" class="btn btn-cdbb">Verander wachtwoord</button>
   @endslot
 @endcomponent
 
