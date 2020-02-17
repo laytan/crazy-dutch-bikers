@@ -2,11 +2,14 @@ import 'bootstrap';
 import LazyLoad from 'vanilla-lazyload';
 import Cart from './cart';
 window.Cart = Cart;
+import AudioTheme from './audio-theme';
 
 (() => {
   $(window).on('load', () => {
     copyModalsToFooter();
     setupLazyCarousels();
+
+    new AudioTheme(document.querySelector('.js-audio-player'), document.querySelector('.js-audio-player__hint'));
 
     new LazyLoad({
       elements_selector: 'img.lazy'
@@ -71,8 +74,8 @@ window.Cart = Cart;
     if(audio && logo) {
       const pulse = (60 / Number(audio.dataset.bpm)) * 1000;
 
-      audio.play();
-      audio.classList.add('playing');
+      // audio.play();
+      // audio.classList.add('playing');
 
       pulsing(logo, pulse);
       setInterval(function() { pulsing(logo, pulse) }, pulse);
