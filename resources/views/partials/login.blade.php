@@ -1,6 +1,13 @@
-<a dusk="login-link" class="nav-link" href="#login" data-toggle="modal" data-target="#login">Members only</a>
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
-<form method="POST" action="{{ route('login') }}" id="loginForm">
+{{ Aire::open()->route('login')->id('loginForm') }}
+<p>
+  Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
+</p>
+{{ Aire::email('email', 'E-Mail') }}
+{{ Aire::password('password', 'Wachtwoord') }}
+{{ Aire::checkbox('remember', 'Onthoud mijn gegevens')->checked(old('remember') ? true : false) }}
+{{ Aire::close() }}
+{{-- <form method="POST" action="{{ route('login') }}" id="loginForm">
   @csrf
   <p>
     Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
@@ -34,7 +41,7 @@
       </label>
     </div>
   </div>
-</form>
+</form> --}}
 @slot('footer')
 <button dusk="login-submit" class="btn-cdbb btn" data-submit="#loginForm">Log in!</button>
 @endslot
