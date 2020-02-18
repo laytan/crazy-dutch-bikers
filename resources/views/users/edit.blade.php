@@ -7,9 +7,14 @@
   {{ Aire::input('name', 'Naam') }}
   {{ Aire::input('email', 'E-Mail') }}
   {{ Aire::textarea('description', 'Beschrijving') }}
-  @component('components.image-upload', ['old' => $user->profile_picture, 'id' => 'profile_picture', 'name' => 'profile_picture', 'initSelf' => true])
-    Profielfoto kiezen
-  @endcomponent
+  <div
+    data-image-upload="true"
+    data-start-image="{{ Storage::url($user->profile_picture) }}"
+    data-name="profile_picture"
+    data-id="profile_picture"
+    @error('profile_picture') data-invalid="true" @enderror
+    data-label="Kies profiel foto"
+  ></div> 
   @can('manage-roles')
   {{ Aire::select(['member' => 'Lid', 'admin' => 'Beheer'], 'role', 'Rol') }}
   @endcan

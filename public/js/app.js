@@ -37031,6 +37031,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _cart__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_cart__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _audio_theme__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./audio-theme */ "./resources/js/audio-theme.ts");
 /* harmony import */ var _audio_theme__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_audio_theme__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./image-upload */ "./resources/js/image-upload.ts");
+/* harmony import */ var _image_upload__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_image_upload__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _images_upload__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./images-upload */ "./resources/js/images-upload.ts");
+/* harmony import */ var _images_upload__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_images_upload__WEBPACK_IMPORTED_MODULE_5__);
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -37039,11 +37043,15 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
 
 
+
+
 (function () {
   $(window).on('load', function () {
     copyModalsToFooter();
     setupLazyCarousels();
     _audio_theme__WEBPACK_IMPORTED_MODULE_3___default.a.initialize();
+    _image_upload__WEBPACK_IMPORTED_MODULE_4___default.a.initialize();
+    _images_upload__WEBPACK_IMPORTED_MODULE_5___default.a.initialize();
     new vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1___default.a({
       elements_selector: 'img.lazy'
     }); // Handle fullscreening gallery images
@@ -37541,6 +37549,253 @@ exports.default = Cart;
 
 /***/ }),
 
+/***/ "./resources/js/image-upload.ts":
+/*!**************************************!*\
+  !*** ./resources/js/image-upload.ts ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * An image upload box with preview
+ */
+var ImageUpload = /** @class */ (function () {
+    /**
+     * Initialize the ImageUpload
+     * @param wrapper - The element to render this object in
+     * @param image - Image currently uploaded, can be empty
+     * @param name - Name to put on the input element
+     * @param id - Id to put on the wrapper element
+     * @param invalid - Render the element with an invalid class?
+     * @param label - The text to add to our button
+     * @param canBeRemoved - Can the element be completely removed by the user?
+     */
+    function ImageUpload(wrapper, image, name, id, invalid, label, canBeRemoved) {
+        this.wrapper = wrapper;
+        this.image = image;
+        this.name = name;
+        this.id = id;
+        this.invalid = invalid;
+        this.label = label;
+        this.canBeRemoved = canBeRemoved;
+        this.initInput();
+        this.render();
+    }
+    /**
+     * Get all the data-image-upload elements and initialize as ImageUpload objects
+     */
+    ImageUpload.initialize = function () {
+        var wrappers = document.querySelectorAll('[data-image-upload]');
+        if (!wrappers)
+            return;
+        wrappers.forEach(function (wrapper) {
+            var image = wrapper.dataset.startImage || '';
+            var invalid = Boolean(wrapper.dataset.invalid);
+            var name = wrapper.dataset.name;
+            if (!name) {
+                console.error('Image upload needs a data-name property');
+                return;
+            }
+            var id = wrapper.dataset.id;
+            if (!id) {
+                console.error('Image upload needs a data-id property');
+                return;
+            }
+            var label = wrapper.dataset.label;
+            if (!label) {
+                console.error('Image upload needs a data-label property');
+                return;
+            }
+            new ImageUpload(wrapper, image, name, id, invalid, label, false);
+        });
+    };
+    /**
+     * Fill the wrapper element with our static elements and add a listener for when a user selects an image
+     */
+    ImageUpload.prototype.initInput = function () {
+        var renderDiv = document.createElement('div');
+        renderDiv.classList.add('js-render');
+        var input = document.createElement('input');
+        input.classList.add('js-image-upload__input');
+        input.classList.add('d-none');
+        input.setAttribute('type', 'file');
+        input.accept = 'image/*';
+        input.id = this.id + "-input";
+        input.name = this.name;
+        this.wrapper.append(renderDiv, input);
+        this.renderEl = renderDiv;
+        input.addEventListener('change', this.onImage.bind(this));
+    };
+    /**
+     * Get the file that was uploaded as a dataURL image and call setImage with it
+     * @param e Event of input element upload
+     */
+    ImageUpload.prototype.onImage = function (e) {
+        var _this = this;
+        var _a;
+        var file = (_a = e.target) === null || _a === void 0 ? void 0 : _a.files[0];
+        if (!file)
+            return;
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            var _a;
+            var src = (_a = e.target) === null || _a === void 0 ? void 0 : _a.result;
+            if (typeof src === 'string') {
+                _this.setImage(src);
+            }
+        };
+        reader.readAsDataURL(file);
+    };
+    /**
+     * Clears the image or removes it
+     */
+    ImageUpload.prototype.removeImage = function () {
+        if (this.image.length > 0) {
+            this.setImage('');
+        }
+        else if (this.canBeRemoved) {
+            this.wrapper.remove();
+        }
+    };
+    /**
+     * Set new image source and call render to re-render
+     * @param src Image source
+     */
+    ImageUpload.prototype.setImage = function (src) {
+        this.image = src;
+        this.render();
+    };
+    /**
+     * Render our image upload with the current state and bind a listener to the trash icon to remove the image
+     */
+    ImageUpload.prototype.render = function () {
+        var _a;
+        if (!this.renderEl) {
+            return;
+        }
+        this.renderEl.innerHTML = "\n            <div id=\"" + this.id + "\" class=\"" + (this.invalid ? 'is-invalid' : '') + " w-100 h-100 mb-2 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center\">\n                <i class=\"image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash\"></i>\n                <img alt=\"\" class=\"" + (this.image ? '' : 'd-none') + " w-100 h-100 object-fit-cover position-absolute\" src=\"" + this.image + "\">\n                <div class=\"js-upload-button\">\n                    <label for=\"" + this.id + "-input\" class=\"" + (this.image ? 'd-none' : '') + " js-label btn btn-primary\"><i class=\"fas fa-upload mr-2\"></i>\n                    <span class=\"v-align-middle\">\n                        " + this.label + "\n                    </span>\n                    </label>\n                </div>\n            </div>\n        ";
+        var trashIcon = this.wrapper.querySelector('.image-upload__remove-icon');
+        (_a = trashIcon) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.removeImage.bind(this));
+    };
+    return ImageUpload;
+}());
+exports.default = ImageUpload;
+
+
+/***/ }),
+
+/***/ "./resources/js/images-upload.ts":
+/*!***************************************!*\
+  !*** ./resources/js/images-upload.ts ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var image_upload_1 = __importDefault(__webpack_require__(/*! ./image-upload */ "./resources/js/image-upload.ts"));
+/**
+ * Mounts on an element and adds an image upload box, with the ability to add more
+ */
+var ImagesUpload = /** @class */ (function () {
+    /**
+     * Initialize the images upload element
+     * @param wrapper - The element we will render our imagesUpload in
+     * @param initialImageUploads - Amount of image uploads to start with
+     * @param name - Name of the file input element
+     * @param label - Label for the upload image button
+     * @param rowSize - How many image uploads to add on load more button click
+     */
+    function ImagesUpload(wrapper, initialImageUploads, name, label, rowSize) {
+        var _this = this;
+        this.wrapper = wrapper;
+        this.initialImageUploads = initialImageUploads;
+        this.name = name;
+        this.label = label;
+        this.rowSize = rowSize;
+        var boxWrapper = document.createElement('div');
+        this.wrapper.append(boxWrapper);
+        this.boxWrapper = boxWrapper;
+        this.loadMoreBtn = this.initLoadMoreBtn();
+        this.loadMoreBtn.addEventListener('click', function () {
+            var _a;
+            return (_a = _this.imageUploads).push.apply(_a, _this.getImageUploads(_this.rowSize));
+        });
+        this.imageUploads = this.getImageUploads(this.initialImageUploads);
+    }
+    /**
+     * Finds all elements with data-images-upload and initializes them
+     */
+    ImagesUpload.initialize = function () {
+        var wrappers = document.querySelectorAll('[data-images-upload]');
+        wrappers.forEach(function (wrapper) {
+            var initialImageUploads = parseInt(wrapper.dataset.initialBoxes || '1');
+            var name = wrapper.dataset.name;
+            var label = wrapper.dataset.label;
+            var rowSize = parseInt(wrapper.dataset.rowSize || '1');
+            if (!label) {
+                console.error('Images Upload needs the property data-label');
+                return;
+            }
+            if (!name) {
+                console.error('Images Upload needs the property data-name');
+                return;
+            }
+            new ImagesUpload(wrapper, initialImageUploads, name, label, rowSize);
+        });
+    };
+    /**
+     * Adds the specified amount of image upload elements and returns them
+     * @param amount - How many to add
+     */
+    ImagesUpload.prototype.getImageUploads = function (amount) {
+        var _a, _b;
+        var toReturn = [];
+        for (var i = 0; i < amount; i++) {
+            toReturn.push(new image_upload_1.default(this.addWrapper(), '', this.name, 
+            // Count imagesUpload and add our current index
+            this.name + "-upload-" + ((((_a = this.imageUploads) === null || _a === void 0 ? void 0 : _a.length) || 0) + i), false, this.label, 
+            // Don't allow destroy itself when index is 0, otherwise allow it
+            !(((((_b = this.imageUploads) === null || _b === void 0 ? void 0 : _b.length) || 0) + i) === 0)));
+        }
+        return toReturn;
+    };
+    /**
+     * Create a load more button markup and add it to the wrapper
+     * @returns {HTMLAnchorElement} - The button element
+     */
+    ImagesUpload.prototype.initLoadMoreBtn = function () {
+        var loadMore = document.createElement('a');
+        loadMore.classList.add('text-center', 'w-100', 'text-primary', 'd-block');
+        loadMore.innerHTML = "Laad meer foto's <i class=\"fas fa-caret-down\"></i>";
+        loadMore.href = '#';
+        this.wrapper.append(loadMore);
+        return loadMore;
+    };
+    /**
+     * Returns a wrapper for a new image upload
+     * @returns {Element} - The new wrapper where a imageupload element can be initialized
+     */
+    ImagesUpload.prototype.addWrapper = function () {
+        var wrapper = document.createElement('div');
+        // Append wrapper to parent wrapper
+        this.boxWrapper.append(wrapper);
+        return wrapper;
+    };
+    return ImagesUpload;
+}());
+exports.default = ImagesUpload;
+
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -37559,8 +37814,8 @@ exports.default = Cart;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

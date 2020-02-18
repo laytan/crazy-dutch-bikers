@@ -55,56 +55,17 @@
   {{ Aire::checkbox('is_private', 'Prive?')->checked($gallery->is_private) }}
   <fieldset class="border border-cdblg px-4 mb-4">
     <legend class="w-auto px-3">Foto's toevoegen</legend>
-    <div class="js-image-uploads row"></div>
-    <div class="d-flex justify-content-center w-100">
-      <a href="#" class="mt-4 mb-2 text-center" onclick="event.preventDefault(); addFileInputRow();">Meer foto's toevoegen</a>
-    </div>
+    <div
+      data-images-upload="true"
+      data-name="images[]"
+      data-label="Kies een foto"
+      data-initial-boxes="3"
+      data-row-size="3"
+    ></div>
   </fieldset>
   {{ Aire::close() }}
-  <div class="js-file-input-copy">
-    <div class="col-6 d-none mt-4" style="height: 300px;">
-      @component('components.image-upload', [ 'name' => 'images[]', 'id' => 'temp-id', 'initSelf' => false ])
-      Kies foto
-      @endcomponent
-    </div>
-  </div>
   @slot('footer')
   <button class="btn btn-primary" data-submit="#gallery-update-form-{{ $gallery->id }}">Gallerij bewerken</button>
   @endslot
-  <script>
-    window.addEventListener('load', addFileInputRow);
-
-    function addFileInputRow() {
-      addFileInput();
-      addFileInput();
-    }
-
-    var inputId = 1;
-    function addFileInput() {
-      const container = document.querySelector('.js-image-uploads');
-      const fileInput = document.querySelector('.js-file-input-copy div').cloneNode(true);
-      fileInput.classList.remove('d-none');
-      const label = fileInput.querySelector('.js-label');
-      const input = fileInput.querySelector('.js-input');
-      const xIcon = fileInput.querySelector('i');
-      xIcon.addEventListener('click', e => {
-        if(e.target.dataset.hasImage === 'false') {
-          fileInput.remove();
-        }
-      });
-      label.setAttribute('for', `image-${inputId}`);
-      input.setAttribute('id', `image-${inputId}`);
-      inputId++;
-      container.appendChild(fileInput);
-
-      const imageUpload = fileInput.querySelector('.image-upload');
-      imageUpload.setAttribute('id', `image-upload-${inputId}`);
-      initImageUpload(`#image-upload-${inputId}`);
-    }
-
-    function removePicture(picture) {
-      console.log('TODO: Implement');
-    }
-  </script>
 @endcomponent
 @endsection
