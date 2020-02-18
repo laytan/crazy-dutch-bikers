@@ -21,12 +21,10 @@
               <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-warning">Bewerken</a>
             @endcan
             @can('destroy-user', $user)
-              <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="POST">
-                @csrf
-                @method('DELETE')
-                <input type="hidden" name="user" value="{{ $user->id }}">
-                <input type="submit" value="Verwijder" class="btn btn-danger">
-              </form>
+              {{ Aire::open()->route('users.destroy', ['user' => $user->id]) }}
+              {{ Aire::input('user')->type('hidden')->value($user->id) }}
+              {{ Aire::submit('Verwijder') }}
+              {{ Aire::close() }}
             @endcan
           </div>
         </div>
