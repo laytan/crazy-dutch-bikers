@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Gallery;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
-use App\Gallery;
 use App\Picture;
 
 class GalleryController extends Controller
@@ -46,20 +46,12 @@ class GalleryController extends Controller
         $validated = $request->validated();
 
         // Create the gallery
-        $gallery             = new Gallery();
-        $gallery->title      = $validated['title'];
+        $gallery = new Gallery();
+        $gallery->title = $validated['title'];
         $gallery->is_private = isset($validated['is_private']) ? $validated['is_private'] : false;
         $gallery->save();
 
-        // Add the images
-        foreach ($validated['images'] as $image) {
-            // dd($image);
-            $pictureUrl = $image->store("galleries/$gallery->title", ['disk' => 'private']);
-            $picture             = new Picture();
-            $picture->gallery_id = $gallery->id;
-            $picture->url        = $pictureUrl;
-            $picture->save();
-        }
+        $gallery->addPictures($validated['images']);
 
         return redirect()->route('galleries.index')->with('success', 'Gallerij aangemaakt');
     }
@@ -79,6 +71,8 @@ class GalleryController extends Controller
         }
 
         // TODO: Add new pictures to the gallery
+        dd($validatedData);
+        $gallery->addPictures($validatedData['images']);
 
         $gallery->save();
         return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
