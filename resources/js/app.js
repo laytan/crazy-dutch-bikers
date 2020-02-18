@@ -9,7 +9,7 @@ import AudioTheme from './audio-theme';
     copyModalsToFooter();
     setupLazyCarousels();
 
-    new AudioTheme(document.querySelector('.js-audio-player'), document.querySelector('.js-audio-player__hint'));
+    AudioTheme.initialize();
 
     new LazyLoad({
       elements_selector: 'img.lazy'
