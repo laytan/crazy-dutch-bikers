@@ -1,8 +1,15 @@
-{{-- 
-@param string $name      - Input name attribute.
-@param string $id        - Unique id to differentiate from other image uploads
-@param boolean $initSelf - Should the image upload initialize itself? call initImageUpload with the id if set to false
-@param string $old       - Start with an image? can be false or the url to the image
+<div data-image-upload="true" data-start-image="{{ $old }}" data-name="{{ $name }}" data-id="{{ $id }}" @error($name) data-invalid="true" @enderror data-label="{{ $slot }}">
+    <div class="js-render">
+
+    </div>
+    <input type="file" class="js-media-upload__input d-none" accept="image/*">
+</div>
+
+{{--
+@param string $name                - Input name attribute.
+@param string $id                  - Unique id to differentiate from other image uploads
+@param boolean|undefined $initSelf - Should the image upload initialize itself? call initImageUpload with the id if set to false
+@param string|undefined $old       - Start with an image? can be false or the url to the image
 --}}
 <div id="{{ $id }}" class="@error($name) is-invalid @enderror w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
   <i data-has-image="false" class="image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash"></i>
@@ -10,10 +17,10 @@
   <div class="js-upload-button">
     <label for="{{ $id }}-input" class="js-label btn btn-primary"><i class="fas fa-upload mr-2"></i>
       <span class="v-align-middle">
-        {{ $slot }}  
+        {{ $slot }}
       </span>
     </label>
-    <input id="{{ $id }}-input" type="file" accept="image/*" name="{{ $name }}" class="js-input d-none"> 
+    <input id="{{ $id }}-input" type="file" accept="image/*" name="{{ $name }}" class="js-input d-none">
   </div>
 </div>
 @error($name)
@@ -48,7 +55,9 @@ function initImageUpload(selector) {
 }
 
 function populateOnImage(imageUpload, input) {
+      console.log('populate', input);
   input.addEventListener('change', e => {
+      console.log('change', e);
     if(!e.target.files || !e.target.files[0]) {
       return;
     }
@@ -56,7 +65,7 @@ function populateOnImage(imageUpload, input) {
     reader.onload = e => {
       setImage(imageUpload, e.target.result);
     };
-    reader.readAsDataURL(e.target.files[0]);  
+    reader.readAsDataURL(e.target.files[0]);
   });
 }
 
