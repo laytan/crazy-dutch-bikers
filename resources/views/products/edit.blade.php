@@ -23,14 +23,14 @@
       {{ Aire::textArea('description', 'Beschrijving')->rows(10) }}
     </div>
     <div class="col-4" style="height: 335px;">
-      @component('components.image-upload', [
-        'id' => 'product_picture',
-        'name' => 'product_picture',
-        'initSelf' => true,
-        'old' => Storage::url($product->product_picture),
-      ])
-      Productfoto kiezen
-      @endcomponent
+      <div
+        data-image-upload="true"
+        data-start-image="{{ Storage::url($product->product_picture) }}"
+        data-name="product_picture"
+        data-id="product_picture"
+        @error("product_picture") data-invalid="true" @enderror
+        data-label="Kies product foto"
+      ></div>
     </div>
   </div>
   {{ Aire::submit('Bewerken') }}

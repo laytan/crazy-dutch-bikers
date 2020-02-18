@@ -17,10 +17,15 @@
         @endcan
       </div>
       <div class="col-6">
-        <div style="height: 400px;" class="mb-3">
-          @component('components.image-upload', ['name' => 'profile_picture', 'id' => 'profile-picture', 'initSelf' => true])
-          Profiel foto
-          @endcomponent
+        <div class="mb-3">
+          <div
+            data-image-upload="true"
+            data-start-image=""
+            data-name="profile_picture"
+            data-id="profile_picture"
+            @error('profile_picture') data-invalid="true" @enderror
+            data-label="Profiel foto"
+          ></div>
           </div>
         </div>
       </div>

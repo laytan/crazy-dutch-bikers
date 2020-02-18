@@ -16,10 +16,15 @@
     <div class="col-8">
       {{ Aire::textArea('description', 'Beschrijving')->rows(10) }}
     </div>
-    <div class="col-4" style="height: 335px;">
-      @component('components.image-upload', ['id' => 'product_picture', 'name' => 'product_picture', 'initSelf' => true])
-      Productfoto kiezen
-      @endcomponent
+    <div class="col-4">
+      <div
+        data-image-upload="true"
+        data-start-image=""
+        data-name="product_picture"
+        data-id="product_picture"
+        @error("product_picture") data-invalid="true" @enderror
+        data-label="Kies productfoto"
+      ></div>
     </div>
   </div>
   {{ Aire::submit('Aanmaken') }}
