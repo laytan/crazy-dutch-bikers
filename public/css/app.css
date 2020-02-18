@@ -20230,6 +20230,7 @@ a:hover {
 .image-upload {
   background-size: cover;
   background-position: center;
+  min-height: 350px;
 }
 .image-upload .image-upload__remove-icon {
   z-index: 5;

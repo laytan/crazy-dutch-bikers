@@ -4,6 +4,8 @@ import LazyLoad from 'vanilla-lazyload';
 import Cart from './cart';
 window.Cart = Cart;
 import AudioTheme from './audio-theme';
+import ImageUpload from './image-upload';
+import ImagesUpload from './images-upload';
 
 (() => {
   $(window).on('load', () => {
@@ -11,6 +13,8 @@ import AudioTheme from './audio-theme';
     setupLazyCarousels();
 
     AudioTheme.initialize();
+    ImageUpload.initialize();
+    ImagesUpload.initialize();
 
     new LazyLoad({
       elements_selector: 'img.lazy'

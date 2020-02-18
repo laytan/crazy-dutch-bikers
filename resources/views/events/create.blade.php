@@ -8,13 +8,14 @@
   {{ Aire::input('title', 'Titel *') }}
   {{ Aire::textArea('description', 'Beschrijving *') }}
   {{ Aire::textArea('location', 'Locatie *') }}
-  <div class="row mb-2">
-    <div class="col-4" style="height: 350px;">
-      @component('components.image-upload', ['name' => 'picture', 'id' => 'picture', 'initSelf' => true])
-      Foto *
-      @endcomponent
-    </div>
-  </div>
+  <div
+    data-image-upload="true"
+    data-start-image=""
+    data-name="picture"
+    data-id="picture"
+    @error('picture') data-invalid="true" @enderror
+    data-label="Kies foto"
+  ></div>
   <div class="row">
     <div class="col-6">
       {{ Aire::date('date', 'Datum *') }}
