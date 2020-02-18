@@ -70,8 +70,6 @@ class GalleryController extends Controller
             $gallery->is_private = false;
         }
 
-        // TODO: Add new pictures to the gallery
-        dd($validatedData);
         $gallery->addPictures($validatedData['images']);
 
         $gallery->save();
