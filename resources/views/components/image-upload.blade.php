@@ -1,3 +1,9 @@
+{{-- 
+@param string $name      - Input name attribute.
+@param string $id        - Unique id to differentiate from other image uploads
+@param boolean $initSelf - Should the image upload initialize itself? call initImageUpload with the id if set to false
+@param string $old       - Start with an image? can be false or the url to the image
+--}}
 <div id="{{ $id }}" class="@error($name) is-invalid @enderror w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
   <i data-has-image="false" class="image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash"></i>
   <img alt="" class="d-none w-100 h-100 object-fit-cover position-absolute">
