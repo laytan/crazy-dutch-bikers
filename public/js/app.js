@@ -17932,7 +17932,7 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
   $(window).on('load', function () {
     copyModalsToFooter();
     setupLazyCarousels();
-    new _audio_theme__WEBPACK_IMPORTED_MODULE_3___default.a(document.querySelector('.js-audio-player'), document.querySelector('.js-audio-player__hint'));
+    _audio_theme__WEBPACK_IMPORTED_MODULE_3___default.a.initialize();
     new vanilla_lazyload__WEBPACK_IMPORTED_MODULE_1___default.a({
       elements_selector: 'img.lazy'
     }); // Handle fullscreening gallery images
@@ -18029,29 +18029,33 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
+var Status;
+(function (Status) {
+    Status["Muted"] = "MUTED";
+    Status["Paused"] = "PAUSED";
+    Status["Playing"] = "PLAYING";
+    Status["Ended"] = "ENDED";
+    Status["Loading"] = "LOADING";
+})(Status || (Status = {}));
 var AudioTheme = /** @class */ (function () {
-    function AudioTheme(wrapper, hint) {
-        var _a;
+    function AudioTheme(wrapper, songName) {
         this.wrapper = wrapper;
-        this.hint = hint;
-        this.state = 'start'; // start, pause, playing, ended
+        this.songName = songName;
         this.audioElement = wrapper.getElementsByTagName('audio')[0];
-        this.playButton = wrapper.querySelector('.js-audio-player__play');
-        this.progress = wrapper.getElementsByTagName('progress')[0];
-        this.currentTime = wrapper.querySelector('.js-audio-player__current');
-        var duration = wrapper.querySelector('.js-audio-player__duration');
-        if (duration) {
-            duration.textContent = AudioTheme.parseTime(this.audioElement.duration);
-        }
-        (_a = this.playButton) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.play.bind(this));
-        this.audioElement.addEventListener('ended', this.ended.bind(this));
-        this.tryAutoplay();
-        setInterval(this.updateProgress.bind(this), 1000);
+        this.state = {
+            status: Status.Loading,
+            currentTime: 0,
+        };
+        this.duration = this.audioElement.duration;
+        this.start();
     }
-    // TODO: Clean up
+    /**
+     * Turns 80 into 01:20 etc.
+     * @param val number of seconds
+     */
     AudioTheme.parseTime = function (val) {
         var string = val.toString();
-        var numberOfSeconds = parseInt(string, 10); // don't forget the second param
+        var numberOfSeconds = parseInt(string, 10);
         var hours = Math.floor(numberOfSeconds / 3600);
         var minutes = Math.floor((numberOfSeconds - (hours * 3600)) / 60);
         var seconds = numberOfSeconds - (hours * 3600) - (minutes * 60);
@@ -18063,49 +18067,150 @@ var AudioTheme = /** @class */ (function () {
         if (seconds < 10) {
             stringSeconds = "0" + seconds;
         }
-        return stringMinutes + ':' + stringSeconds;
+        return stringMinutes + ":" + stringSeconds;
     };
-    AudioTheme.prototype.tryAutoplay = function () {
-        var _this = this;
-        this.audioElement.play()
-            .then(function () {
-            _this.play();
-        })
-            .catch(function () {
-            _this.hintPlay();
+    /**
+     * Create objects for all data-audio-player=""
+     */
+    AudioTheme.initialize = function () {
+        var audioPlayers = document.querySelectorAll('[data-audio-player=""');
+        audioPlayers.forEach(function (player) {
+            if (!(player instanceof HTMLDivElement)) {
+                console.error('Audio player should be a div element');
+                return;
+            }
+            var songName = player.dataset.songName;
+            if (!songName) {
+                console.error('Audio element needs a data-song-name attribute');
+                return;
+            }
+            new AudioTheme(player, songName);
         });
     };
-    AudioTheme.prototype.hintPlay = function () {
-        this.hint.classList.add('d-block');
+    /**
+     * Try to autoplay the audio, if it didn't work mute and play it that way
+     */
+    AudioTheme.prototype.start = function () {
+        var _this = this;
+        this.audioElement.addEventListener('ended', function () { return _this.setState({ status: Status.Ended }); });
+        this.audioElement.play()
+            .then(function () {
+            // Autoplay worked
+            _this.setState({
+                status: Status.Playing,
+            });
+        })
+            .catch(function () {
+            // Autoplay did not work, mute audio and play again
+            _this.audioElement.muted = true;
+            _this.audioElement.play();
+            _this.setState({
+                status: Status.Muted,
+            });
+        }).finally(function () {
+            setInterval(_this.updateTime.bind(_this), 1000);
+        });
     };
-    // TODO: setState function so state is in one place
-    AudioTheme.prototype.play = function () {
-        switch (this.state) {
-            case 'playing':
-                this.audioElement.pause();
-                this.state = 'pause';
+    /**
+     * Update time when we have the audioelement actually playing
+     */
+    AudioTheme.prototype.updateTime = function () {
+        if (this.state.status === Status.Playing || this.state.status === Status.Muted) {
+            this.setState({ currentTime: this.audioElement.currentTime });
+        }
+    };
+    /**
+     * Change the state and render with that state
+     * @param state - The state you wish to change
+     */
+    AudioTheme.prototype.setState = function (state) {
+        this.state = {
+            status: state.status || this.state.status,
+            currentTime: state.currentTime || this.state.currentTime,
+        };
+        this.render();
+    };
+    /**
+     * Handle click on the current icon
+     */
+    AudioTheme.prototype.onClickIcon = function () {
+        switch (this.state.status) {
+            case Status.Muted:
+                this.audioElement.muted = false;
+                this.setState({ status: Status.Playing });
                 break;
-            case 'ended':
+            case Status.Ended:
                 this.audioElement.currentTime = 0;
                 this.audioElement.play();
-                this.state = 'playing';
+                this.setState({ status: Status.Playing });
                 break;
-            default:
+            case Status.Loading:
+                // Try starting again
+                this.start();
+                break;
+            case Status.Paused:
                 this.audioElement.play();
-                this.state = 'playing';
+                this.setState({ status: Status.Playing });
+                break;
+            case Status.Playing:
+                this.audioElement.pause();
+                this.setState({ status: Status.Paused });
                 break;
         }
     };
-    AudioTheme.prototype.ended = function () {
-        this.state = 'ended';
+    /**
+     * On click progress bar check the click percent and adjust current time
+     * @param e progress bar click event
+     */
+    AudioTheme.prototype.seek = function (e) {
+        var target = e.target;
+        var percent = e.offsetX / target.offsetWidth;
+        this.audioElement.currentTime = percent * this.duration;
+        this.setState({ currentTime: this.audioElement.currentTime });
     };
-    // TODO: rename
-    AudioTheme.prototype.updateProgress = function () {
-        this.wrapper.setAttribute('data-state', this.state);
-        this.progress.value = (this.audioElement.currentTime / this.audioElement.duration);
-        if (this.currentTime) {
-            this.currentTime.textContent = AudioTheme.parseTime(this.audioElement.currentTime);
+    /**
+     * Return the progress percentage that the progress element takes
+     */
+    AudioTheme.prototype.getProgress = function () {
+        return (this.state.currentTime / this.duration).toString();
+    };
+    /**
+     * Return an icon based on the status
+     */
+    AudioTheme.prototype.getIcon = function () {
+        switch (this.state.status) {
+            case Status.Muted:
+                return '<i class="fas fa-volume-up"></i>';
+            case Status.Paused:
+                return '<i class="fas fa-play"></i>';
+            case Status.Playing:
+                return '<i class="fas fa-pause"></i>';
+            case Status.Ended:
+                return '<i class="fas fa-redo"></i>';
+            case Status.Loading:
+                return '<i class="fas fa-spinner fa-spin"></i>';
         }
+    };
+    /**
+     * Let the user know that the audio is muted because autoplay is blocked
+     */
+    AudioTheme.prototype.getMutedNotice = function () {
+        return "\n    <div>\n      We have muted your audio because playing our theme song is blocked by your browser. You can unmute it here.\n    </div>\n    ";
+    };
+    /**
+     * Render the element with the current state
+     */
+    AudioTheme.prototype.render = function () {
+        var _a, _b;
+        var renderIn = this.wrapper.querySelector('.js-render');
+        if (!renderIn)
+            return;
+        renderIn.innerHTML = "\n    <div class=\"js-audio-player audio-player bg-cdbg-opaque border-cdbb fixed-top py-1\" data-bpm=\"72\" data-state=\"" + this.state.status + "\">\n      <div class=\"d-flex justify-content-around align-items-center\">  \n        <div class=\"audio-player__play\">\n          " + this.getIcon() + "\n        </div>\n        <div class=\"d-flex align-items-center flex-column pr-3 pl-2\">\n          <p class=\"mb-0 lead\">\n            " + this.songName + "\n          </p>\n          <progress value=\"" + this.getProgress() + "\" max=\"1\" class=\"mw-100 cursor-pointer\"></progress>\n          <div class=\"d-flex justify-content-between w-100\">\n            <small class=\"js-audio-player__current\">\n              " + AudioTheme.parseTime(this.state.currentTime) + "\n            </small>\n            <small class=\"js-audio-player__duration\">\n              " + AudioTheme.parseTime(this.duration) + "\n            </small>\n          </div>\n        </div>\n      </div>\n    </div>\n    " + (this.state.status === Status.Muted ? this.getMutedNotice() : '') + "\n    ";
+        // Set up event listeners
+        var icon = renderIn.querySelector('.audio-player__play i');
+        (_a = icon) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.onClickIcon.bind(this));
+        var progress = renderIn.querySelector('progress');
+        (_b = progress) === null || _b === void 0 ? void 0 : _b.addEventListener('click', this.seek.bind(this));
     };
     return AudioTheme;
 }());
@@ -18302,8 +18407,8 @@ exports.default = Cart;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
