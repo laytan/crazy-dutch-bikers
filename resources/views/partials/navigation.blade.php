@@ -18,7 +18,7 @@
         <a href="{{ url('/') }}" class="navbar-brand navigation__logo">
             <img src="{{ url('/images/cdb-logo.png') }}" alt="Crazy Dutch Bikers logo">
         </a>
-        <button class="btn btn-primary btn-sm align-self-center">
+        <button class="btn btn-primary btn-sm align-self-center" data-toggle="modal" data-target="#login">
             <i class="fas fa-user-lock"></i> Members only
         </button>
         <button
@@ -28,9 +28,11 @@
         data-toggle="collapse"
         data-target="#navigation"
         type="button">
-            <span class="navigation-toggler__bar"></span>
-            <span class="navigation-toggler__bar"></span>
-            <span class="navigation-toggler__bar"></span>
-        </button>
-    </div>
+        <span class="navigation-toggler__bar"></span>
+        <span class="navigation-toggler__bar"></span>
+        <span class="navigation-toggler__bar"></span>
+    </button>
+</div>
 </nav>
+{{-- Login modal --}}
+@include('partials.login')
