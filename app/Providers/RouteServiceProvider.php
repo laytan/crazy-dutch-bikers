@@ -35,7 +35,7 @@ class RouteServiceProvider extends ServiceProvider
 
         parent::boot();
 
-        Route::bind('picture', fn($file) => Picture::with('galleries')->where('url', 'like', "%$file")->firstOrFail());
+        Route::bind('picture', fn($file) => Picture::with('gallery')->where('url', 'like', "%$file")->firstOrFail());
     }
 
     /**
