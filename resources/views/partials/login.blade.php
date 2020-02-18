@@ -1,5 +1,5 @@
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
-{{ Aire::open()->route('login')->id('loginForm') }}
+{{ Aire::open()->route('login')->method('POST')->id('loginForm')->validate('App\Http\Requests\LoginRequest') }}
 <p>
   Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
 </p>
@@ -7,41 +7,6 @@
 {{ Aire::password('password', 'Wachtwoord') }}
 {{ Aire::checkbox('remember', 'Onthoud mijn gegevens')->checked(old('remember') ? true : false) }}
 {{ Aire::close() }}
-{{-- <form method="POST" action="{{ route('login') }}" id="loginForm">
-  @csrf
-  <p>
-    Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
-  </p>
-  <div class="form-group">
-    <label for="email">E-Mail</label>
-    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email"
-        value="{{ old('email') }}" required autocomplete="email" autofocus>
-    @error('email')
-    <span class="invalid-feedback" role="alert">
-      <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-  </div>
-  <div class="form-group">
-    <label for="password">Wachtwoord</label>
-    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password"
-      required autocomplete="current-password">
-    @error('password')
-    <span class="invalid-feedback" role="alert">
-      <strong>{{ $message }}</strong>
-    </span>
-    @enderror
-  </div>
-  <div class="form-group">
-    <div class="form-check">
-      <input class="form-check-input" type="checkbox" name="remember" id="remember"
-        {{ old('remember') ? 'checked' : '' }}>
-      <label class="form-check-label" for="remember">
-        Onthoud mijn gegevens
-      </label>
-    </div>
-  </div>
-</form> --}}
 @slot('footer')
 <button dusk="login-submit" class="btn-cdbb btn" data-submit="#loginForm">Log in!</button>
 @endslot
