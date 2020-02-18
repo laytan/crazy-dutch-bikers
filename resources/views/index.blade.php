@@ -1,34 +1,13 @@
 @extends('layouts.app')
 
 @section('above-nav')
-<!-- TODO: Move to a render function in AudioTheme class -->
-<div class="js-audio-player audio-player bg-cdbg-opaque border-cdbb fixed-top py-1" data-bpm="72">
-  <div class="d-flex justify-content-around align-items-center">  
-    <div class="audio-player__play">
-      <!-- TODO: Change icon depending on data-state on wrapper -->
-      <i class="far fa-play-circle text-primary js-audio-player__play"></i>
-    </div>
-    <div class="d-flex align-items-center flex-column pr-3 pl-2">
-      <p class="mb-0 lead">
-        Wild Ride
-      </p>
-      <progress value="0" max="1" class="mw-100"></progress>
-      <div class="d-flex justify-content-between w-100">
-        <small class="js-audio-player__current">
-          00:00
-        </small>
-        <small class="js-audio-player__duration">
-          00:00
-        </small>
-      </div>
-    </div>
-  </div>
+<div class="audio-player" data-audio-player="" data-song-name="Wild Ride">
   <audio>
     <source src="{{ url('/audio/theme.mpeg') }}" type="audio/mpeg">
-  </audio> 
-</div>
-<div class="js-audio-player__hint d-none">
-  We have muted your audio because playing our theme song is blocked by your browser. You can unmute it here.
+  </audio>
+  <div class="js-render">
+    {{-- The actual audio element will render here --}}
+  </div>
 </div>
 <div class="welcome-background container-fluid">
   <div class="welcome text-center p-5 d-flex justify-content-center align-items-center flex-column position-absolute">
