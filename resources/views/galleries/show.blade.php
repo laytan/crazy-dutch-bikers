@@ -23,7 +23,7 @@
           <img class="lazy" data-src="{{ Storage::url($gallery->pictures[$i]->url) }}">
           <i class="fa fa-close"></i>
         </div>
-      @php } @endphp 
+      @php } @endphp
     </div>
     <div class="gallery-grid__column">
       @php for($i = ceil((count($gallery->pictures) / 4) * 2); $i < ceil((count($gallery->pictures) / 4) * 3); $i++) { @endphp
@@ -71,40 +71,40 @@
   @slot('footer')
   <button class="btn btn-primary" data-submit="#gallery-update-form-{{ $gallery->id }}">Gallerij bewerken</button>
   @endslot
+  <script>
+    window.addEventListener('load', addFileInputRow);
+
+    function addFileInputRow() {
+      addFileInput();
+      addFileInput();
+    }
+
+    var inputId = 1;
+    function addFileInput() {
+      const container = document.querySelector('.js-image-uploads');
+      const fileInput = document.querySelector('.js-file-input-copy div').cloneNode(true);
+      fileInput.classList.remove('d-none');
+      const label = fileInput.querySelector('.js-label');
+      const input = fileInput.querySelector('.js-input');
+      const xIcon = fileInput.querySelector('i');
+      xIcon.addEventListener('click', e => {
+        if(e.target.dataset.hasImage === 'false') {
+          fileInput.remove();
+        }
+      });
+      label.setAttribute('for', `image-${inputId}`);
+      input.setAttribute('id', `image-${inputId}`);
+      inputId++;
+      container.appendChild(fileInput);
+
+      const imageUpload = fileInput.querySelector('.image-upload');
+      imageUpload.setAttribute('id', `image-upload-${inputId}`);
+      initImageUpload(`#image-upload-${inputId}`);
+    }
+
+    function removePicture(picture) {
+      console.log('TODO: Implement');
+    }
+  </script>
 @endcomponent
-<script>
-  window.addEventListener('load', addFileInputRow);
-
-  function addFileInputRow() {
-    addFileInput();
-    addFileInput();
-  }
-
-  let inputId = 1;
-  function addFileInput() {
-    const container = document.querySelector('.js-image-uploads');
-    const fileInput = document.querySelector('.js-file-input-copy div').cloneNode(true);
-    fileInput.classList.remove('d-none');
-    const label = fileInput.querySelector('.js-label');
-    const input = fileInput.querySelector('.js-input');
-    const xIcon = fileInput.querySelector('i');
-    xIcon.addEventListener('click', e => {
-      if(e.target.dataset.hasImage === 'false') {
-        fileInput.remove();
-      }
-    });
-    label.setAttribute('for', `image-${inputId}`);
-    input.setAttribute('id', `image-${inputId}`);
-    inputId++;
-    container.appendChild(fileInput);
-
-    const imageUpload = fileInput.querySelector('.image-upload');
-    imageUpload.setAttribute('id', `image-upload-${inputId}`);
-    initImageUpload(`#image-upload-${inputId}`);
-  } 
-
-  function removePicture(picture) {
-    console.log('TODO: Implement');
-  }
-</script>
 @endsection
