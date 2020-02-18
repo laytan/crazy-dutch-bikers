@@ -1,3 +1,4 @@
+require('./bootstrap');
 import 'bootstrap';
 import LazyLoad from 'vanilla-lazyload';
 import Cart from './cart';
