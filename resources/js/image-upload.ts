@@ -1,18 +1,32 @@
-class ImageUpload {
+/**
+ * An image upload box with preview
+ */
+export default class ImageUpload {
+    // Element to render the dynamic parts of the ImageUpload in
+    private renderEl: HTMLDivElement|undefined;
 
-    private input: HTMLInputElement;
-
-    constructor(private wrapper: Element, private image: string, private name: string, private id: string, private invalid: boolean, private label: string) {
-        const input = this.wrapper.querySelector('input.js-image-upload__input') as HTMLInputElement;
-        this.input = input;
-
+    /**
+     * Initialize the ImageUpload
+     * @param wrapper - The element to render this object in
+     * @param image - Image currently uploaded, can be empty
+     * @param name - Name to put on the input element
+     * @param id - Id to put on the wrapper element
+     * @param invalid - Render the element with an invalid class?
+     * @param label - The text to add to our button
+     * @param canBeRemoved - Can the element be completely removed by the user?
+     */
+    constructor(private wrapper: Element, private image: string, private name: string, private id: string, private invalid: boolean, private label: string, private canBeRemoved: boolean) {
         this.initInput();
         this.render();
     }
 
-    static Initialize() {
-        const wrappers = document.querySelectorAll('[data-image-upload=""]') as NodeListOf<HTMLDivElement>;
+    /**
+     * Get all the data-image-upload elements and initialize as ImageUpload objects
+     */
+    static initialize() {
+        const wrappers = document.querySelectorAll('[data-image-upload]') as NodeListOf<HTMLDivElement>;
         if(!wrappers) return;
+
         wrappers.forEach(wrapper => {
             const image = wrapper.dataset.startImage || '';
 
@@ -36,21 +50,35 @@ class ImageUpload {
                 return;
             }
 
-            new ImageUpload(wrapper, image, name, id, invalid, label);
+            new ImageUpload(wrapper, image, name, id, invalid, label, false);
         });
     }
 
+    /**
+     * Fill the wrapper element with our static elements and add a listener for when a user selects an image
+     */
     private initInput() {
-        this.input.name = this.name;
-        this.input.id = `${this.id}-input`;
-
-        this.input.addEventListener('change', this.onImage.bind(this));
+    const renderDiv = document.createElement('div');
+    renderDiv.classList.add('js-render');
+    const input = document.createElement('input');
+    input.classList.add('js-image-upload__input');
+    input.classList.add('d-none');
+    input.setAttribute('type', 'file');
+    input.accept = 'image/*';
+    input.id = `${this.id}-input`;
+    input.name = this.name;
+    this.wrapper.append(renderDiv, input);
+    this.renderEl = renderDiv;
+    input.addEventListener('change', this.onImage.bind(this));
     }
 
-    private onImage(e: Event) {
-        if(!e.target.files || !e.target.files[0]) {
-            return;
-        }
+    /**
+     * Get the file that was uploaded as a dataURL image and call setImage with it
+     * @param e Event of input element upload
+     */
+    private onImage(e: any) {
+        const file = e.target?.files[0];
+        if(!file) return;
 
         const reader = new FileReader();
         reader.onload = e => {
@@ -59,23 +87,39 @@ class ImageUpload {
                 this.setImage(src);
             }
         };
-        const file = e.target?.files[0];
-        if(file) {
-            reader.readAsDataURL(file);
+
+        reader.readAsDataURL(file);
+    }
+
+    /**
+     * Clears the image or removes it
+     */
+    private removeImage() {
+        if(this.image.length > 0) {
+            this.setImage('');
+        } else if(this.canBeRemoved) {
+            this.wrapper.remove();
         }
     }
 
+    /**
+     * Set new image source and call render to re-render
+     * @param src Image source
+     */
     private setImage(src: string) {
         this.image = src;
         this.render();
     }
 
+    /**
+     * Render our image upload with the current state and bind a listener to the trash icon to remove the image
+     */
     private render() {
-        const render = this.wrapper.querySelector('.js-render');
-        if(!render) return;
-
-        render.innerHTML = `
-            <div id="${this.id}" class="${this.invalid ? 'is-invalid' : ''} w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
+        if(!this.renderEl) {
+            return;
+        }
+        this.renderEl.innerHTML = `
+            <div id="${this.id}" class="${this.invalid ? 'is-invalid' : ''} w-100 h-100 mb-2 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
                 <i class="image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash"></i>
                 <img alt="" class="${this.image ? '' : 'd-none'} w-100 h-100 object-fit-cover position-absolute" src="${this.image}">
                 <div class="js-upload-button">
@@ -87,5 +131,8 @@ class ImageUpload {
                 </div>
             </div>
         `;
+
+        const trashIcon = this.wrapper.querySelector('.image-upload__remove-icon');
+        trashIcon?.addEventListener('click', this.removeImage.bind(this));
     }
 }
