@@ -2,18 +2,19 @@ enum Status {
   Muted = "MUTED",
   Paused = "PAUSED",
   Playing = "PLAYING",
-  Ended = "ENDED",
-  Loading = "LOADING",
+  Ended = "ENDED"
 }
 
 interface PartialState {
   status?: Status,
   currentTime?: number,
+  shouldHint?: boolean,
 }
 
 interface State {
   status: Status,
   currentTime: number,
+  shouldHint: boolean,
 }
 
 export default class AudioTheme {
@@ -21,19 +22,39 @@ export default class AudioTheme {
   private audioElement: HTMLAudioElement;
   private state: State;
   private duration: number;
-  private dismissedHint = false;
+  private dismissedHint: boolean;
 
   constructor (private wrapper: Element, private songName: string) {
     this.audioElement = wrapper.getElementsByTagName('audio')[0];
 
+    // Get localstorage item or false and turn into boolean
+    this.dismissedHint = ((localStorage.getItem('audioDismissedHint') || 'false') === 'true');
+    
     this.state = {
-      status: Status.Loading,
+      status: Status.Muted,
       currentTime: 0,
+      shouldHint: false,
     };
 
     this.duration = this.audioElement.duration;
-
+    
+    console.log(this);
     this.start();
+  }
+
+  static stringToStatus(status: string) : Status {
+    switch(status) {
+      case 'MUTED':
+        return Status.Muted;
+      case 'PAUSED':
+        return Status.Paused;
+      case 'PLAYING':
+        return Status.Playing;
+      case 'ENDED':
+        return Status.Ended;
+      default:
+        return Status.Muted;
+    }
   }
 
   /**
@@ -82,22 +103,18 @@ export default class AudioTheme {
    */
   private start() {
     this.audioElement.addEventListener('ended', () => this.setState({ status: Status.Ended }));
+    const sessionCurrentTime = parseInt(localStorage.getItem('audioCurrentTime') || '0');
 
     this.audioElement.play()
       .then(() => {
-        // Autoplay worked
-        this.setState({
-          status: Status.Playing,
-        });
+        const sessionStatus = localStorage.getItem('audioStatus') || 'PLAYING';
+        this.setState({ status: AudioTheme.stringToStatus(sessionStatus) });
       })
       .catch(() => {
         // Autoplay did not work, mute audio and play again
-        this.audioElement.muted = true;
-        this.audioElement.play();
-        this.setState({
-          status: Status.Muted,
-        });
+        this.setState({ status: Status.Muted, shouldHint: true });
       }).finally(() => {
+        this.setState({ currentTime: sessionCurrentTime });
         setInterval(this.updateTime.bind(this), 1000);
       });
   }
@@ -107,7 +124,7 @@ export default class AudioTheme {
    */
   private updateTime() {
     if(this.state.status === Status.Playing || this.state.status === Status.Muted) {
-      this.setState({ currentTime: this.audioElement.currentTime });
+      this.setState({});
     }
   }
 
@@ -116,39 +133,58 @@ export default class AudioTheme {
    * @param state - The state you wish to change
    */
   private setState(state: PartialState) {
-    this.state = {
-      status: state.status || this.state.status,
-      currentTime: state.currentTime || this.state.currentTime,
-    };
+    const prevState = Object.assign({}, this.state);
+    if(state.currentTime) {
+      this.audioElement.currentTime = state.currentTime;
+      this.state.currentTime = state.currentTime;
+    } else {
+      this.state.currentTime = this.audioElement.currentTime;
+    }
+    this.state.status = state.status || this.state.status;
+    this.state.shouldHint = state.shouldHint || this.state.shouldHint;
+
+    // Update localstorage to have it resume where it left of on another page
+    localStorage.setItem('audioCurrentTime', this.state.currentTime.toString());
+    localStorage.setItem('audioStatus', this.state.status);
+    localStorage.setItem('audioDismissedHint', this.dismissedHint.toString());
+
+    this.syncAudioElement(prevState);
     this.render();
+  }
+
+  private syncAudioElement(prevState: State) {
+    switch(this.state.status) {
+      case Status.Muted:
+        this.audioElement.muted = true;
+        this.audioElement.play().catch(() => {
+          console.warn('Autoplay on mute blocked');
+          this.setState({ status: Status.Paused, shouldHint: true });
+        });
+        break;
+      case Status.Paused:
+        this.audioElement.pause();
+        break;
+      case Status.Playing:
+        if(prevState.status === Status.Ended) {
+          this.audioElement.currentTime = 0;
+        } else if(prevState.status === Status.Muted) {
+          this.audioElement.muted = false;
+        }
+        this.audioElement.play();
+        break;
+    }
   }
 
   /**
    * Handle click on the current icon
    */
   private onClickIcon() {
-    switch(this.state.status) {
-      case Status.Muted:
-        this.audioElement.muted = false;
-        this.setState({ status: Status.Playing });
-        break;
-      case Status.Ended:
-        this.audioElement.currentTime = 0;
-        this.audioElement.play();
-        this.setState({ status: Status.Playing });
-        break;
-      case Status.Loading:
-        // Try starting again
-        this.start();
-        break;
-      case Status.Paused:
-        this.audioElement.play();
-        this.setState({ status: Status.Playing });
-        break;
-      case Status.Playing:
-        this.audioElement.pause();
-        this.setState({ status: Status.Paused });
-        break;
+    if([Status.Ended, Status.Muted, Status.Paused].includes(this.state.status)) {
+      this.setState({ status: Status.Playing });
+    } else if(this.state.status === Status.Playing) {
+      this.setState({ status: Status.Paused });
+    } else {
+      this.start();
     }
   }
 
@@ -160,8 +196,7 @@ export default class AudioTheme {
   private seek(e: MouseEvent) {
     const target = e.target as HTMLProgressElement;
     const percent = e.offsetX / target.offsetWidth;
-    this.audioElement.currentTime = percent * this.duration;
-    this.setState({ currentTime: this.audioElement.currentTime });
+    this.setState({ currentTime: percent * this.duration });
   }
 
   /**
@@ -184,20 +219,18 @@ export default class AudioTheme {
         return '<i class="fas fa-pause"></i>';
       case Status.Ended:
         return '<i class="fas fa-redo"></i>';
-      case Status.Loading:
-        return '<i class="fas fa-spinner fa-spin"></i>'
     }
   }
 
   /**
    * Let the user know that the audio is muted because autoplay is blocked
    */
-  private getMutedNotice() {
-    if(this.dismissedHint) {
+  private getMutedNotice(): string {
+    if(this.dismissedHint || !this.state.shouldHint) {
         return '';
     } else {
         return `
-        <div class="alert alert-warning alert-dismissible fade show position-absolute mr-3 mt-3 right-0 d-none d-lg-block" role="alert">
+        <div class="alert alert-warning alert-dismissible fade show position-lg-absolute m-3 right-0" role="alert">
             <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
@@ -235,7 +268,7 @@ export default class AudioTheme {
         </div>
       </div>
     </div>
-    ${ this.state.status === Status.Muted ? this.getMutedNotice() : '' }
+    ${ this.getMutedNotice() }
     `;
 
     // Set up event listeners
