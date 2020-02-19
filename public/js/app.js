@@ -37153,21 +37153,37 @@ var Status;
     Status["Paused"] = "PAUSED";
     Status["Playing"] = "PLAYING";
     Status["Ended"] = "ENDED";
-    Status["Loading"] = "LOADING";
 })(Status || (Status = {}));
 var AudioTheme = /** @class */ (function () {
     function AudioTheme(wrapper, songName) {
         this.wrapper = wrapper;
         this.songName = songName;
-        this.dismissedHint = false;
         this.audioElement = wrapper.getElementsByTagName('audio')[0];
+        // Get localstorage item or false and turn into boolean
+        this.dismissedHint = ((localStorage.getItem('audioDismissedHint') || 'false') === 'true');
         this.state = {
-            status: Status.Loading,
+            status: Status.Muted,
             currentTime: 0,
+            shouldHint: false,
         };
         this.duration = this.audioElement.duration;
+        console.log(this);
         this.start();
     }
+    AudioTheme.stringToStatus = function (status) {
+        switch (status) {
+            case 'MUTED':
+                return Status.Muted;
+            case 'PAUSED':
+                return Status.Paused;
+            case 'PLAYING':
+                return Status.Playing;
+            case 'ENDED':
+                return Status.Ended;
+            default:
+                return Status.Muted;
+        }
+    };
     /**
      * Turns 80 into 01:20 etc.
      * @param val number of seconds
@@ -37212,21 +37228,17 @@ var AudioTheme = /** @class */ (function () {
     AudioTheme.prototype.start = function () {
         var _this = this;
         this.audioElement.addEventListener('ended', function () { return _this.setState({ status: Status.Ended }); });
+        var sessionCurrentTime = parseInt(localStorage.getItem('audioCurrentTime') || '0');
         this.audioElement.play()
             .then(function () {
-            // Autoplay worked
-            _this.setState({
-                status: Status.Playing,
-            });
+            var sessionStatus = localStorage.getItem('audioStatus') || 'PLAYING';
+            _this.setState({ status: AudioTheme.stringToStatus(sessionStatus) });
         })
             .catch(function () {
             // Autoplay did not work, mute audio and play again
-            _this.audioElement.muted = true;
-            _this.audioElement.play();
-            _this.setState({
-                status: Status.Muted,
-            });
+            _this.setState({ status: Status.Muted, shouldHint: true });
         }).finally(function () {
+            _this.setState({ currentTime: sessionCurrentTime });
             setInterval(_this.updateTime.bind(_this), 1000);
         });
     };
@@ -37235,7 +37247,7 @@ var AudioTheme = /** @class */ (function () {
      */
     AudioTheme.prototype.updateTime = function () {
         if (this.state.status === Status.Playing || this.state.status === Status.Muted) {
-            this.setState({ currentTime: this.audioElement.currentTime });
+            this.setState({});
         }
     };
     /**
@@ -37243,38 +37255,59 @@ var AudioTheme = /** @class */ (function () {
      * @param state - The state you wish to change
      */
     AudioTheme.prototype.setState = function (state) {
-        this.state = {
-            status: state.status || this.state.status,
-            currentTime: state.currentTime || this.state.currentTime,
-        };
+        var prevState = Object.assign({}, this.state);
+        if (state.currentTime) {
+            this.audioElement.currentTime = state.currentTime;
+            this.state.currentTime = state.currentTime;
+        }
+        else {
+            this.state.currentTime = this.audioElement.currentTime;
+        }
+        this.state.status = state.status || this.state.status;
+        this.state.shouldHint = state.shouldHint || this.state.shouldHint;
+        // Update localstorage to have it resume where it left of on another page
+        localStorage.setItem('audioCurrentTime', this.state.currentTime.toString());
+        localStorage.setItem('audioStatus', this.state.status);
+        localStorage.setItem('audioDismissedHint', this.dismissedHint.toString());
+        this.syncAudioElement(prevState);
         this.render();
+    };
+    AudioTheme.prototype.syncAudioElement = function (prevState) {
+        var _this = this;
+        switch (this.state.status) {
+            case Status.Muted:
+                this.audioElement.muted = true;
+                this.audioElement.play().catch(function () {
+                    console.warn('Autoplay on mute blocked');
+                    _this.setState({ status: Status.Paused, shouldHint: true });
+                });
+                break;
+            case Status.Paused:
+                this.audioElement.pause();
+                break;
+            case Status.Playing:
+                if (prevState.status === Status.Ended) {
+                    this.audioElement.currentTime = 0;
+                }
+                else if (prevState.status === Status.Muted) {
+                    this.audioElement.muted = false;
+                }
+                this.audioElement.play();
+                break;
+        }
     };
     /**
      * Handle click on the current icon
      */
     AudioTheme.prototype.onClickIcon = function () {
-        switch (this.state.status) {
-            case Status.Muted:
-                this.audioElement.muted = false;
-                this.setState({ status: Status.Playing });
-                break;
-            case Status.Ended:
-                this.audioElement.currentTime = 0;
-                this.audioElement.play();
-                this.setState({ status: Status.Playing });
-                break;
-            case Status.Loading:
-                // Try starting again
-                this.start();
-                break;
-            case Status.Paused:
-                this.audioElement.play();
-                this.setState({ status: Status.Playing });
-                break;
-            case Status.Playing:
-                this.audioElement.pause();
-                this.setState({ status: Status.Paused });
-                break;
+        if ([Status.Ended, Status.Muted, Status.Paused].includes(this.state.status)) {
+            this.setState({ status: Status.Playing });
+        }
+        else if (this.state.status === Status.Playing) {
+            this.setState({ status: Status.Paused });
+        }
+        else {
+            this.start();
         }
     };
     /**
@@ -37285,8 +37318,7 @@ var AudioTheme = /** @class */ (function () {
     AudioTheme.prototype.seek = function (e) {
         var target = e.target;
         var percent = e.offsetX / target.offsetWidth;
-        this.audioElement.currentTime = percent * this.duration;
-        this.setState({ currentTime: this.audioElement.currentTime });
+        this.setState({ currentTime: percent * this.duration });
     };
     /**
      * Return the progress percentage that the progress element takes
@@ -37307,19 +37339,17 @@ var AudioTheme = /** @class */ (function () {
                 return '<i class="fas fa-pause"></i>';
             case Status.Ended:
                 return '<i class="fas fa-redo"></i>';
-            case Status.Loading:
-                return '<i class="fas fa-spinner fa-spin"></i>';
         }
     };
     /**
      * Let the user know that the audio is muted because autoplay is blocked
      */
     AudioTheme.prototype.getMutedNotice = function () {
-        if (this.dismissedHint) {
+        if (this.dismissedHint || !this.state.shouldHint) {
             return '';
         }
         else {
-            return "\n        <div class=\"alert alert-warning alert-dismissible fade show position-absolute mr-3 mt-3 right-0 d-none d-lg-block\" role=\"alert\">\n            <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!\n            <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n                <span aria-hidden=\"true\">&times;</span>\n            </button>\n        </div>\n        ";
+            return "\n        <div class=\"alert alert-warning alert-dismissible fade show position-lg-absolute m-3 right-0\" role=\"alert\">\n            <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!\n            <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n                <span aria-hidden=\"true\">&times;</span>\n            </button>\n        </div>\n        ";
         }
     };
     /**
@@ -37331,7 +37361,7 @@ var AudioTheme = /** @class */ (function () {
         var renderIn = this.wrapper.querySelector('.js-render');
         if (!renderIn)
             return;
-        renderIn.innerHTML = "\n    <div class=\"js-audio-player border-cdbb py-1\" data-bpm=\"72\" data-state=\"" + this.state.status + "\">\n      <div class=\"d-flex flex-column flex-lg-row align-items-center\">\n        <div class=\"audio-player__play pl-3 pr-2 pt-2 pt-lg-0\">\n          " + this.getIcon() + "\n        </div>\n        <div class=\"d-flex align-items-center flex-column pr-3 pl-2\">\n          <p class=\"mb-0 lead\">\n            " + this.songName + "\n          </p>\n          <progress value=\"" + this.getProgress() + "\" max=\"1\" class=\"mw-100\"></progress>\n          <div class=\"d-flex justify-content-between w-100\">\n            <small class=\"js-audio-player__current\">\n              " + AudioTheme.parseTime(this.state.currentTime) + "\n            </small>\n            <small class=\"js-audio-player__duration\">\n              " + AudioTheme.parseTime(this.duration) + "\n            </small>\n          </div>\n        </div>\n      </div>\n    </div>\n    " + (this.state.status === Status.Muted ? this.getMutedNotice() : '') + "\n    ";
+        renderIn.innerHTML = "\n    <div class=\"js-audio-player border-cdbb py-1\" data-bpm=\"72\" data-state=\"" + this.state.status + "\">\n      <div class=\"d-flex flex-column flex-lg-row align-items-center\">\n        <div class=\"audio-player__play pl-3 pr-2 pt-2 pt-lg-0\">\n          " + this.getIcon() + "\n        </div>\n        <div class=\"d-flex align-items-center flex-column pr-3 pl-2\">\n          <p class=\"mb-0 lead\">\n            " + this.songName + "\n          </p>\n          <progress value=\"" + this.getProgress() + "\" max=\"1\" class=\"mw-100\"></progress>\n          <div class=\"d-flex justify-content-between w-100\">\n            <small class=\"js-audio-player__current\">\n              " + AudioTheme.parseTime(this.state.currentTime) + "\n            </small>\n            <small class=\"js-audio-player__duration\">\n              " + AudioTheme.parseTime(this.duration) + "\n            </small>\n          </div>\n        </div>\n      </div>\n    </div>\n    " + this.getMutedNotice() + "\n    ";
         // Set up event listeners
         var icon = renderIn.querySelector('.audio-player__play i');
         (_a = icon) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.onClickIcon.bind(this));
@@ -37824,8 +37854,8 @@ exports.default = ImagesUpload;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
