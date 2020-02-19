@@ -27,7 +27,7 @@ class Gallery extends Model
      */
     public function addPicture(UploadedFile $picture): Picture
     {
-        $pictureUrl = $picture->store("galleries/$this->title", ['disk' => 'private']);
+        $pictureUrl = $picture->store("galleries/$this->title", ['disk' => 'public']);
         $picture = new Picture();
         $picture->gallery_id = $this->id;
         $picture->url = $pictureUrl;

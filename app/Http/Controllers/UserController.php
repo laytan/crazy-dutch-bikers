@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateUserRequest;
+use App\Mail\UserRegistered;
+use App\User;
+use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
-use App\User;
-use App\Mail\UserRegistered;
-use Auth;
 use Mail;
-use App\Http\Requests\CreateUserRequest;
+use Storage;
 
 class UserController extends Controller
 {
@@ -71,13 +72,13 @@ class UserController extends Controller
     {
         // Validate request
         $validatedData = $request->validate([
-            'name'            => 'nullable|string|max:255',
-            'email'           => 'nullable|email|max:255|string',
-            'old_password'    => 'nullable|min:8|string',
-            'password'        => 'nullable|min:8|string',
-            'description'     => 'nullable|string',
+            'name' => 'nullable|string|max:255',
+            'email' => 'nullable|email|max:255|string',
+            'old_password' => 'nullable|min:8|string',
+            'password' => 'nullable|min:8|string',
+            'description' => 'nullable|string',
             'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role'            => 'nullable|in:member,admin',
+            'role' => 'nullable|in:member,admin',
         ]);
 
         // Name
@@ -107,10 +108,10 @@ class UserController extends Controller
         // Profile picture
         if (isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
             // Store picture
-            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'private']);
+            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
             // Remove old picture
             if ($user->profile_picture !== null) {
-                \Storage::disk('private')->delete($user->profile_picture);
+                Storage::disk('public')->delete($user->profile_picture);
             }
             // Edit user profile picture path
             $user->profile_picture = $picture;
@@ -155,7 +156,7 @@ class UserController extends Controller
         $picture = null;
         if (isset($validatedData['profile_picture']) && $validatedData['profile_picture'] !== null) {
             // Upload picture
-            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'private']);
+            $picture = $request->file('profile_picture')->store('profile-pictures', ['disk' => 'public']);
         }
 
         // Add to the database

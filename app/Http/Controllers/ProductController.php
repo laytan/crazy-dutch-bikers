@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Product;
 use Auth;
 use Storage;
-use App\Http\Requests\CreateProductRequest;
-use App\Http\Requests\UpdateProductRequest;
 
 class ProductController extends Controller
 {
@@ -40,14 +40,14 @@ class ProductController extends Controller
     {
         $validatedData = $request->validated();
 
-        $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'private']);
+        $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
 
-        $product                  = new Product;
-        $product->title           = $validatedData['title'];
-        $product->description     = $validatedData['description'];
-        $product->price           = $validatedData['price'];
+        $product = new Product;
+        $product->title = $validatedData['title'];
+        $product->description = $validatedData['description'];
+        $product->price = $validatedData['price'];
         $product->product_picture = $picture;
-        $product->updated_by      = Auth::user()->id;
+        $product->updated_by = Auth::user()->id;
 
         $product->save();
 
@@ -77,10 +77,10 @@ class ProductController extends Controller
 
         if (isset($validatedData['product_picture']) && $validatedData['product_picture'] !== null) {
             // Store picture
-            $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'private']);
+            $picture = $request->file('product_picture')->store('product-pictures', ['disk' => 'public']);
             // Remove old picture
             if ($product->product_picture !== null) {
-                Storage::disk('private')->delete($product->product_picture);
+                Storage::disk('public')->delete($product->product_picture);
             }
             // Update path
             $product->product_picture = $picture;
@@ -94,7 +94,7 @@ class ProductController extends Controller
     {
         // Remove picture
         if ($product->product_picture !== null) {
-            Storage::disk('private')->delete($product->product_picture);
+            Storage::disk('public')->delete($product->product_picture);
         }
 
         $product->delete();
