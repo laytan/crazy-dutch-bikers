@@ -61,3 +61,10 @@
 .cart__cart-icon {
 	border-bottom-right-radius: 50%;
 }
+
+
+@include media-breakpoint-down(lg) {
+	.phpdebugbar {
+		display: none;
+	}
+}
