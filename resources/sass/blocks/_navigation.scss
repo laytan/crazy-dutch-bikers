@@ -1,14 +1,22 @@
 .navigation {
   &__logo {
     img {
-      height: 2.5rem;
+      height: 3rem;
       width: auto;
       display: inline-block;
     }
   }
 
   .nav-link {
+    padding-top: .8rem;
+    padding-bottom: 0;
     color: map-get($theme-colors, 'cdblg');
+  }
+
+  @include media-breakpoint-up(lg) {
+    .nav-item {
+        display: inline-block;
+    }
   }
 }
 
@@ -50,4 +58,12 @@
       }
     }
   }
+}
+
+.brand-text {
+    font-size: 2rem;
+
+    &__z {
+        font-size: 1.4rem;
+    }
 }
