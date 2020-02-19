@@ -37159,6 +37159,7 @@ var AudioTheme = /** @class */ (function () {
     function AudioTheme(wrapper, songName) {
         this.wrapper = wrapper;
         this.songName = songName;
+        this.dismissedHint = false;
         this.audioElement = wrapper.getElementsByTagName('audio')[0];
         this.state = {
             status: Status.Loading,
@@ -37280,6 +37281,7 @@ var AudioTheme = /** @class */ (function () {
      * On click progress bar check the click percent and adjust current time
      * @param e progress bar click event
      */
+    // TODO: Does not work in chrome
     AudioTheme.prototype.seek = function (e) {
         var target = e.target;
         var percent = e.offsetX / target.offsetWidth;
@@ -37313,22 +37315,30 @@ var AudioTheme = /** @class */ (function () {
      * Let the user know that the audio is muted because autoplay is blocked
      */
     AudioTheme.prototype.getMutedNotice = function () {
-        return "\n    <div>\n      We have muted your audio because playing our theme song is blocked by your browser. You can unmute it here.\n    </div>\n    ";
+        if (this.dismissedHint) {
+            return '';
+        }
+        else {
+            return "\n        <div class=\"alert alert-warning alert-dismissible fade show position-absolute mr-3 mt-3 right-0 d-none d-lg-block\" role=\"alert\">\n            <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!\n            <button type=\"button\" class=\"close\" data-dismiss=\"alert\" aria-label=\"Close\">\n                <span aria-hidden=\"true\">&times;</span>\n            </button>\n        </div>\n        ";
+        }
     };
     /**
      * Render the element with the current state
      */
     AudioTheme.prototype.render = function () {
-        var _a, _b;
+        var _this = this;
+        var _a, _b, _c;
         var renderIn = this.wrapper.querySelector('.js-render');
         if (!renderIn)
             return;
-        renderIn.innerHTML = "\n    <div class=\"js-audio-player audio-player bg-cdbg-opaque border-cdbb fixed-top py-1\" data-bpm=\"72\" data-state=\"" + this.state.status + "\">\n      <div class=\"d-flex justify-content-around align-items-center\">  \n        <div class=\"audio-player__play\">\n          " + this.getIcon() + "\n        </div>\n        <div class=\"d-flex align-items-center flex-column pr-3 pl-2\">\n          <p class=\"mb-0 lead\">\n            " + this.songName + "\n          </p>\n          <progress value=\"" + this.getProgress() + "\" max=\"1\" class=\"mw-100 cursor-pointer\"></progress>\n          <div class=\"d-flex justify-content-between w-100\">\n            <small class=\"js-audio-player__current\">\n              " + AudioTheme.parseTime(this.state.currentTime) + "\n            </small>\n            <small class=\"js-audio-player__duration\">\n              " + AudioTheme.parseTime(this.duration) + "\n            </small>\n          </div>\n        </div>\n      </div>\n    </div>\n    " + (this.state.status === Status.Muted ? this.getMutedNotice() : '') + "\n    ";
+        renderIn.innerHTML = "\n    <div class=\"js-audio-player border-cdbb py-1\" data-bpm=\"72\" data-state=\"" + this.state.status + "\">\n      <div class=\"d-flex flex-column flex-lg-row align-items-center\">\n        <div class=\"audio-player__play pl-3 pr-2 pt-2 pt-lg-0\">\n          " + this.getIcon() + "\n        </div>\n        <div class=\"d-flex align-items-center flex-column pr-3 pl-2\">\n          <p class=\"mb-0 lead\">\n            " + this.songName + "\n          </p>\n          <progress value=\"" + this.getProgress() + "\" max=\"1\" class=\"mw-100\"></progress>\n          <div class=\"d-flex justify-content-between w-100\">\n            <small class=\"js-audio-player__current\">\n              " + AudioTheme.parseTime(this.state.currentTime) + "\n            </small>\n            <small class=\"js-audio-player__duration\">\n              " + AudioTheme.parseTime(this.duration) + "\n            </small>\n          </div>\n        </div>\n      </div>\n    </div>\n    " + (this.state.status === Status.Muted ? this.getMutedNotice() : '') + "\n    ";
         // Set up event listeners
         var icon = renderIn.querySelector('.audio-player__play i');
         (_a = icon) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.onClickIcon.bind(this));
         var progress = renderIn.querySelector('progress');
         (_b = progress) === null || _b === void 0 ? void 0 : _b.addEventListener('click', this.seek.bind(this));
+        var close = renderIn.querySelector('.close');
+        (_c = close) === null || _c === void 0 ? void 0 : _c.addEventListener('click', function () { return _this.dismissedHint = true; });
     };
     return AudioTheme;
 }());
@@ -37814,8 +37824,8 @@ exports.default = ImagesUpload;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -17,11 +17,12 @@ interface State {
 }
 
 export default class AudioTheme {
-  
+
   private audioElement: HTMLAudioElement;
   private state: State;
   private duration: number;
-  
+  private dismissedHint = false;
+
   constructor (private wrapper: Element, private songName: string) {
     this.audioElement = wrapper.getElementsByTagName('audio')[0];
 
@@ -155,13 +156,14 @@ export default class AudioTheme {
    * On click progress bar check the click percent and adjust current time
    * @param e progress bar click event
    */
+  // TODO: Does not work in chrome
   private seek(e: MouseEvent) {
     const target = e.target as HTMLProgressElement;
     const percent = e.offsetX / target.offsetWidth;
     this.audioElement.currentTime = percent * this.duration;
     this.setState({ currentTime: this.audioElement.currentTime });
   }
-  
+
   /**
    * Return the progress percentage that the progress element takes
    */
@@ -191,11 +193,18 @@ export default class AudioTheme {
    * Let the user know that the audio is muted because autoplay is blocked
    */
   private getMutedNotice() {
-    return `
-    <div>
-      We have muted your audio because playing our theme song is blocked by your browser. You can unmute it here.
-    </div>
-    `;
+    if(this.dismissedHint) {
+        return '';
+    } else {
+        return `
+        <div class="alert alert-warning alert-dismissible fade show position-absolute mr-3 mt-3 right-0 d-none d-lg-block" role="alert">
+            <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        `;
+    }
   }
 
   /**
@@ -205,16 +214,16 @@ export default class AudioTheme {
     const renderIn = this.wrapper.querySelector('.js-render');
     if(!renderIn) return;
     renderIn.innerHTML = `
-    <div class="js-audio-player audio-player bg-cdbg-opaque border-cdbb fixed-top py-1" data-bpm="72" data-state="${this.state.status}">
-      <div class="d-flex justify-content-around align-items-center">  
-        <div class="audio-player__play">
+    <div class="js-audio-player border-cdbb py-1" data-bpm="72" data-state="${this.state.status}">
+      <div class="d-flex flex-column flex-lg-row align-items-center">
+        <div class="audio-player__play pl-3 pr-2 pt-2 pt-lg-0">
           ${this.getIcon()}
         </div>
         <div class="d-flex align-items-center flex-column pr-3 pl-2">
           <p class="mb-0 lead">
             ${this.songName}
           </p>
-          <progress value="${this.getProgress()}" max="1" class="mw-100 cursor-pointer"></progress>
+          <progress value="${this.getProgress()}" max="1" class="mw-100"></progress>
           <div class="d-flex justify-content-between w-100">
             <small class="js-audio-player__current">
               ${AudioTheme.parseTime(this.state.currentTime)}
@@ -235,5 +244,8 @@ export default class AudioTheme {
 
     const progress = renderIn.querySelector('progress');
     progress?.addEventListener('click', this.seek.bind(this));
+
+    const close = renderIn.querySelector('.close');
+    close?.addEventListener('click', () => this.dismissedHint = true);
   }
 }

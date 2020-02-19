@@ -1,0 +1,29 @@
+.featured-event {
+    &__text {
+        max-height: 6rem;
+
+        @include media-breakpoint-up(lg) {
+            max-height: 4rem;
+
+            &__picture {
+                min-height: 300px;
+            }
+        }
+
+        @include media-breakpoint-up(xl) {
+            max-height: 1rem;
+        }
+    }
+
+    &__picture {
+        transition: background-color .25s ease-in-out;
+    }
+
+    a:hover {
+        background-color: transparent;
+
+        .featured-event__picture {
+            background-color: lighten(map-get($theme-colors, 'cdbg'), 5%);
+        }
+    }
+}

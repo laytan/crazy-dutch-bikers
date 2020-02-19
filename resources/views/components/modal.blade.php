@@ -1,3 +1,4 @@
+{{-- TODO: If a form is put in submit on enter --}}
 <div class="modal text-dark fade" tabindex="-1" role="dialog" id="{{ $id }}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
