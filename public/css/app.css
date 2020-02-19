@@ -20369,6 +20369,7 @@ a:hover {
           justify-content: center;
   -webkit-box-align: center;
           align-items: center;
+  cursor: pointer;
 }
 .audio-player__play i {
   font-size: 2.5rem;
@@ -20400,6 +20401,7 @@ a:hover {
   color: #8D111B;
   border-radius: 5px;
   margin-bottom: 0.25rem;
+  cursor: pointer;
 }
 .audio-player progress[value]::-moz-progress-bar {
   background-image: -moz-linear-gradient(135deg, transparent 33%, rgba(0, 0, 0, 0.1) 33%, rgba(0, 0, 0, 0.1) 66%, transparent 66%), -moz-linear-gradient(top, rgba(255, 255, 255, 0.25), rgba(0, 0, 0, 0.25)), -moz-linear-gradient(left, #f5a8af, #8D111B 90%);
