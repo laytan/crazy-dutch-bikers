@@ -55,9 +55,3 @@ Route::post('/gallerij/aanmaken', 'GalleryController@store')->name('galleries.st
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');
 Route::patch('/gallerij/{gallery}', 'GalleryController@update')->name('galleries.update');
 Route::delete('/gallerij/{gallery}', 'GalleryController@destroy')->name('galleries.destroy');
-
-// TODO: Remove picture implementation because filenames are obscufated anyway
-// and this implementation checks auth and other conditions which is slow
-Route::get('/storage/profile-pictures/{profile_picture}', 'UserController@picture');
-Route::get('/storage/galleries/{gallery}/{picture}', 'GalleryController@picture');
-Route::get('/storage/product-pictures/{product_picture}', 'ProductController@picture');
