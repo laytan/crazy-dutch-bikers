@@ -12,29 +12,35 @@
 @endsection
 
 @section('above-nav')
-<div class="welcome-background container-fluid">
-  <div class="welcome text-center p-5 d-flex justify-content-center align-items-center flex-column position-absolute">
-    <img class="welcome__logo js-logo mb-4" src="{{ url('/images/cdb-logo.png') }}">
-    <button onclick="document.getElementById('content').scrollIntoView({ behavior: 'smooth' });" class="wheel-btn mt-4 d-flex border-0 align-items-start justify-content-center">
-      <img class="wheel-btn__wheel wheel-btn__wheel--left p-2" src="{{ url('/images/wheel.png') }}" alt="">
-      <span class="wheel-btn__text h4">Maak kennis met de club</span>
-      <img class="wheel-btn__wheel wheel-btn__wheel--right p-2" src="{{ url('/images/wheel.png') }}" alt="">
-    </button>
+<div class="welcome-background container-fluid p-0">
+  <div class="header-row">
+    <div class="header-row__item">
+      <ul class="header-menu d-flex justify-content-center flex-column h-100 no-list-style p-0">
+        @component('components.nav-button', ['engine' => '1', 'link' => route('galleries.index')])
+          Gallery
+        @endcomponent
+        @component('components.nav-button-right', ['engine' => '1', 'link' => route('events.index')])
+          Events
+        @endcomponent
+        @component('components.nav-button', ['engine' => '1', 'link' => route('login')])
+          <span dusk="home-login-btn">Members</span>
+        @endcomponent
+        @component('components.nav-button-right', ['engine' => '1', 'link' => url('/aanmelden')])
+          Join
+        @endcomponent
+      </ul>
+    </div>
+    <div class="header-row__item">
+      <div class="welcome text-center d-flex justify-content-center align-items-center flex-column">
+        <img class="welcome__logo js-logo mb-4" src="{{ url('/images/cdb-logo.png') }}">
+        <button onclick="document.getElementById('content').scrollIntoView({ behavior: 'smooth' });" class="wheel-btn mt-4 d-flex border-0 align-items-start justify-content-center">
+          <img class="wheel-btn__wheel wheel-btn__wheel--left p-2" src="{{ url('/images/wheel.png') }}" alt="">
+          <span class="wheel-btn__text h6">Maak kennis met de club</span>
+          <img class="wheel-btn__wheel wheel-btn__wheel--right p-2" src="{{ url('/images/wheel.png') }}" alt="">
+        </button>
+      </div>
+    </div>
   </div>
-  <ul class="d-flex justify-content-center flex-column h-100 no-list-style">
-    @component('components.nav-button', ['engine' => '1', 'link' => route('galleries.index')])
-      Gallery
-    @endcomponent
-    @component('components.nav-button', ['engine' => '3', 'link' => route('events.index')])
-      Events
-    @endcomponent
-    @component('components.nav-button', ['engine' => '2', 'link' => route('login')])
-      <span dusk="home-login-btn">Members only</span>
-    @endcomponent
-    @component('components.nav-button', ['engine' => '4', 'link' => url('/aanmelden')])
-      Join us
-    @endcomponent
-  </ul>
 </div>
 @endsection
 
@@ -46,7 +52,7 @@
         <img class="w-100 h-100 object-fit-cover" src="{{ url('/images/background-2.jpeg') }}" alt="Motor">
       </div>
       <div id="home-about-section" class="col-12 col-md-6 bg-cdbg-opaque">
-        <div class="p-5">
+        <div class="px-lg-5 py-5">
           <h2 class="border-bottom pb-3 border-primary border-4">De <span class="h1 text-primary">Cra<span class="h5 text-primary">Z</span>y</span><br>Dutch Bikers</h2>
           <p class="pt-3 lead">
             Welkom bij MTC Crazy Dutch Bikers.
@@ -59,11 +65,19 @@
       </div>
     </div>
   </div>
-  <p class="bg-primary p-5 my-6 d-flex justify-content-around lead">
-    <span class="px-2 h3">Broederschap</span>
-    <span class="px-2 h3">Vertrouwen</span>
-    <span class="px-2 h3">Gezelligheid</span>
-  </p>
+  <div class="container-fluid p-0">
+    <div class="row bg-primary p-5 my-6">
+      <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 pb-4 pb-lg-0">
+        <h2>Broederschap</h2>
+      </div>
+      <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 py-4 py-lg-0">
+        <h2>Vertrouwen</h2>
+      </div>
+      <div class="col-12 col-lg-4 text-center pt-4 pt-lg-0">
+        <h2>Gezelligheid</h2>
+      </div>
+    </div>
+  </div>
   <div class="container-fluid my-6">
     <div class="row">
         <div class="col-12 col-lg-8 col-xl-4 mb-4 order-xl-5">
