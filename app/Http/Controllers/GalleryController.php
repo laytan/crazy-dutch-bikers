@@ -80,7 +80,7 @@ class GalleryController extends Controller
     {
         // Remove all pictures
         foreach ($gallery->pictures as $picture) {
-            Storage::disk('private')->delete($picture->url);
+            Storage::disk('public')->delete($picture->url);
             $picture->delete();
         }
 
