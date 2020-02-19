@@ -1,6 +1,6 @@
 <a class="dropdown-item" href="#password-change" data-toggle="modal" data-target="#password-change">Wachtwoord veranderen</a>
 @component('components.modal', ['title' => 'Wachtwoord veranderen', 'id' => 'password-change'])
-  {{ Aire::open()->route('change-password')->id('password-change-form')->validate('App\Http\Requests\ChangePasswordRequest') }}
+  {{ Aire::open()->route('change-password')->id('password-change-form')->validate('App\Http\Requests\ChangePasswordRequest')->method('PATCH') }}
   {{ Aire::password('password-old', 'Oud wachtwoord') }}
   {{ Aire::password('password-new', 'Nieuw wachtwoord') }}
   {{ Aire::close() }}

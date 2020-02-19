@@ -16,7 +16,7 @@ class ChangePasswordController extends Controller
         return view('index')->with('showChangePassword', 'true');
     }
 
-    public function changePassword(ChangePasswordRequest $request)
+    public function update(ChangePasswordRequest $request)
     {
         $validatedData = $request->validated();
         $user = $request->user();
