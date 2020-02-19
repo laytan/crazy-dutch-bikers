@@ -40,3 +40,21 @@
 .whitespace-nowrap {
   white-space: nowrap;
 }
+
+
+@include media-breakpoint-up(lg) {
+  // Bootstrap sticky top implementation on large breakpoint
+  .lg-sticky-top {
+    position: sticky;
+    top: 0;
+    z-index: 1020;
+  }
+
+  .w-lg-auto {
+    width: auto !important;
+  }
+
+  .bg-lg-cdbb {
+    background-color: map-get($theme-colors, 'cdbb');
+  }
+}

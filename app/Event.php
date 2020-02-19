@@ -62,4 +62,9 @@ class Event extends Model
         }
         return $ordered;
     }
+
+    public static function nearest(int $amt)
+    {
+        return Event::where('timestamp', '>', now())->orderBy('timestamp', 'ASC')->take($amt)->get();
+    }
 }
