@@ -2,10 +2,11 @@
 
 @section('content')
 <div class="container-fluid text-light">
-  @include('partials.form-errors')
   <div class="row js-products">
     <div class="col-9">
-      <h2>Merchandise</h2>
+      @component('components.title', ['icon' => 'fas fa-tags'])
+      Merchandise
+      @endcomponent
       <div class="row">
         @foreach($products as $product)
         <div class="col-4">
@@ -24,7 +25,7 @@
               </p>
               @can('manage', $product)
               <hr class="border-cdblg">
-            
+
               <a href="{{ route('products.edit', ['product' => $product->id]) }}" class="btn btn-info btn-sm w-100">
                 <i class="fas fa-edit"></i> Bewerken
               </a>

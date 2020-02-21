@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container text-light">
-  <h2 class="pl-2">Gallerijen</h2>
+  @component('components.title', ['icon' => 'fas fa-images'])
+  Gallerijen
+  @endcomponent
   <div class="row">
     @foreach($galleries as $galleryIndex => $gallery)
       <div class="col col-12 col-md-6 py-4 p-md-4">

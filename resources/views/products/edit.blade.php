@@ -2,13 +2,15 @@
 
 @section('content')
 <div class="container">
-  <h2 class="d-inline-block">{{ $product->title }} bewerken</h2>
-  <small class="d-inline-block ml-2">Laatst bewerkt door {{ $product->user->name }} op {{ formatTimeForDisplay($product->updated_at) }}</small>
+    @component('components.title', ['icon' => 'fas fa-tag'])
+    {{ $product->title }} bewerken
+    @endcomponent
+  <small>Laatst bewerkt door {{ $product->user->name }} op {{ formatTimeForDisplay($product->updated_at) }}</small>
   {{ Aire::open()
       ->route('products.update', ['product' => $product->id])
       ->multipart()
       ->bind($product)
-      ->validate('App\Http\Requests\UpdateProductRequest') 
+      ->validate('App\Http\Requests\UpdateProductRequest')
   }}
   <div class="row">
     <div class="col-8">
