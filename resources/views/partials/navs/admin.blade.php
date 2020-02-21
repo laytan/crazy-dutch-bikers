@@ -12,9 +12,7 @@
 @endcomponent
 @component('components.dropdown', ['id' => 'gallery-dropdown', 'title' => 'Gallerij'])
 	<a href="{{ route('galleries.create') }}" class="dropdown-item">Gallerij toevoegen</a>
-	<a href="#" class="dropdown-item">Gallerijen overzicht</a>
-	<a href="#" class="dropdown-item">Foto's toevoegen</a>
-	<a href="#" class="dropdown-item">Foto's overzicht</a>
+	<a href="{{ route('galleries.index') }}" class="dropdown-item">Gallerijen overzicht</a>
 @endcomponent
 <li class="nav-item">
 	<div class="d-flex align-items-center">
