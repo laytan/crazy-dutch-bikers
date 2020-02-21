@@ -2,8 +2,9 @@
 
 @section('content')
 <div class="container text-light">
-  @include('partials.form-errors')
-  <h2>bestellingen</h2>
+  @component('components.title', ['icon' => 'fas fa-shopping-bag'])
+  Bestellingen
+  @endcomponent
   <table class="table table-dark table-hover table-responsive-lg">
     <caption class="ml-3">Open bestellingen</caption>
     <thead>
