@@ -2,6 +2,9 @@
 
 @section('content')
 <div class="container-fluid text-light">
+    @component('components.title', ['icon' => 'fas fa-users'])
+    Leden
+    @endcomponent
   <div class="row">
     @foreach ($users as $user)
       <div class="col-12 col-sm-6 col-md-4">

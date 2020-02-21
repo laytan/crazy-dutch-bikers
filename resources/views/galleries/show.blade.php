@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container-fluid text-light">
-  <h2>{{ $gallery->title }} {{ $gallery->is_private ? '(prive)' : '(publiekelijk)' }}</h2>
+  @component('components.title', ['icon' => 'fas fa-images'])
+  {{ $gallery->title }}
+  @endcomponent
   {{ Aire::open()->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form-' . $gallery->id) }}
   {{ Aire::close() }}
   <button class="btn btn-warning" data-submit="#gallery-destroy-form-{{ $gallery->id }}">Verwijder gallerij</button>
