@@ -19921,6 +19921,7 @@ body {
   background-image: url("/images/pattern.svg");
   overflow-x: hidden;
   overflow-y: scroll !important;
+  min-height: 100vh;
 }
 body.modal-open {
   position: fixed;
