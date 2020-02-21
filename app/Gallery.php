@@ -34,4 +34,16 @@ class Gallery extends Model
         $picture->save();
         return $picture;
     }
+
+    /**
+     * Turn all pictures into an array of 4 arrays of pictures
+     */
+    public function getPictureColumnsAttribute()
+    {
+        $ret = [[], [], [], []];
+        foreach ($this->pictures as $index => $picture) {
+            $ret[$index % 4][] = $picture;
+        }
+        return $ret;
+    }
 }

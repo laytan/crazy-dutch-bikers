@@ -185,10 +185,4 @@ class UserController extends Controller
         // Return view with appropiate message
         return redirect()->route('users.index')->with('success', 'Gebruiker geregistreerd');
     }
-
-    public function picture($profile_picture)
-    {
-        $path = "app/private/profile-pictures/$profile_picture";
-        return file_response($path);
-    }
 }
