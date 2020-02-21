@@ -119,7 +119,7 @@ export default class ImageUpload {
             return;
         }
         this.renderEl.innerHTML = `
-            <div id="${this.id}" class="${this.invalid ? 'is-invalid' : ''} w-100 h-100 mb-2 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
+            <div id="${this.id}" class="${this.invalid ? 'is-invalid' : ''} w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
                 <i class="image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash"></i>
                 <img alt="" class="${this.image ? '' : 'd-none'} w-100 h-100 object-fit-cover position-absolute" src="${this.image}">
                 <div class="js-upload-button">
@@ -130,6 +130,7 @@ export default class ImageUpload {
                     </label>
                 </div>
             </div>
+            ${this.invalid ? '<div class="text-danger text-sm mb-2">Dit is geen geldige foto</div>' : '<div class="mb-2"></div>'}
         `;
 
         const trashIcon = this.wrapper.querySelector('.image-upload__remove-icon');

@@ -35,7 +35,7 @@
     top: 0; bottom: 0; left: 0; right: 0;
 }
 .masonry .masonry__tile {
-    width:  49.3%; 
+    width:  49.3%;
     margin: 3px 0.0% 3px 0.0%;
     border: 1px solid grey;
 }
@@ -67,4 +67,16 @@
 	.phpdebugbar {
 		display: none;
 	}
+}
+
+
+.application-details {
+    &__row {
+        display: table-row;
+
+        > div {
+            padding: .4rem 0;
+            display: table-cell;
+        }
+    }
 }
