@@ -1,7 +1,6 @@
 <?php
 
 use App\User;
-use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -18,7 +17,7 @@ class DatabaseSeeder extends Seeder
         $super->email = 'beheer@crazydutchbikers.nl';
         $super->email_verified_at = now();
         $super->remember_token = Str::random(10);
-        $super->password = '$2y$12$X1HU74UzvASfEqZkBHYqc.ZRnvNnyILcOFA2EDqLsEDcfAOjb/jPi';
+        $super->password = env('SUPER_ADMIN_HASH', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
         $super->role = 'super-admin';
         $super->save();
     }

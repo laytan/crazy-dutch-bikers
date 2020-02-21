@@ -74,3 +74,30 @@ if (!function_exists('file_response')) {
         }
     }
 }
+
+if (!function_exists('parseConfigReceivers')) {
+    /**
+     * Takes a string like 'Piet Klaas<piet@mail.com>, Klaas Piet<mail@mail.com>'
+     * and turns it into an array like
+     * [
+     *  [
+     *   "name" => "Piet Klaas",
+     *   "email" => "piet@mail.com",
+     *  ],
+     *  [
+     *   "name" => "Klaas Piet",
+     *   "email" => "mail@mail.com",
+     *  ],
+     * ]
+     *
+     * @param string $configLine - String in the format: 'Piet Klaas<piet@mail.com>, Klaas Piet<mail@mail.com>'.
+     * @return array
+     */
+    function parseConfigReceivers(string $configLine): array
+    {
+        return array_map(fn($receiver) => [
+            'name' => trim(explode('<', $receiver)[0]),
+            'email' => trim(str_replace('>', '', explode('<', $receiver)[1])),
+        ], explode(',', $configLine));
+    }
+}
