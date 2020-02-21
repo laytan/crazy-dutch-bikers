@@ -62,3 +62,13 @@
     position: absolute;
   }
 }
+
+.h7 {
+    font-size: 1.8rem;
+}
+
+@include media-breakpoint-up(md) {
+    .h-md-4 {
+        font-size: 2.75rem;
+    }
+}

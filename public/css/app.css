@@ -5088,16 +5088,16 @@ input[type=button].btn-block {
   padding: 0.5rem 0.75rem;
   margin-left: -1px;
   line-height: 1.25;
-  color: #8D111B;
-  background-color: #fff;
-  border: 1px solid #dee2e6;
+  color: #B6BDC7;
+  background-color: #212529;
+  border: 1px solid rgba(182, 189, 199, 0.5);
 }
 .page-link:hover {
   z-index: 2;
-  color: #a4141f;
+  color: #d3d7dd;
   text-decoration: none;
-  background-color: #e9ecef;
-  border-color: #dee2e6;
+  background-color: #383f45;
+  border-color: rgba(182, 189, 199, 0.5);
 }
 .page-link:focus {
   z-index: 3;
@@ -5118,14 +5118,14 @@ input[type=button].btn-block {
   z-index: 3;
   color: #fff;
   background-color: #8D111B;
-  border-color: #8D111B;
+  border-color: rgba(182, 189, 199, 0.5);
 }
 .page-item.disabled .page-link {
-  color: #6c757d;
+  color: #99a3b1;
   pointer-events: none;
   cursor: auto;
-  background-color: #fff;
-  border-color: #dee2e6;
+  background-color: #0a0c0d;
+  border-color: rgba(182, 189, 199, 0.5);
 }
 
 .pagination-lg .page-link {
@@ -20018,6 +20018,15 @@ a:hover {
     position: absolute;
   }
 }
+.h7 {
+  font-size: 1.8rem;
+}
+
+@media (min-width: 768px) {
+  .h-md-4 {
+    font-size: 2.75rem;
+  }
+}
 .js-audio-theme {
   position: fixed;
   right: 0;
@@ -20566,4 +20575,11 @@ a:hover {
   .phpdebugbar {
     display: none;
   }
+}
+.application-details__row {
+  display: table-row;
+}
+.application-details__row > div {
+  padding: 0.4rem 0;
+  display: table-cell;
 }

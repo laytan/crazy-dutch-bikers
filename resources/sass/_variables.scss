@@ -12,16 +12,16 @@ $theme-colors: (
   'cdbg': #212529,
   'cdblg': $cdb-gray
   );
-  
+
   $spacers: (
   '6': 6rem
   );
-  
+
   $sizes: (
     'vw': 100vw,
     'vh': 100vh
     );
-    
+
 // Typography
 $font-size-base: 1.1rem;
 
@@ -65,3 +65,18 @@ $dropdown-link-hover-bg:            $dropdown-bg;
 // Modals
 $modal-content-color:                  $body-color;
 $modal-content-bg:                     #212529;
+
+// Pagination
+$pagination-color:                  $cdb-gray;
+$pagination-bg:                     map-get($theme-colors, 'cdbg');
+$pagination-border-color:           rgba($cdb-gray, 0.5);
+
+$pagination-hover-color:            lighten($cdb-gray, 10%);
+$pagination-hover-bg:               lighten(map-get($theme-colors, 'cdbg'), 10%);
+$pagination-hover-border-color:     rgba($cdb-gray, 0.5);
+
+$pagination-disabled-color:         darken($cdb-gray, 10%);
+$pagination-disabled-bg:            darken(map-get($theme-colors, 'cdbg'), 10%);
+$pagination-disabled-border-color: rgba($cdb-gray, 0.5);
+
+$pagination-active-border-color:    rgba($cdb-gray, 0.5);
