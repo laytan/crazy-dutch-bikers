@@ -55,3 +55,8 @@ Route::post('/gallerij/aanmaken', 'GalleryController@store')->name('galleries.st
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');
 Route::patch('/gallerij/{gallery}', 'GalleryController@update')->name('galleries.update');
 Route::delete('/gallerij/{gallery}', 'GalleryController@destroy')->name('galleries.destroy');
+
+Route::get('/aanmelden', 'ApplicationController@create')->name('applications.create');
+Route::get('/aanmeldingen', 'ApplicationController@index')->name('applications.index');
+Route::get('/aanmeldingen/{application}', 'ApplicationController@show')->name('applications.show');
+Route::post('/aanmelden', 'ApplicationController@store')->name('applications.store');

@@ -23,4 +23,11 @@
 		</a>
 	</div>
 </li>
+<li class="nav-item">
+	<div class="d-flex align-items-center">
+		<a href="{{ route('applications.index') }}" class="nav-link d-flex align-items-center">
+			Aanmeldingen
+		</a>
+	</div>
+</li>
 @include('partials.navs.user-dropdown')

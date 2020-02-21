@@ -37716,7 +37716,7 @@ var ImageUpload = /** @class */ (function () {
         if (!this.renderEl) {
             return;
         }
-        this.renderEl.innerHTML = "\n            <div id=\"" + this.id + "\" class=\"" + (this.invalid ? 'is-invalid' : '') + " w-100 h-100 mb-2 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center\">\n                <i class=\"image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash\"></i>\n                <img alt=\"\" class=\"" + (this.image ? '' : 'd-none') + " w-100 h-100 object-fit-cover position-absolute\" src=\"" + this.image + "\">\n                <div class=\"js-upload-button\">\n                    <label for=\"" + this.id + "-input\" class=\"" + (this.image ? 'd-none' : '') + " js-label btn btn-primary\"><i class=\"fas fa-upload mr-2\"></i>\n                    <span class=\"v-align-middle\">\n                        " + this.label + "\n                    </span>\n                    </label>\n                </div>\n            </div>\n        ";
+        this.renderEl.innerHTML = "\n            <div id=\"" + this.id + "\" class=\"" + (this.invalid ? 'is-invalid' : '') + " w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center\">\n                <i class=\"image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash\"></i>\n                <img alt=\"\" class=\"" + (this.image ? '' : 'd-none') + " w-100 h-100 object-fit-cover position-absolute\" src=\"" + this.image + "\">\n                <div class=\"js-upload-button\">\n                    <label for=\"" + this.id + "-input\" class=\"" + (this.image ? 'd-none' : '') + " js-label btn btn-primary\"><i class=\"fas fa-upload mr-2\"></i>\n                    <span class=\"v-align-middle\">\n                        " + this.label + "\n                    </span>\n                    </label>\n                </div>\n            </div>\n            " + (this.invalid ? '<div class="text-danger text-sm mb-2">Dit is geen geldige foto</div>' : '<div class="mb-2"></div>') + "\n        ";
         var trashIcon = this.wrapper.querySelector('.image-upload__remove-icon');
         (_a = trashIcon) === null || _a === void 0 ? void 0 : _a.addEventListener('click', this.removeImage.bind(this));
     };
@@ -37854,8 +37854,8 @@ exports.default = ImagesUpload;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
