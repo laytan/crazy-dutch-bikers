@@ -51,10 +51,12 @@ Route::post('/evenementen', 'EventController@store')->name('events.store');
 
 Route::get('/gallerij', 'GalleryController@index')->name('galleries.index');
 Route::get('/gallerij/aanmaken', 'GalleryController@create')->name('galleries.create');
-Route::post('/gallerij/aanmaken', 'GalleryController@store')->name('galleries.store');
+Route::post('/gallerij', 'GalleryController@store')->name('galleries.store');
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');
 Route::patch('/gallerij/{gallery}', 'GalleryController@update')->name('galleries.update');
 Route::delete('/gallerij/{gallery}', 'GalleryController@destroy')->name('galleries.destroy');
+
+Route::delete('/pictures/{picture}', 'PictureController@destroy')->name('pictures.destroy');
 
 Route::get('/aanmelden', 'ApplicationController@create')->name('applications.create');
 Route::get('/aanmeldingen', 'ApplicationController@index')->name('applications.index');
