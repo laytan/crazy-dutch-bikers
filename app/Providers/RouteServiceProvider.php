@@ -2,7 +2,6 @@
 
 namespace App\Providers;
 
-use App\Picture;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Route;
 
@@ -34,8 +33,6 @@ class RouteServiceProvider extends ServiceProvider
         //
 
         parent::boot();
-
-        Route::bind('picture', fn($file) => Picture::with('gallery')->where('url', 'like', "%$file")->firstOrFail());
     }
 
     /**
