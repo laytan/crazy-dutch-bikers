@@ -33,7 +33,23 @@ import ImagesUpload from './images-upload';
       e.preventDefault();
       document.querySelector(e.target.dataset.submit).submit();
     });
-  });
+
+    // Set padding bottom on footer when the nav is fixed to the bottom
+    footerPadding();
+    $(window).on('resize', footerPadding);
+});
+
+/**
+ * Set footer padding bottom to the nav's height when the window width is less than 992px (bootstrap large breakpoint)
+ */
+function footerPadding() {
+    if($(window).width() < 992) {
+        const navHeight = $('.navigation').height();
+        $('footer').css('padding-bottom', `${navHeight}px`);
+    } else {
+        $('footer').css('padding-bottom', '0px');
+    }
+  }
 
   /**
    * Puts all modals on the page into the footer, so we can initialize them everywhere and the z-index will works
@@ -48,13 +64,13 @@ import ImagesUpload from './images-upload';
   }
 
   /**
-   * On slide it will load in the next carousel item's image 
+   * On slide it will load in the next carousel item's image
    */
   function setupLazyCarousels() {
     $('.carousel.lazy').on('slide.bs.carousel', function(ev) {
       const curr = ev.relatedTarget.id;
       currParts = curr.split('-');
-      const next = $(`#${currParts[0]}-${currParts[1]}-${currParts[2]}-${Number(currParts[3]) + 1}`).find('[data-src]'); 
+      const next = $(`#${currParts[0]}-${currParts[1]}-${currParts[2]}-${Number(currParts[3]) + 1}`).find('[data-src]');
       if(next) {
       next.attr('src', next.data('src'));
       next.removeAttr('data-src');
@@ -89,7 +105,7 @@ import ImagesUpload from './images-upload';
 
   function pulsing(logo, pulse) {
     logo.classList.add('pulse');
-  
+
     setTimeout(() => {
       logo.classList.remove('pulse');
     }, pulse - 100);

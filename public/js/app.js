@@ -37066,11 +37066,27 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
     $('[data-submit]').click(function (e) {
       e.preventDefault();
       document.querySelector(e.target.dataset.submit).submit();
-    });
+    }); // Set padding bottom on footer when the nav is fixed to the bottom
+
+    footerPadding();
+    $(window).on('resize', footerPadding);
   });
+  /**
+   * Set footer padding bottom to the nav's height when the window width is less than 992px (bootstrap large breakpoint)
+   */
+
+  function footerPadding() {
+    if ($(window).width() < 992) {
+      var navHeight = $('.navigation').height();
+      $('footer').css('padding-bottom', "".concat(navHeight, "px"));
+    } else {
+      $('footer').css('padding-bottom', '0px');
+    }
+  }
   /**
    * Puts all modals on the page into the footer, so we can initialize them everywhere and the z-index will works
    */
+
 
   function copyModalsToFooter() {
     var modals = $('.modal');
@@ -37081,7 +37097,7 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
     });
   }
   /**
-   * On slide it will load in the next carousel item's image 
+   * On slide it will load in the next carousel item's image
    */
 
 
