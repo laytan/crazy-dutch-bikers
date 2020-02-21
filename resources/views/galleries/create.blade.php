@@ -21,5 +21,11 @@
     </fieldset>
     {{ Aire::submit('Aanmaken') }}
     {{ Aire::close() }}
+    <div id="vue">
+        <image-upload image="https://vuejs.org/images/logo.png"></image-upload>
+    </div>
 </div>
+@endsection
+@section('footer')
+<script defer src="{{ asset('js/gallery.js') }}"></script>
 @endsection
