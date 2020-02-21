@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container text-light">
-  <h2>Merchandise toevoegen</h2>
+  @component('components.title', ['icon' => 'fas fa-tag'])
+  Merchandise Toevoegen
+  @endcomponent
   {{ Aire::open()->route('products.store')->multipart()->validate('App\Http\Requests\CreateProductRequest') }}
   <div class="row">
     <div class="col-8">

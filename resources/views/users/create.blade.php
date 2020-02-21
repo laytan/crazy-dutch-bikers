@@ -2,7 +2,9 @@
 
 @section('content')
 <div class="container text-light">
-  <div class="w-75 m-auto bg-cdbg-opaque p-3">
+    @component('components.title', ['icon' => 'fas fa-user-plus'])
+    Lid Toevoegen
+    @endcomponent
     {{ Aire::open()->route('users.store')->validate('App\Http\Requests\CreateUserRequest')->multipart() }}
     <div class="row">
       <div class="col-6">
@@ -32,7 +34,6 @@
     {{ Aire::textarea('description', 'Beschrijving') }}
     {{ Aire::submit('Aanmaken') }}
     {{ Aire::close() }}
-  </div>
 </div>
 <script>
   window.onload = handlePasswordBox;
@@ -47,7 +48,7 @@
       passwordWrapper.style.display = "block";
     }
   }
-  
+
   randomPasswordBox.addEventListener('change', handlePasswordBox);
 
   // Initial

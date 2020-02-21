@@ -2,8 +2,9 @@
 
 @section('content')
 <div class="container text-light">
-  @include('partials.form-errors')
-  <h2 class="mb-0">Bestelling #{{ $order->id }}</h2>
+  @component('components.title', ['icon' => 'fas fa-shopping-bag'])
+  Bestelling #{{ $order->id }}
+  @endcomponent
   <p>
     Status: {{ $order->fulfilled ? 'Vervuld' : 'In behandeling' }}
   </p>

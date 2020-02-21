@@ -2,14 +2,15 @@
 
 @section('content')
 <div class="container text-light">
-  @include('partials.form-errors')
   @foreach($futureEvents as $day => $event)
   <li>
     <a href="#day-{{ $day }}">{{ $day }}</a>
   </li>
   @endforeach
   <div class="d-flex align-items-center border-bottom mb-4">
-    <h2 class="text-center pt-2">Evenementen</h2>
+    @component('components.title', ['icon' => 'fas fa-calendar-alt'])
+    Evenementen
+    @endcomponent
     @can('manage')
     <a href="{{ route('events.create') }}" class="ml-auto btn btn-primary"><i class="fas fa-plus"></i></a>
     @endcan

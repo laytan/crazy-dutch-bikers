@@ -2,9 +2,10 @@
 
 @section('content')
 <div class="container text-light">
-  @include('partials.form-errors')
-  <h2>Evenement aanmaken</h2>
-  {{ Aire::open()->class('bg-cdbg-opaque p-3')->route('events.store')->multipart()->validate('App\Http\Requests\CreateEventRequest') }}
+  @component('components.title', ['icon' => 'far fa-calendar-plus'])
+  Evenement Aanmaken
+  @endcomponent
+  {{ Aire::open()->route('events.store')->multipart()->validate('App\Http\Requests\CreateEventRequest') }}
   {{ Aire::input('title', 'Titel *') }}
   {{ Aire::textArea('description', 'Beschrijving *') }}
   {{ Aire::textArea('location', 'Locatie *') }}
