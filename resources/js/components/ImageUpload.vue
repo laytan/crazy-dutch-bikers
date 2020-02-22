@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="form-check">
-      <input type="checkbox" class="form-check-input" :id="`private-${uploadId}`">
+      <input type="checkbox" class="form-check-input" v-model="isPrivate" :id="`private-${uploadId}`">
       <label class="form-check-label" :for="`private-${uploadId}`">Prive</label>
     </div>
   </div>
