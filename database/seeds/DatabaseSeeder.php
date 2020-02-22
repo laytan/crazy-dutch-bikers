@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $super->remember_token = Str::random(10);
         $super->password = env('SUPER_ADMIN_HASH', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi');
         $super->role = 'super-admin';
+        $super->api_token = Str::random(60);
         $super->save();
     }
 }
