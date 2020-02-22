@@ -100,10 +100,4 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product verwijderd');
     }
-
-    public function picture($product_picture)
-    {
-        $path = 'app/private/product-pictures/' . $product_picture;
-        return file_response($path);
-    }
 }
