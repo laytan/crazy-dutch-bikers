@@ -69,7 +69,7 @@ function footerPadding() {
   function setupLazyCarousels() {
     $('.carousel.lazy').on('slide.bs.carousel', function(ev) {
       const curr = ev.relatedTarget.id;
-      currParts = curr.split('-');
+      const currParts = curr.split('-');
       const next = $(`#${currParts[0]}-${currParts[1]}-${currParts[2]}-${Number(currParts[3]) + 1}`).find('[data-src]');
       if(next) {
       next.attr('src', next.data('src'));
