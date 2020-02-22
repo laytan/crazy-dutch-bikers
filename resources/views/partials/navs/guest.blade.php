@@ -14,7 +14,7 @@
 	</a>
 </li>
 <li class="nav-item">
-    <a href="{{ route('applications.index') }}" class="nav-link">
+    <a href="{{ route('applications.create') }}" class="nav-link">
 		Aanmelden voor CDB
 	</a>
 </li>
