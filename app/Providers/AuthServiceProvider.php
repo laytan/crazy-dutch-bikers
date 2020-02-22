@@ -36,12 +36,12 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-        
+
         /**
          * Implicitly grant "Super Admin" role all permission
          * when Response::deny has not yet been returned in the gates before
          */
-        Gate::after(fn(User $user) => $user->hasRole('super-admin') ? true : Response::deny($this->message));
+        Gate::after(fn (User $user) => $user->hasRole('super-admin') ? true : Response::deny($this->message));
 
         Gate::define('manage-roles', function (User $user) {
             if ($user->hasRole('super-admin')) {
@@ -60,15 +60,13 @@ class AuthServiceProvider extends ServiceProvider
             $this->message = 'Je kunt deze actie alleen als beheerder uitvoeren';
         });
 
-        Gate::define(
-            'make-admin',
-            fn(User $user,
-            User $otherUser) => !$otherUser->hasRole('super-admin') && $user->hasRole('super-admin')
-        );
+        Gate::define('make-admin', function (User $user, User $otherUser) {
+            return !$otherUser->hasRole('super-admin') && $user->hasRole('super-admin');
+        });
 
         Gate::define('destroy-user', function (User $user, User $otherUser) {
             $this->message = 'Deze gebruiker kan je niet veranderen';
-            
+
             // Super admins can't be destroyed
             if ($otherUser->hasRole('super-admin')) {
                 return Response::deny('Hoofdgebruikers kunnen niet verwijderd worden');
@@ -87,15 +85,15 @@ class AuthServiceProvider extends ServiceProvider
                 return true;
             }
         });
-        
+
         Gate::define('update-user', function (User $user, User $otherUser) {
             $this->message = 'Deze gebruiker kan je niet veranderen';
-            
+
             // Super admins can't be edited by other people
             if (!$user->hasRole('super-admin') && $otherUser->hasRole('super-admin')) {
                 return null;
             }
-            
+
             // Users can update themselves
             if ($user->id === $otherUser->id) {
                 return true;
@@ -118,10 +116,10 @@ class AuthServiceProvider extends ServiceProvider
             if (Hash::check($old_password, $user->password)) {
                 return true;
             } else {
-                return Response::deny($message);
+                return Response::deny($this->message);
             }
         });
-        
+
         /**
          * Orders can be viewed if the user has placed them or if the user is an admin
          */
@@ -132,12 +130,8 @@ class AuthServiceProvider extends ServiceProvider
             $this->message = 'Deze bestelling kan je niet bekijken';
         });
 
-        Gate::define('access-image', function (?User $user, Picture $picture) {
-            $this->message = 'Deze foto is alleen voor members';
-            // If the gallery is private and the user is not logged in
-            if ($picture->gallery->is_private && !$user) {
-                return null;
-            } else {
+        Gate::define('see-private-galleries', function (?User $user) {
+            if ($user && $user->hasAnyRole(['member', 'admin'])) {
                 return true;
             }
         });
