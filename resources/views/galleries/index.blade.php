@@ -2,9 +2,23 @@
 
 @section('content')
 <div class="container text-light">
-  @component('components.title', ['icon' => 'fas fa-images'])
-  Gallerijen
-  @endcomponent
+  <div class="d-flex align-items-center justify-content-between">
+    @component('components.title', ['icon' => 'fas fa-images'])
+    Gallerijen
+    @endcomponent
+    @can('manage')
+      @component('components.modal', ['id' => 'create-gallery-modal', 'title' => 'Gallerij aanmaken'])
+        {{ Aire::open()->route('galleries.store')->multipart()->id('create-gallery-form') }}
+        {{ Aire::input('title', 'Titel')->id('title')->autocomplete('off') }}
+        {{ Aire::checkbox('is_private', 'Prive?') }}
+        {{ Aire::close() }}
+        @slot('footer')
+        <button class="btn btn-primary" data-submit="#create-gallery-form">Aanmaken</button>
+        @endslot
+      @endcomponent
+      <button class="btn btn-primary mt-2" data-toggle="modal" data-target="#create-gallery-modal"><i class="fas fa-plus"></i></button>
+    @endcan
+  </div>
   <div class="row">
     @foreach($galleries as $galleryIndex => $gallery)
       <div class="col col-12 col-md-6 py-4 p-md-4">
