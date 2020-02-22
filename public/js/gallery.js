@@ -983,8 +983,40 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "form-check" }, [
       _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.isPrivate,
+            expression: "isPrivate"
+          }
+        ],
         staticClass: "form-check-input",
-        attrs: { type: "checkbox", id: "private-" + _vm.uploadId }
+        attrs: { type: "checkbox", id: "private-" + _vm.uploadId },
+        domProps: {
+          checked: Array.isArray(_vm.isPrivate)
+            ? _vm._i(_vm.isPrivate, null) > -1
+            : _vm.isPrivate
+        },
+        on: {
+          change: function($event) {
+            var $$a = _vm.isPrivate,
+              $$el = $event.target,
+              $$c = $$el.checked ? true : false
+            if (Array.isArray($$a)) {
+              var $$v = null,
+                $$i = _vm._i($$a, $$v)
+              if ($$el.checked) {
+                $$i < 0 && (_vm.isPrivate = $$a.concat([$$v]))
+              } else {
+                $$i > -1 &&
+                  (_vm.isPrivate = $$a.slice(0, $$i).concat($$a.slice($$i + 1)))
+              }
+            } else {
+              _vm.isPrivate = $$c
+            }
+          }
+        }
       }),
       _vm._v(" "),
       _c(
