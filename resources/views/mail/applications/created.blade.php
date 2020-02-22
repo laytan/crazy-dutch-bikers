@@ -20,11 +20,11 @@ Er is een nieuwe aanmelding verstuurd via het aanmeldformulier op {{ config('app
 
 ### Foto's
 
-#### Persoon
+Persoon 
 
 ![Persoon]({{ Storage::url($application->person_picture) }})
 
-#### Motor
+Motor 
 
 ![Motor]({{ Storage::url($application->bike_picture) }})
 

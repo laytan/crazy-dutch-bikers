@@ -17,6 +17,7 @@ class CreatePicturesTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('gallery_id');
             $table->string('url');
+            $table->boolean('is_private')->default(false);
             $table->timestamps();
         });
     }
