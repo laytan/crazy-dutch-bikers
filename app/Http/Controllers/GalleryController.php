@@ -5,15 +5,13 @@ namespace App\Http\Controllers;
 use App\Gallery;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
-use App\Picture;
-use Symfony\Component\HttpFoundation\Request;
+use Storage;
 
 class GalleryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('can:access-image,picture')->only('picture');
-        $this->middleware('can:manage')->except(['index', 'show', 'picture']);
+        $this->middleware(['auth', 'can:manage'])->except(['index', 'show', 'picture']);
     }
 
     public function index()
@@ -25,21 +23,7 @@ class GalleryController extends Controller
     public function show($galleryName)
     {
         $gallery = Gallery::where('title', '=', $galleryName)->firstOrFail();
-        $updateRequest = new UpdateGalleryRequest();
-        $updateRequest = $updateRequest->rules();
-        unset($updateRequest['images.*']);
-        unset($updateRequest['images']);
-        return view('galleries.show', compact('gallery', 'updateRequest'));
-    }
-
-    public function create()
-    {
-        // Remove unsupported images.* request validation for client-side validation
-        $req = new CreateGalleryRequest();
-        $rules = $req->rules();
-        unset($rules['images.*']);
-
-        return view('galleries.create', compact('rules'));
+        return view('galleries.show', compact('gallery'));
     }
 
     public function store(CreateGalleryRequest $request)
@@ -52,9 +36,8 @@ class GalleryController extends Controller
         $gallery->is_private = isset($validated['is_private']) ? $validated['is_private'] : false;
         $gallery->save();
 
-        $gallery->addPictures($validated['images']);
-
-        return redirect()->route('galleries.index')->with('success', 'Gallerij aangemaakt');
+        return redirect()->route('galleries.edit', ['gallery' => $gallery->title])
+            ->with('success', 'Gallerij aangemaakt, voeg hier foto\'s toe!');
     }
 
     public function edit($gallery)
@@ -77,8 +60,6 @@ class GalleryController extends Controller
             $gallery->is_private = false;
         }
 
-        $gallery->addPictures($validatedData['images']);
-
         $gallery->save();
         return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
     }
@@ -92,11 +73,6 @@ class GalleryController extends Controller
         }
 
         $gallery->delete();
-    }
-
-    public function picture($gallery, Picture $picture)
-    {
-        $path = "app/private/$picture->url";
-        return file_response($path);
+        return redirect()->route('galleries.index')->with('success', 'Gallerij is verwijderd');
     }
 }

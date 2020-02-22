@@ -37104,7 +37104,7 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
   function setupLazyCarousels() {
     $('.carousel.lazy').on('slide.bs.carousel', function (ev) {
       var curr = ev.relatedTarget.id;
-      currParts = curr.split('-');
+      var currParts = curr.split('-');
       var next = $("#".concat(currParts[0], "-").concat(currParts[1], "-").concat(currParts[2], "-").concat(Number(currParts[3]) + 1)).find('[data-src]');
 
       if (next) {
