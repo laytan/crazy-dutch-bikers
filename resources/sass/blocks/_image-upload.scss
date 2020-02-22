@@ -3,6 +3,11 @@
   background-position: center;
   min-height: 350px;
 
+  .input-wrapper, i {
+    z-index: 5;
+    cursor: pointer;
+  }
+
   .image-upload__remove-icon {
     z-index: 5;
     cursor: pointer;

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\UploadedFile;
 
 class Picture extends Model
 {
@@ -15,5 +16,10 @@ class Picture extends Model
     {
         list($width, $height, $type, $attr) = getimagesize(storage_path('app/public/' . $this->url));
         return [$width, $height];
+    }
+
+    public function uploadPicture(UploadedFile $file)
+    {
+        $this->url = $file->store('galleries/' . $this->gallery->title, ['disk' => 'public']);
     }
 }

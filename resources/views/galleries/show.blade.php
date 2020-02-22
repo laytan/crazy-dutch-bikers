@@ -2,13 +2,24 @@
 
 @section('content')
 <div class="container-fluid text-light">
-    @component('components.title', ['icon' => 'fas fa-images'])
-    {{ $gallery->title }}
-    @endcomponent
-    {{ Aire::open()->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form-' . $gallery->id) }}
-    {{ Aire::close() }}
-    <button class="btn btn-warning" data-submit="#gallery-destroy-form-{{ $gallery->id }}">Verwijder gallerij</button>
-    <button class="btn btn-primary" data-toggle="modal" data-target="#gallery-update-{{ $gallery->id }}">Gallerij bewerken</button>
+    <div class="d-flex align-items-center justify-content-between">
+        <div>
+            @component('components.title', ['icon' => 'fas fa-images'])
+            {{ $gallery->title }}
+            @endcomponent
+        </div>
+        <div>
+            @component('components.modal', ['id' => 'remove-gallery-modal', 'title' => 'Gallerij verwijderen?'])
+                {{ Aire::open()->class('d-none')->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form') }}
+                {{ Aire::close() }}
+                @slot('footer')
+                    <button class="btn-danger" data-submit="#gallery-destroy-form">Verwijderen</button>
+                @endslot
+            @endcomponent
+            <button class="btn btn-warning" data-toggle="modal" data-target="#remove-gallery-modal">Verwijderen</button>
+            <a href="{{ route('galleries.edit', ['gallery' => $gallery->title]) }}" class="btn btn-primary">Bewerken</a>
+        </div>
+    </div>
     <div class="gallery-grid">
         @foreach($gallery->picture_columns as $column)
         <div class="gallery-grid__column">
@@ -25,28 +36,4 @@
         @endforeach
     </div>
 </div>
-@component('components.modal', ['id' => 'gallery-update-' . $gallery->id, 'title' => $gallery->title . ' bewerken'])
-    {{ Aire::open()
-        ->route('galleries.update', ['gallery' => $gallery->id])
-        ->rules($updateRequest)
-        ->multipart()
-        ->bind($gallery)
-        ->id('gallery-update-form-' . $gallery->id) }}
-    {{ Aire::input('title', 'Titel')->id('title')->value('')->autocomplete('off')->placeholder($gallery->title) }}
-    {{ Aire::checkbox('is_private', 'Prive?')->checked($gallery->is_private) }}
-    <fieldset class="border border-cdblg px-4 mb-4">
-    <legend class="w-auto px-3">Foto's toevoegen</legend>
-    <div
-        data-images-upload="true"
-        data-name="images[]"
-        data-label="Kies een foto"
-        data-initial-boxes="3"
-        data-row-size="3"
-    ></div>
-    </fieldset>
-    {{ Aire::close() }}
-    @slot('footer')
-    <button class="btn btn-primary" data-submit="#gallery-update-form-{{ $gallery->id }}">Gallerij bewerken</button>
-    @endslot
-@endcomponent
 @endsection
