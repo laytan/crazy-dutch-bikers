@@ -6,23 +6,26 @@ use App\Gallery;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use Storage;
+use Auth;
 
 class GalleryController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['auth', 'can:manage'])->except(['index', 'show', 'picture']);
+        $this->middleware(['auth', 'can:manage'])->except(['index', 'show']);
     }
 
     public function index()
     {
-        $galleries = Gallery::with('pictures')->get();
+        $galleries = Gallery::allCheckPrivate();
+        // Limit to 5 pictures per gallery
+        $galleries = $galleries->map(fn ($gallery) => $gallery->setRelation('pictures', $gallery->pictures->take(5)));
         return view('galleries.index', compact('galleries'));
     }
 
     public function show($galleryName)
     {
-        $gallery = Gallery::where('title', '=', $galleryName)->firstOrFail();
+        $gallery = Gallery::checkPrivate($galleryName);
         return view('galleries.show', compact('gallery'));
     }
 
