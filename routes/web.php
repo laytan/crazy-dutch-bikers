@@ -53,6 +53,7 @@ Route::get('/gallerij', 'GalleryController@index')->name('galleries.index');
 Route::get('/gallerij/aanmaken', 'GalleryController@create')->name('galleries.create');
 Route::post('/gallerij', 'GalleryController@store')->name('galleries.store');
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');
+Route::get('/gallerij/{gallery}/bewerken', 'GalleryController@edit')->name('galleries.edit');
 Route::patch('/gallerij/{gallery}', 'GalleryController@update')->name('galleries.update');
 Route::delete('/gallerij/{gallery}', 'GalleryController@destroy')->name('galleries.destroy');
 
