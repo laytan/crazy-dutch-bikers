@@ -166,6 +166,7 @@ class UserController extends Controller
             'password' => \Hash::make($password),
             'description' => $validatedData['description'],
             'profile_picture' => $picture,
+            'api_token' => \Str::random(60),
         ]);
 
         // If the role field has been set
