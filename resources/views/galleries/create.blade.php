@@ -9,7 +9,7 @@
     {{ Aire::open()->route('galleries.store')->validate($rules)->multipart() }}
     {{ Aire::input('title', 'Titel')->id('title')->autocomplete('off') }}
     {{ Aire::checkbox('is_private', 'Prive?') }}
-    <fieldset class="border border-cdblg px-4 mb-4">
+    {{-- <fieldset class="border border-cdblg px-4 mb-4">
         <legend class="w-auto px-3">Foto's</legend>
         <div
             data-images-upload="true"
@@ -17,13 +17,13 @@
             data-label="Kies een foto"
             data-initial-boxes="3"
             data-row-size="3"
-        ></div>
-    </fieldset>
+        ></div> --}}
+        <div id="vue">
+        <gallery-upload gallery="{{ $gallery->title }}"></gallery-upload>
+        </div>
+    {{-- </fieldset>     --}}
     {{ Aire::submit('Aanmaken') }}
     {{ Aire::close() }}
-    <div id="vue">
-        <image-upload image="https://vuejs.org/images/logo.png"></image-upload>
-    </div>
 </div>
 @endsection
 @section('footer')

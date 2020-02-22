@@ -16,3 +16,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::middleware('auth:api')->post('/pictures', function (Request $request) {
+    return [
+        'image' => isset($request->image),
+        'is_private' => $request->is_private,
+        'gallery' => $request->gallery,
+    ];
+});
