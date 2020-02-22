@@ -50,7 +50,6 @@ Route::get('/evenementen/aanmaken', 'EventController@create')->name('events.crea
 Route::post('/evenementen', 'EventController@store')->name('events.store');
 
 Route::get('/gallerij', 'GalleryController@index')->name('galleries.index');
-Route::get('/gallerij/aanmaken', 'GalleryController@create')->name('galleries.create');
 Route::post('/gallerij', 'GalleryController@store')->name('galleries.store');
 Route::get('/gallerij/{gallery}', 'GalleryController@show')->name('galleries.show');
 Route::get('/gallerij/{gallery}/bewerken', 'GalleryController@edit')->name('galleries.edit');

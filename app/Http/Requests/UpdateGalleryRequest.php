@@ -25,8 +25,6 @@ class UpdateGalleryRequest extends FormRequest
     {
         return [
             'title' => 'nullable|min:1|unique:galleries,title',
-            'images' => 'nullable',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'is_private' => 'nullable|boolean'
         ];
     }
