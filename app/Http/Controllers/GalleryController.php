@@ -6,6 +6,7 @@ use App\Gallery;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use App\Picture;
+use Symfony\Component\HttpFoundation\Request;
 
 class GalleryController extends Controller
 {
@@ -54,6 +55,12 @@ class GalleryController extends Controller
         $gallery->addPictures($validated['images']);
 
         return redirect()->route('galleries.index')->with('success', 'Gallerij aangemaakt');
+    }
+
+    public function edit($gallery)
+    {
+        $gallery = Gallery::where('title', '=', $gallery)->firstOrFail();
+        return view('galleries.edit', compact('gallery'));
     }
 
     public function update(UpdateGalleryRequest $request, Gallery $gallery)
