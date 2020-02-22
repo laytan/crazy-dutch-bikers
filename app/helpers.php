@@ -59,22 +59,6 @@ if (!function_exists('formatFullDate')) {
     }
 }
 
-if (!function_exists('file_response')) {
-    function file_response($path)
-    {
-        try {
-            $path = storage_path($path);
-            $file = File::get($path);
-            $type = File::mimeType($path);
-            $response = Response::make($file, 200);
-            $response->header("Content-Type", $type);
-            return $response;
-        } catch (Exception $exception) {
-            abort(404);
-        }
-    }
-}
-
 if (!function_exists('parseConfigReceivers')) {
     /**
      * Takes a string like 'Piet Klaas<piet@mail.com>, Klaas Piet<mail@mail.com>'
