@@ -3,16 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use App\Http\Requests\CreateEventRequest;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 
 class EventController extends Controller
 {
-    public function __constructor()
+    public function __construct()
     {
-        $this->middleware('auth')->except('index');
-        $this->middleware('can:manage')->except('index');
+        $this->middleware(['auth', 'can:manage'])->except('index');
     }
 
     private function dateTimeFieldsToTimestamp($date, $time)
@@ -72,8 +71,8 @@ class EventController extends Controller
             $event->timestamp_end = $this->dateTimeFieldsToTimestamp($validatedData['end_date'], $endTime);
         }
 
-        $event->timestamp   = $this->dateTimeFieldsToTimestamp($validatedData['date'], $time);
-        $event->full_day    = $fullDay;
+        $event->timestamp = $this->dateTimeFieldsToTimestamp($validatedData['date'], $time);
+        $event->full_day = $fullDay;
 
         $event->uploadPicture($request->file('picture'));
 
