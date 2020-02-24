@@ -67,10 +67,10 @@
   </div>
   <div class="container-fluid p-0">
     <div class="row bg-primary p-5 my-6">
-      <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 pb-4 pb-lg-0">
+      <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 border-lg-0 pb-4 pb-lg-0">
         <h2>Broederschap</h2>
       </div>
-      <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 py-4 py-lg-0">
+      <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 border-lg-0 py-4 py-lg-0">
         <h2>Vertrouwen</h2>
       </div>
       <div class="col-12 col-lg-4 text-center pt-4 pt-lg-0">
