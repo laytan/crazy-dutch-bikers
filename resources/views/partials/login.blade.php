@@ -1,5 +1,6 @@
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
 {{ Aire::open()->route('login')->method('POST')->id('loginForm')->validate('App\Http\Requests\LoginRequest') }}
+@honeypot
 <p>
   Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
 </p>
