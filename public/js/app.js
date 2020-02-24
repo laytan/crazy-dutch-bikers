@@ -37061,10 +37061,12 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
       wrap.toggleClass('gallery-grid__image-wrap--full');
     });
     matchHeights();
-    pulsateLogo(); // data-submit submits the form with that selector on click
+    pulsateLogo();
+    console.log($('[data-submit]')); // data-submit submits the form with that selector on click
 
     $('[data-submit]').click(function (e) {
       e.preventDefault();
+      console.log(e);
       document.querySelector(e.target.dataset.submit).submit();
     }); // Set padding bottom on footer when the nav is fixed to the bottom
 
@@ -37089,11 +37091,17 @@ window.Cart = _cart__WEBPACK_IMPORTED_MODULE_2___default.a;
 
 
   function copyModalsToFooter() {
-    var modals = $('.modal');
-    modals.each(function (_, modal) {
-      var content = modal.cloneNode(true);
-      modal.remove();
-      $(content).appendTo('footer');
+    var modals = document.querySelectorAll('.modal');
+    var footer = document.querySelector('.footer');
+    modals.forEach(function (modal) {
+      console.log(modal);
+      var modalContent = modal.cloneNode(true);
+      var parent = modal.parentNode;
+      console.log(parent);
+      modal.parentNode.removeChild(modal);
+      console.log(parent);
+      footer.appendChild(modalContent);
+      console.log(footer);
     });
   }
   /**
@@ -37870,8 +37878,8 @@ exports.default = ImagesUpload;
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
