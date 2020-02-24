@@ -13332,7 +13332,7 @@ var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\Laytan\Documents\Projecten\crazy-dutch-bikers\resources\js\gallery.js */"./resources/js/gallery.js");
+module.exports = __webpack_require__(/*! C:\Users\Laytan\Desktop\projecten\crazy-dutch-bikers\resources\js\gallery.js */"./resources/js/gallery.js");
 
 
 /***/ })
