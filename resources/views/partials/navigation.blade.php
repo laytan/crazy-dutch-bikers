@@ -39,6 +39,6 @@
         <span class="navigation-toggler__bar"></span>
     </button>
 </div>
-</nav>
 {{-- Login modal --}}
 @include('partials.login')
+</nav>
