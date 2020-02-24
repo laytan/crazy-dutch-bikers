@@ -178,6 +178,7 @@ return [
         'textarea' => 'bg-cdbb text-cdblg border-cdblg',
         'form' => 'bg-cdbg-opaque p-3',
         'group_errors' => 'text-danger text-sm',
+        'select' => 'bg-cdbb text-cdblg border-cdblg',
     ],
 
     /*
