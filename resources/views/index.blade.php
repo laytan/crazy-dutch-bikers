@@ -1,16 +1,5 @@
 @extends('layouts.app')
 
-@section('nav-end')
-<div class="audio-player d-flex align-items-end position-lg-absolute position-xl-relative d-lg-block" data-audio-player="" data-song-name="Wild Ride">
-    <audio>
-        <source src="{{ url('/audio/theme.mpeg') }}" type="audio/mpeg">
-    </audio>
-    <div class="js-render">
-        {{-- The actual audio element will render here --}}
-    </div>
-</div>
-@endsection
-
 @section('above-nav')
 <div class="welcome-background container-fluid p-0">
   <div class="header-row">
