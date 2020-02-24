@@ -17,7 +17,10 @@
 @if(($errors->has('email') || $errors->has('password')) || session('showLogin'))
 <script type="text/javascript">
   window.onload = function() {
-      $('#login').modal('show');
+      // Set timeout so it does not interfere with our copyModalsToFooter function
+      setTimeout(() => {
+          $('#login').modal('show');
+      }, 500);
   };
 </script>
 @endif

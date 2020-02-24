@@ -28,9 +28,11 @@ import ImagesUpload from './images-upload';
     matchHeights();
     pulsateLogo();
 
+    console.log($('[data-submit]'));
     // data-submit submits the form with that selector on click
     $('[data-submit]').click(e => {
       e.preventDefault();
+      console.log(e);
       document.querySelector(e.target.dataset.submit).submit();
     });
 
@@ -55,11 +57,17 @@ function footerPadding() {
    * Puts all modals on the page into the footer, so we can initialize them everywhere and the z-index will works
    */
   function copyModalsToFooter() {
-    const modals = $('.modal');
-    modals.each((_, modal) => {
-      const content = modal.cloneNode(true);
-      modal.remove();
-      $(content).appendTo('footer');
+    const modals = document.querySelectorAll('.modal');
+    const footer = document.querySelector('.footer');
+    modals.forEach(modal => {
+        console.log(modal);
+        const modalContent = modal.cloneNode(true);
+        const parent = modal.parentNode;
+        console.log(parent);
+        modal.parentNode.removeChild(modal);
+        console.log(parent);
+        footer.appendChild(modalContent);
+        console.log(footer);
     });
   }
 
