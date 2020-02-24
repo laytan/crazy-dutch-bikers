@@ -9,14 +9,17 @@
   {{ Aire::input('name', 'Naam') }}
   {{ Aire::input('email', 'E-Mail') }}
   {{ Aire::textarea('description', 'Beschrijving') }}
-  <div
-    data-image-upload="true"
-    data-start-image="{{ $user->profile_picture }}"
-    data-name="profile_picture"
-    data-id="profile_picture"
-    @error('profile_picture') data-invalid="true" @enderror
-    data-label="Kies profiel foto"
-  ></div>
+  <div class="row">
+      <div
+        class="col-12 col-md-8 col-lg-6"
+        data-image-upload="true"
+        data-start-image="{{ $user->profile_picture }}"
+        data-name="profile_picture"
+        data-id="profile_picture"
+        @error('profile_picture') data-invalid="true" @enderror
+        data-label="Kies profiel foto"
+      ></div>
+  </div>
   @can('manage-roles')
   {{ Aire::select(['member' => 'Lid', 'admin' => 'Beheer'], 'role', 'Rol') }}
   @endcan
