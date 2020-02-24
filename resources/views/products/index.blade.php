@@ -32,7 +32,7 @@
               <button data-submit="#destroy-{{ $product->id }}-product" class="btn w-100 btn-danger btn-sm mt-2">
                 <i class="fas fa-trash"></i> Verwijderen
               </button>
-              {{ Aire::open()->id("destroy-{$product->id}-product")->route('products.destroy', ['product' => $product->id]) }}
+              {{ Aire::open()->id("destroy-{$product->id}-product")->route('products.destroy', ['product' => $product->id])->class('d-none') }}
               {{ aire::close() }}
               @endcan
             </div>
@@ -53,7 +53,7 @@
           <hr class="border-cdblg">
           <p class="text-right w-100 mb-3 pr-2">Totaal: <span class="js-cart-total">&euro; 0,00</span></p>
           <button class="btn btn-success w-100 js-order-btn">Bestelling plaatsen</button>
-          {{ Aire::open()->route('orders.store') }}
+          {{ Aire::open()->route('orders.store')->class('d-none') }}
           {{ Aire::hidden('product-ids') }}
           {{ Aire::close() }}
         </div>
