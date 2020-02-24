@@ -1,8 +1,8 @@
 enum Status {
-  Muted = "MUTED",
-  Paused = "PAUSED",
-  Playing = "PLAYING",
-  Ended = "ENDED"
+  Muted = 'MUTED',
+  Paused = 'PAUSED',
+  Playing = 'PLAYING',
+  Ended = 'ENDED'
 }
 
 interface PartialState {
@@ -20,16 +20,19 @@ interface State {
 export default class AudioTheme {
 
   private audioElement: HTMLAudioElement;
+
   private state: State;
+
   private duration: number;
+
   private dismissedHint: boolean;
 
-  constructor (private wrapper: Element, private songName: string) {
+  constructor(private wrapper: Element, private songName: string) {
     this.audioElement = wrapper.getElementsByTagName('audio')[0];
 
     // Get localstorage item or false and turn into boolean
     this.dismissedHint = ((localStorage.getItem('audioDismissedHint') || 'false') === 'true');
-    
+
     this.state = {
       status: Status.Muted,
       currentTime: 0,
@@ -37,13 +40,12 @@ export default class AudioTheme {
     };
 
     this.duration = this.audioElement.duration;
-    
-    console.log(this);
+
     this.start();
   }
 
   static stringToStatus(status: string) : Status {
-    switch(status) {
+    switch (status) {
       case 'MUTED':
         return Status.Muted;
       case 'PAUSED':
@@ -64,7 +66,7 @@ export default class AudioTheme {
   static parseTime(val: number): string {
     const string = val.toString();
     const numberOfSeconds = parseInt(string, 10);
-    const hours   = Math.floor(numberOfSeconds / 3600);
+    const hours = Math.floor(numberOfSeconds / 3600);
     const minutes = Math.floor((numberOfSeconds - (hours * 3600)) / 60);
     const seconds = numberOfSeconds - (hours * 3600) - (minutes * 60);
 
@@ -84,13 +86,13 @@ export default class AudioTheme {
    */
   static initialize() {
     const audioPlayers = document.querySelectorAll('[data-audio-player=""');
-    audioPlayers.forEach(player => {
-      if(!(player instanceof HTMLDivElement)) {
+    audioPlayers.forEach((player) => {
+      if (!(player instanceof HTMLDivElement)) {
         console.error('Audio player should be a div element');
         return;
       }
-      const songName = player.dataset.songName;
-      if(!songName) {
+      const { songName } = player.dataset;
+      if (!songName) {
         console.error('Audio element needs a data-song-name attribute');
         return;
       }
@@ -103,7 +105,7 @@ export default class AudioTheme {
    */
   private start() {
     this.audioElement.addEventListener('ended', () => this.setState({ status: Status.Ended }));
-    const sessionCurrentTime = parseInt(localStorage.getItem('audioCurrentTime') || '0');
+    const sessionCurrentTime = parseInt(localStorage.getItem('audioCurrentTime') || '0', 10);
 
     this.audioElement.play()
       .then(() => {
@@ -123,7 +125,7 @@ export default class AudioTheme {
    * Update time when we have the audioelement actually playing
    */
   private updateTime() {
-    if(this.state.status === Status.Playing || this.state.status === Status.Muted) {
+    if (this.state.status === Status.Playing || this.state.status === Status.Muted) {
       this.setState({});
     }
   }
@@ -133,8 +135,9 @@ export default class AudioTheme {
    * @param state - The state you wish to change
    */
   private setState(state: PartialState) {
-    const prevState = Object.assign({}, this.state);
-    if(state.currentTime) {
+    // Make a new object with all the values of state, const prevState = state would only point
+    const prevState = { ...this.state };
+    if (state.currentTime) {
       this.audioElement.currentTime = state.currentTime;
       this.state.currentTime = state.currentTime;
     } else {
@@ -153,7 +156,7 @@ export default class AudioTheme {
   }
 
   private syncAudioElement(prevState: State) {
-    switch(this.state.status) {
+    switch (this.state.status) {
       case Status.Muted:
         this.audioElement.muted = true;
         this.audioElement.play().catch(() => {
@@ -165,13 +168,14 @@ export default class AudioTheme {
         this.audioElement.pause();
         break;
       case Status.Playing:
-        if(prevState.status === Status.Ended) {
+        if (prevState.status === Status.Ended) {
           this.audioElement.currentTime = 0;
-        } else if(prevState.status === Status.Muted) {
+        } else if (prevState.status === Status.Muted) {
           this.audioElement.muted = false;
         }
         this.audioElement.play();
         break;
+      default:
     }
   }
 
@@ -179,9 +183,9 @@ export default class AudioTheme {
    * Handle click on the current icon
    */
   private onClickIcon() {
-    if([Status.Ended, Status.Muted, Status.Paused].includes(this.state.status)) {
+    if ([Status.Ended, Status.Muted, Status.Paused].includes(this.state.status)) {
       this.setState({ status: Status.Playing });
-    } else if(this.state.status === Status.Playing) {
+    } else if (this.state.status === Status.Playing) {
       this.setState({ status: Status.Paused });
     } else {
       this.start();
@@ -210,7 +214,7 @@ export default class AudioTheme {
    * Return an icon based on the status
    */
   private getIcon(): string {
-    switch(this.state.status) {
+    switch (this.state.status) {
       case Status.Muted:
         return '<i class="fas fa-volume-up"></i>';
       case Status.Paused:
@@ -219,6 +223,8 @@ export default class AudioTheme {
         return '<i class="fas fa-pause"></i>';
       case Status.Ended:
         return '<i class="fas fa-redo"></i>';
+      default:
+        return '<i class="fas fa-play"></i>';
     }
   }
 
@@ -226,18 +232,18 @@ export default class AudioTheme {
    * Let the user know that the audio is muted because autoplay is blocked
    */
   private getMutedNotice(): string {
-    if(this.dismissedHint || !this.state.shouldHint) {
-        return '';
-    } else {
-        return `
-        <div class="alert alert-warning alert-dismissible fade show position-lg-absolute m-3 right-0" role="alert">
-            <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        `;
+    if (this.dismissedHint || !this.state.shouldHint) {
+      return '';
     }
+
+    return `
+    <div class="alert alert-warning alert-dismissible fade show position-lg-absolute m-3 right-0" role="alert">
+        <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    `;
   }
 
   /**
@@ -245,7 +251,7 @@ export default class AudioTheme {
    */
   private render() {
     const renderIn = this.wrapper.querySelector('.js-render');
-    if(!renderIn) return;
+    if (!renderIn) return;
     renderIn.innerHTML = `
     <div class="js-audio-player border-cdbb py-1" data-bpm="72" data-state="${this.state.status}">
       <div class="d-flex flex-column flex-lg-row align-items-center">
@@ -268,7 +274,7 @@ export default class AudioTheme {
         </div>
       </div>
     </div>
-    ${ this.getMutedNotice() }
+    ${this.getMutedNotice()}
     `;
 
     // Set up event listeners
@@ -279,6 +285,6 @@ export default class AudioTheme {
     progress?.addEventListener('click', this.seek.bind(this));
 
     const close = renderIn.querySelector('.close');
-    close?.addEventListener('click', () => this.dismissedHint = true);
+    close?.addEventListener('click', () => { this.dismissedHint = true; });
   }
 }
