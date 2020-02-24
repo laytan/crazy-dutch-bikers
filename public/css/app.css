@@ -20053,6 +20053,10 @@ progress[value]::-webkit-progress-value {
   .position-lg-absolute {
     position: absolute;
   }
+
+  .border-lg-0 {
+    border: none !important;
+  }
 }
 .h7 {
   font-size: 1.8rem;
