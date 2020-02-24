@@ -7,18 +7,18 @@
   @endcomponent
   {{ Aire::open()->route('products.store')->multipart()->validate('App\Http\Requests\CreateProductRequest') }}
   <div class="row">
-    <div class="col-8">
+    <div class="col-12 col-lg-8">
       {{ Aire::input('title', 'Titel') }}
     </div>
-    <div class="col-4">
+    <div class="col-12 col-lg-4">
       {{ Aire::number('price', 'Prijs in centen') }}
     </div>
   </div>
   <div class="row mb-4">
-    <div class="col-8">
+    <div class="col-12 col-lg-8">
       {{ Aire::textArea('description', 'Beschrijving')->rows(10) }}
     </div>
-    <div class="col-4">
+    <div class="col-12 col-lg-4">
       <div
         data-image-upload="true"
         data-start-image=""
