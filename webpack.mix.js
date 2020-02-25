@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+require('laravel-mix-purgecss');
 
 /*
 |--------------------------------------------------------------------------
@@ -14,20 +15,21 @@ const mix = require('laravel-mix');
 mix.options({ processCssUrls: false });
 
 mix.js('resources/js/app.js', 'public/js')
-    .js('resources/js/gallery.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
-    .webpackConfig({
-        module: {
-            rules: [
-                {
-                test: /\.tsx?$/,
-                loader: "ts-loader",
-                exclude: /node_modules/
-                }
-            ]
+  .js('resources/js/gallery.js', 'public/js')
+  .sass('resources/sass/app.scss', 'public/css')
+  .purgeCss()
+  .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
+  .webpackConfig({
+    module: {
+      rules: [
+        {
+          test: /\.tsx?$/,
+          loader: 'ts-loader',
+          exclude: /node_modules/,
         },
-        resolve: {
-            extensions: ["*", ".js", ".jsx", ".vue", ".ts", ".tsx"]
-        },
-    });
+      ],
+    },
+    resolve: {
+      extensions: ['*', '.js', '.jsx', '.vue', '.ts', '.tsx'],
+    },
+  });
