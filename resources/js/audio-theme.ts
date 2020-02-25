@@ -18,7 +18,6 @@ interface State {
 }
 
 export default class AudioTheme {
-
   private audioElement: HTMLAudioElement;
 
   private state: State;
@@ -28,7 +27,7 @@ export default class AudioTheme {
   private dismissedHint: boolean;
 
   constructor(private wrapper: Element, private songName: string) {
-    this.audioElement = wrapper.getElementsByTagName('audio')[0];
+    [this.audioElement] = Array.from(wrapper.getElementsByTagName('audio'));
 
     // Get localstorage item or false and turn into boolean
     this.dismissedHint = ((localStorage.getItem('audioDismissedHint') || 'false') === 'true');

@@ -1,7 +1,7 @@
 {
     "private": true,
     "scripts": {
-        "lint": "eslint",
+        "lint": "eslint resources/js",
         "dev": "npm run development",
         "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "watch": "npm run development -- --watch",
@@ -13,12 +13,11 @@
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.12.0",
         "@types/jquery": "^3.3.32",
-        "@typescript-eslint/eslint-plugin": "^2.20.0",
-        "@typescript-eslint/parser": "^2.20.0",
+        "@typescript-eslint/eslint-plugin": "^2.21.0",
         "axios": "^0.19",
         "bootstrap": "^4.0.0",
         "eslint": "^6.8.0",
-        "eslint-config-airbnb-base": "^14.0.0",
+        "eslint-config-airbnb-typescript": "^7.0.0",
         "eslint-plugin-import": "^2.20.1",
         "jquery": "^3.2",
         "laravel-mix": "^4.0.7",

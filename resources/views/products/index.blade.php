@@ -60,6 +60,14 @@
       </div>
     </div>
   </div>
+  {{-- Controlled in Cart.ts --}}
+  @component('components.modal', ['id' => 'confirm-order-modal', 'title' => 'Bestelling'])
+    Wilt u deze bestelling plaatsen?
+    De staff gaat dan aan de slag met de producten.
+    @slot('footer')
+        <button class="btn-primary order-btn">Plaatsen</button>
+    @endslot
+  @endcomponent
 </div>
 <script>
 // Configure cart
