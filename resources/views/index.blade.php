@@ -95,24 +95,33 @@
         @endforeach
     </div>
   </div>
-  <div class="bg-cdbg-opaque py-5 my-6">
-    <div class="text-center">
-      <h2 class="p-0 m-0">Nieuwste foto's</h2>
-    </div>
-    <div class="container">
+  <div>
+    <div class="container-fluid">
       <div class="row">
-        @for($i = 0; $i < 4; $i++)
-        <div class="col-6">
-          <div class="mt-4 p-4 bg-cdbg">
-            <p class="m-0">Openingsfeest</p>
-            <img class="w-100 my-2" src="{{ url('/images/background-2.jpeg') }}" alt="Motor">
-            <div class="d-flex justify-content-between align-items-center">
-              <small>20 september 2020</small>
-              <a href="#">Bekijk volledige gallerij</a>
+        @php
+          $featured = App\Gallery::featured();
+        @endphp
+        <div class="col-8">
+          <div class="latest-images">
+            <div class="latest-images__title text-center">
+            <h2>{{ $featured->title }}</h2>
             </div>
+            @foreach($featured->pictures as $i => $pic)
+            <div class="latest-images__{{ $i + 1 }} shadow-lg">
+              <img src="{{ Storage::url($pic->url) }}" class="rounded">
+            </div>
+            @endforeach
           </div>
         </div>
-        @endfor
+        <div class="col-4">
+          <p class="lead">Nieuwste gallerij: {{ $featured->title }}</p>
+          <p>Bekijk hier een paar foto's van onze laatste gallerij.</p>
+          <p>De Crazy Dutch Bikers zijn in voor feestjes en laten dat ook zien. Door middel van foto's kijken wij terug op alle gezellige feestjes, ritjes en evenementen.</p>
+          <div>
+            <button class="btn btn-primary">Bekijk alle foto's</button>
+            <button class="btn btn-secondary">Bekijk onze laatste gallerij</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
