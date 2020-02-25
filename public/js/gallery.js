@@ -163,7 +163,7 @@ __webpack_require__.r(__webpack_exports__);
     ImageUpload: _ImageUpload__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
-    // Add the amount specified of objects 
+    // Add the amount specified of objects
     addMore: function addMore(add) {
       var l = this.images.length;
 
@@ -1120,7 +1120,7 @@ function normalizeComponent (
       // for template-only hot-reload because in that case the render fn doesn't
       // go through the normalizer
       options._injectStyles = hook
-      // register for functioal component in vue file
+      // register for functional component in vue file
       var originalRender = options.render
       options.render = function renderWithStyleInjection (h, context) {
         hook.call(context)
@@ -13310,16 +13310,16 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ImageUpload */ "./resources/js/components/ImageUpload.vue");
-/* harmony import */ var _components_GalleryUpload__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/GalleryUpload */ "./resources/js/components/GalleryUpload.vue");
+/* harmony import */ var _components_ImageUpload_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ImageUpload.vue */ "./resources/js/components/ImageUpload.vue");
+/* harmony import */ var _components_GalleryUpload_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/GalleryUpload.vue */ "./resources/js/components/GalleryUpload.vue");
 
 
 
-var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
+new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#vue',
   components: {
-    ImageUpload: _components_ImageUpload__WEBPACK_IMPORTED_MODULE_1__["default"],
-    GalleryUpload: _components_GalleryUpload__WEBPACK_IMPORTED_MODULE_2__["default"]
+    ImageUpload: _components_ImageUpload_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    GalleryUpload: _components_GalleryUpload_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
   }
 });
 
