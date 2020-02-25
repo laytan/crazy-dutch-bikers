@@ -1,11 +1,9 @@
-/* global $ */
-
 import 'bootstrap';
 import LazyLoad from 'vanilla-lazyload';
-import Cart from './cart.ts';
-import AudioTheme from './audio-theme.ts';
-import ImageUpload from './image-upload.ts';
-import ImagesUpload from './images-upload.ts';
+import Cart from './cart';
+import AudioTheme from './audio-theme';
+import ImageUpload from './image-upload';
+import ImagesUpload from './images-upload';
 
 require('./bootstrap');
 
