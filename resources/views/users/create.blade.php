@@ -7,7 +7,7 @@
     @endcomponent
     {{ Aire::open()->route('users.store')->validate('App\Http\Requests\CreateUserRequest')->multipart() }}
     <div class="row">
-      <div class="col-6">
+      <div class="col-12 col-md-6">
         {{ Aire::input('name', 'Naam') }}
         {{ Aire::email('email', 'E-Mail')->autocomplete('off') }}
         {{ Aire::checkbox('generate-password', 'Genereer een willekeuring wachtwoord')->id('random-password') }}
@@ -18,7 +18,7 @@
           {{ Aire::select(['member' => 'Lid', 'admin' => 'Beheerder'], 'role', 'Rol') }}
         @endcan
       </div>
-      <div class="col-6">
+      <div class="col-12 col-md-6">
         <div class="mb-3">
           <div
             data-image-upload="true"

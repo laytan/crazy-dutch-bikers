@@ -2,14 +2,14 @@
 
 @section('content')
 <div class="container-fluid text-light">
+  @component('components.title', ['icon' => 'fas fa-tags'])
+  Merchandise
+  @endcomponent
   <div class="row js-products">
-    <div class="col-9">
-      @component('components.title', ['icon' => 'fas fa-tags'])
-      Merchandise
-      @endcomponent
+    <div class="col-12 col-md-9 order-2 order-md-1 mt-5 mt-md-0">
       <div class="row">
         @foreach($products as $product)
-        <div class="col-4">
+        <div class="col-12 col-md-6 col-lg-4">
           <div class="card bg-cdbg-opaque js-product" data-product="{{ json_encode($product) }}">
             <img class="card-img-top merchandise-picture" src="{{ Storage::url($product->product_picture) }}" alt="{{ $product->title }}">
             <div class="card-body">
@@ -41,13 +41,16 @@
         @endforeach
       </div>
     </div>
-    <div class="col-3">
+    <div class="col-12 col-md-3 order-1 order-md-2">
       <div class="d-flex flex-column justify-content-between bg-cdbg-opaque h-100">
-        <div class="js-cart-items px-2">
+        <div>
+          <small class="p-2 mb-0 font-weight-bold">WINKELWAGEN</small>
+          <div class="js-cart-items px-2">
+          </div>
         </div>
         {{-- Bottom of the cart --}}
         <div>
-          <button class="btn btn-sm btn-link js-clear-cart-btn p-0 pr-2 text-right w-100">
+          <button class="btn btn-sm btn-link js-clear-cart-btn p-0 pr-2 text-right w-100 mt-3">
             <i class="fas fa-dumpster"></i> Leegmaken
           </button>
           <hr class="border-cdblg">
@@ -65,7 +68,7 @@
     Wilt u deze bestelling plaatsen?
     De staff gaat dan aan de slag met de producten.
     @slot('footer')
-        <button class="btn-primary order-btn">Plaatsen</button>
+        <button class="btn btn-primary order-btn">Plaatsen</button>
     @endslot
   @endcomponent
 </div>
