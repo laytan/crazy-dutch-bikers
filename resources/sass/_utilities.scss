@@ -69,6 +69,7 @@
 
 .h7 {
     font-size: $h7-font-size;
+    font-family: $headings-font-family;
 }
 
 @include media-breakpoint-up(sm) {

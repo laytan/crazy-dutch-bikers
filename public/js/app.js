@@ -35598,8 +35598,12 @@ var Cart = /** @class */ (function () {
      * @param {Product} product - The product to add.
      */
     Cart.prototype.addToCart = function (product) {
+        var _a;
         this.cart.push(product);
         this.onCartChange();
+        if (window.innerWidth < 1164) {
+            (_a = this.itemsContainer) === null || _a === void 0 ? void 0 : _a.scrollIntoView({ behavior: 'smooth' });
+        }
     };
     /**
      * Removes all items from the cart
