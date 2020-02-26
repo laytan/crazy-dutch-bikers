@@ -22,9 +22,9 @@
     <div class="header-row__item">
       <div class="welcome text-center d-flex justify-content-center align-items-center flex-column">
         <img class="welcome__logo js-logo mb-4" src="{{ url('/images/cdb-logo.png') }}">
-        <button onclick="document.getElementById('content').scrollIntoView({ behavior: 'smooth' });" class="wheel-btn mt-4 d-flex border-0 align-items-start justify-content-center">
+        <button onclick="document.getElementById('content').scrollIntoView({ behavior: 'smooth' });" class="wheel-btn mt-4 d-flex border-0 align-items-center justify-content-center">
           <img class="wheel-btn__wheel wheel-btn__wheel--left p-2" src="{{ url('/images/wheel.png') }}" alt="">
-          <span class="wheel-btn__text h6">Maak kennis met de club</span>
+          <span class="wheel-btn__text h7">Ontdek de CDB</span>
           <img class="wheel-btn__wheel wheel-btn__wheel--right p-2" src="{{ url('/images/wheel.png') }}" alt="">
         </button>
       </div>
@@ -57,17 +57,17 @@
   <div class="container-fluid p-0">
     <div class="row bg-primary p-5 my-6">
       <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 border-lg-0 pb-4 pb-lg-0">
-        <h2>Broederschap</h2>
+        <h2 class="h4 h-sm-2">Broederschap</h2>
       </div>
       <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 border-lg-0 py-4 py-lg-0">
-        <h2>Vertrouwen</h2>
+        <h2 class="h4 h-sm-2">Vertrouwen</h2>
       </div>
       <div class="col-12 col-lg-4 text-center pt-4 pt-lg-0">
-        <h2>Gezelligheid</h2>
+        <h2 class="h4 h-sm-2">Gezelligheid</h2>
       </div>
     </div>
   </div>
-  <div class="container-fluid my-6">
+  <div class="container-fluid my-lg-6">
     <div class="row">
         <div class="col-12 col-lg-8 col-xl-4 mb-4 order-xl-5">
             <div class="pr-3 pr-md-5">
