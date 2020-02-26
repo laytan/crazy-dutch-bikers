@@ -68,11 +68,25 @@
 }
 
 .h7 {
-    font-size: 1.8rem;
+    font-size: $h7-font-size;
+}
+
+@include media-breakpoint-up(sm) {
+  .h-sm-2 {
+    font-size: $h2-font-size;
+  }
+
+  .h-sm-3 {
+    font-size: $h3-font-size;
+  }
+
+  .h-sm-4 {
+    font-size: $h4-font-size;
+  }
 }
 
 @include media-breakpoint-up(md) {
-    .h-md-4 {
-        font-size: 2.75rem;
-    }
+  .h-md-4 {
+    font-size: $h4-font-size;
+  }
 }
