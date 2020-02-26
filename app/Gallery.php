@@ -75,7 +75,8 @@ class Gallery extends Model
      */
     public static function featured()
     {
-        $publicOrderedGalleries = Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')]) // Eager load public pictures
+        // Eager load public pictures
+        $publicOrderedGalleries = Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
             ->withCount(['pictures' => fn($q) => $q->where('is_private', '=', '0')]) // Query picture count
             ->where('is_private', '=', '0') // Only take public galleries
             ->orderBy('created_at', 'DESC') // Order newest first
