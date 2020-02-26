@@ -9,24 +9,24 @@
             Persoonlijke informatie
             @endcomponent
             <img class="w-100 h-auto object-fit-cover img-thumbnail bg-cdblg" src="{{ Storage::url($application->person_picture) }}" alt="{{ $application->name }}">
-            <div class="application-details mt-3">
-                <div class="application-details__row">
-                    <div class="pr-3">Naam</div>
-                    <div>{{ $application->name }}</div>
+            <div class="mt-3">
+                <div class="d-table-row">
+                    <div class="pr-3 d-table-cell py-2">Naam</div>
+                    <div class="d-table-cell py-2">{{ $application->name }}</div>
                 </div>
-                <div class="application-details__row">
-                    <div class="pr-3">Adres</div>
-                    <div>{{ $application->address }}, {{ $application->postal_code }} {{ $application->town }}</div>
+                <div class="d-table-row">
+                    <div class="pr-3 d-table-cell py-2">Adres</div>
+                    <div class="d-table-cell py-2">{{ $application->address }}, {{ $application->postal_code }} {{ $application->town }}</div>
                 </div>
-                <div class="application-details__row">
-                    <div class="pr-3">Leeftijd</div>
-                    <div>
+                <div class="d-table-row">
+                    <div class="pr-3 d-table-cell py-2">Leeftijd</div>
+                    <div class="d-table-cell py-2">
                         {{ $application->age }} jaar <small>({{ $application->date_of_birth }})</small>
                     </div>
                 </div>
-                <div class="application-details__row">
-                    <div class="pr-3">Telefoon Nummmer</div>
-                    <div>
+                <div class="d-table-row">
+                    <div class="pr-3 d-table-cell py-2">Telefoon Nummmer</div>
+                    <div class="d-table-cell py2">
                         <a href="tel:{{ $application->phone }}" class="btn-primary btn-sm mr-2 mb-2 mb-md-0"><i class="fas fa-phone"></i> Bel</a> {{ $application->phone }}
                     </div>
                 </div>
