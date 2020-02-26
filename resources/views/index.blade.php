@@ -104,7 +104,9 @@
         <div class="col-12 order-2 col-lg-8 order-lg-1 mt-5 mt-lg-0 bg-cdbg-opaque rounded p-3">
           <div class="latest-images">
             <div class="latest-images__title text-center pl-lg-3 pb-2">
-              <h2 class="h5 h-sm-2">{{ $featured->title }}</h2>
+              <a href="{{ route('galleries.show', ['gallery' => $featured->id]) }}">
+                <h2 class="h5 h-sm-2">{{ $featured->title }}</h2>
+              </a>
               <div class="d-flex justify-content-between">
                 <small><i class="fas fa-images"></i> {{ $featured->pictures_count }}</small>
                 <small>{{ $featured->created_at->setTimeZone('Europe/paris')->diffForHumans() }} <i class="fas fa-clock"></i></small>
