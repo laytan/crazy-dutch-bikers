@@ -83,3 +83,12 @@ $pagination-disabled-border-color: rgba($cdb-gray, 0.5);
 $pagination-active-border-color:    rgba($cdb-gray, 0.5);
 
 $box-shadow:                  0 .5rem 1rem rgba($cdb-black, .3);
+
+// Tabs
+
+$nav-tabs-link-active-color:        $cdb-gray;
+$nav-tabs-link-active-bg:          #212529;
+// Can't be overwritten with variables
+.nav-tabs .nav-link:not(.active) {
+  color: $cdb-gray !important;
+}
