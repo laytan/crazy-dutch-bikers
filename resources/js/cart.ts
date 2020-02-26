@@ -160,6 +160,10 @@ export default class Cart {
   addToCart(product: Product) {
     this.cart.push(product);
     this.onCartChange();
+
+    if (window.innerWidth < 1164) {
+      this.itemsContainer?.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   /**

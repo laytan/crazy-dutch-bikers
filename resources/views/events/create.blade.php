@@ -37,10 +37,10 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       {{ Aire::url('location_link', 'Locatie link') }}
     </div>
-    <div class="col-6">
+    <div class="col-12 col-md-6">
       {{ Aire::url('facebook_link', 'Facebook link') }}
     </div>
   </div>
