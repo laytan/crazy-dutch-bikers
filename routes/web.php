@@ -48,6 +48,9 @@ Route::patch('/bestellingen/{order}', 'OrderController@update')->name('orders.up
 Route::get('/evenementen', 'EventController@index')->name('events.index');
 Route::get('/evenementen/aanmaken', 'EventController@create')->name('events.create');
 Route::post('/evenementen', 'EventController@store')->name('events.store');
+Route::delete('/evenementen/{event}', 'EventController@destroy')->name('events.destroy');
+Route::get('/evenementen/{event}/bewerken', 'EventController@edit')->name('events.edit');
+Route::patch('/evenementen/{event}', 'EventController@update')->name('events.update');
 
 Route::get('/gallerij', 'GalleryController@index')->name('galleries.index');
 Route::post('/gallerij', 'GalleryController@store')->name('galleries.store');
