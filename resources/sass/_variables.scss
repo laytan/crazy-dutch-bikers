@@ -45,6 +45,7 @@ $h3-font-size:                $font-size-base * 2.75;
 $h4-font-size:                $font-size-base * 2.5;
 $h5-font-size:                $font-size-base * 2.25;
 $h6-font-size:                $font-size-base * 2;
+$h7-font-size: 1.8rem;
 
 // Navbar
 $navbar-brand-font-size:     2.5rem;
@@ -80,3 +81,5 @@ $pagination-disabled-bg:            darken(map-get($theme-colors, 'cdbg'), 10%);
 $pagination-disabled-border-color: rgba($cdb-gray, 0.5);
 
 $pagination-active-border-color:    rgba($cdb-gray, 0.5);
+
+$box-shadow:                  0 .5rem 1rem rgba($cdb-black, .3);
