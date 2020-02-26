@@ -19593,6 +19593,7 @@ progress[value]::-webkit-progress-value {
 }
 .h7 {
   font-size: 1.8rem;
+  font-family: "Cloister";
 }
 
 @media (min-width: 576px) {
@@ -19734,7 +19735,7 @@ progress[value]::-webkit-progress-value {
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  height: 100vh;
+  min-height: 100vh;
   background-blend-mode: saturation;
 }
 
@@ -19743,6 +19744,11 @@ progress[value]::-webkit-progress-value {
 }
 .welcome__logo {
   width: 12rem;
+}
+@media (min-width: 992px) {
+  .welcome__logo {
+    width: 20rem;
+  }
 }
 
 .header-row {
@@ -19761,6 +19767,7 @@ progress[value]::-webkit-progress-value {
 @media (min-width: 768px) {
   .header-row {
     grid-template-columns: repeat(4, 1fr);
+    min-height: 100vh;
   }
   .header-row__item {
     grid-column: span 2;
@@ -19778,10 +19785,12 @@ progress[value]::-webkit-progress-value {
 
 @media (max-width: 767.98px) {
   .header-menu {
-    margin: 0 1rem;
+    margin: 3rem 1rem 0 1rem;
+    align-items: center;
   }
   .header-menu li, .header-menu li a, .header-menu li a span {
     width: 100%;
+    max-width: 400px;
   }
 }
 .cdb-nav-item__icon {
@@ -19821,6 +19830,9 @@ progress[value]::-webkit-progress-value {
   border-radius: 10px 0 0 10px;
   border-left: 4px solid #B6BDC7;
   border-right: none;
+}
+.cdb-nav-item--right:hover .cdb-nav-item__icon {
+  transform: translateX(-1.3rem) scale(1.2);
 }
 @media (min-width: 768px) {
   .cdb-nav-item__icon img {
@@ -19865,6 +19877,11 @@ progress[value]::-webkit-progress-value {
 .wheel-btn:hover .wheel-btn__text {
   background-color: #212529;
 }
+@media (min-width: 992px) {
+  .wheel-btn__text {
+    font-size: 2.5rem;
+  }
+}
 .wheel-btn__wheel {
   z-index: 1;
   height: 4rem;
@@ -19872,6 +19889,12 @@ progress[value]::-webkit-progress-value {
   background: #0A0A08;
   border-radius: 50%;
   border: 4px solid #B6BDC7;
+}
+@media (min-width: 992px) {
+  .wheel-btn__wheel {
+    width: 5rem;
+    height: 5rem;
+  }
 }
 .wheel-btn__wheel--left {
   margin-right: -2.7rem;
