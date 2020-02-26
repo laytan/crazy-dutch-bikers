@@ -101,25 +101,29 @@
         @php
           $featured = App\Gallery::featured();
         @endphp
-        <div class="col-8">
+        <div class="col-12 order-2 col-lg-8 order-lg-1 mt-5 mt-lg-0 bg-cdbg-opaque rounded p-3">
           <div class="latest-images">
-            <div class="latest-images__title text-center">
-            <h2>{{ $featured->title }}</h2>
+            <div class="latest-images__title text-center pl-3 pb-2">
+              <h2 class="h5 h-sm-2">{{ $featured->title }}</h2>
+              <div class="d-flex justify-content-between">
+                <small><i class="fas fa-images"></i> {{ $featured->pictures_count }}</small>
+                <small>{{ $featured->created_at->setTimeZone('Europe/paris')->diffForHumans() }} <i class="fas fa-clock"></i></small>
+              </div>
             </div>
             @foreach($featured->pictures as $i => $pic)
-            <div class="latest-images__{{ $i + 1 }} shadow-lg">
+            <div class="latest-images__{{ $i + 1 }} shadow">
               <img src="{{ Storage::url($pic->url) }}" class="rounded">
             </div>
             @endforeach
           </div>
         </div>
-        <div class="col-4">
-          <p class="lead">Nieuwste gallerij: {{ $featured->title }}</p>
+        <div class="col-12 order-1 col-lg-4 order-lg-2">
+          <h3 class="h5">Nieuwste Gallerij</h3>
           <p>Bekijk hier een paar foto's van onze laatste gallerij.</p>
           <p>De Crazy Dutch Bikers zijn in voor feestjes en laten dat ook zien. Door middel van foto's kijken wij terug op alle gezellige feestjes, ritjes en evenementen.</p>
           <div>
-            <button class="btn btn-primary">Bekijk alle foto's</button>
-            <button class="btn btn-secondary">Bekijk onze laatste gallerij</button>
+            <button class="btn btn-primary d-block w-100">Bekijk alle foto's</button>
+            <button class="btn btn-outline-primary d-block w-100 mt-2">Bekijk {{ $featured->title }}</button>
           </div>
         </div>
       </div>
