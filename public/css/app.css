@@ -7757,7 +7757,7 @@ button.bg-cdblg:focus {
 }
 
 .shadow {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 0.5rem 1rem rgba(10, 10, 8, 0.3) !important;
 }
 
 .shadow-lg {
@@ -19595,6 +19595,19 @@ progress[value]::-webkit-progress-value {
   font-size: 1.8rem;
 }
 
+@media (min-width: 576px) {
+  .h-sm-2 {
+    font-size: 3.3rem;
+  }
+
+  .h-sm-3 {
+    font-size: 3.025rem;
+  }
+
+  .h-sm-4 {
+    font-size: 2.75rem;
+  }
+}
 @media (min-width: 768px) {
   .h-md-4 {
     font-size: 2.75rem;
@@ -20094,9 +20107,7 @@ progress[value]::-webkit-progress-value {
 
 .latest-images {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
-  height: 900px;
+  gap: 1rem;
 }
 .latest-images img {
   width: 100%;
@@ -20104,30 +20115,38 @@ progress[value]::-webkit-progress-value {
   -o-object-fit: cover;
      object-fit: cover;
 }
-.latest-images__title {
-  grid-column-start: 4;
-  grid-column-end: 7;
-  grid-row-start: 1;
-  grid-row-end: 1;
-}
-.latest-images__1 {
-  grid-column-start: 1;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: 5;
-  z-index: 2;
-}
-.latest-images__2 {
-  grid-column-start: 3;
-  grid-column-end: 7;
-  grid-row-start: 2;
-  grid-row-end: 3;
-  z-index: 3;
-}
-.latest-images__3 {
-  grid-column-start: 2;
-  grid-column-end: 6;
-  grid-row-start: 4;
-  grid-row-end: 8;
-  z-index: 1;
+@media (min-width: 992px) {
+  .latest-images {
+    gap: 0;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    height: 900px;
+  }
+  .latest-images__title {
+    grid-column-start: 4;
+    grid-column-end: 7;
+    grid-row-start: 1;
+    grid-row-end: 1;
+  }
+  .latest-images__1 {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    grid-row-start: 1;
+    grid-row-end: 7;
+    z-index: 2;
+  }
+  .latest-images__2 {
+    grid-column-start: 3;
+    grid-column-end: 7;
+    grid-row-start: 2;
+    grid-row-end: 5;
+    z-index: 3;
+  }
+  .latest-images__3 {
+    grid-column-start: 2;
+    grid-column-end: 6;
+    grid-row-start: 6;
+    grid-row-end: 9;
+    z-index: 1;
+  }
 }
