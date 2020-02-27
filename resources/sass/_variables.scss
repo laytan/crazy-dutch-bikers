@@ -23,7 +23,7 @@ $theme-colors: (
     );
 
 // Typography
-$font-size-base: 1.1rem;
+$font-size-base: 1.2rem;
 
 $font-family-sans-serif: 'Nunito', sans-serif;
 $headings-font-family: 'Cloister';
@@ -35,10 +35,12 @@ $headings-color: #e9ecef; // Gray 200
 $paragraph-margin-bottom: 1.5rem;
 
 $link-hover-decoration: none;
-$link-hover-color: lighten($cdb-red, 5%);
+$link-color: #dc2a2a;
+$link-hover-color: darken(#dc2a2a, 5%);
 
-$line-height-lg: 1.7;
-$line-height-sm: 1.7;
+$line-height-lg: 1.55;
+$line-height-sm: 1.55;
+$headings-line-height: 1;
 $h1-font-size:                $font-size-base * 3.2;
 $h2-font-size:                $font-size-base * 3;
 $h3-font-size:                $font-size-base * 2.75;

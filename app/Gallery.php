@@ -71,6 +71,21 @@ class Gallery extends Model
     }
 
     /**
+     * Get the latest $amt of galleries viewable by the user
+     */
+    public static function latest($amt)
+    {
+        if (Gate::allows('see-private-galleries')) {
+            return Gallery::take($amt)->get();
+        } else {
+            return Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
+                ->where('is_private', '=', '0')
+                ->take(5)
+                ->get();
+        }
+    }
+
+    /**
      * Returns the latest added public gallery with more than 2 pictures and limits the pictures to 3
      */
     public static function featured()
