@@ -96,7 +96,7 @@
     </div>
   </div>
   <div>
-    <div class="container-fluid">
+    <div class="container-fluid mb-6">
       <div class="row">
         @php
           $featured = App\Gallery::featured();
