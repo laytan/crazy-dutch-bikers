@@ -68,6 +68,12 @@
                     <a href="{{ route('applications.index') }}">Aanmeldingen</a>
                   </li>
                 @endcan
+                <li>
+                  <a href="{{ route('privacy') }}">Privacy Beleid</a>
+                </li>
+                <li>
+                  <a href="{{ route('disclaimer') }}">Disclaimer</a>
+                </li>
               </ul>
             </div>
             <div class="col-12 col-sm-6 col-lg-3 mt-3 footer-item">
