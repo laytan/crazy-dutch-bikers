@@ -23,6 +23,9 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
+Route::get('/privacybeleid', fn() => view('legal.privacy'))->name('privacy');
+Route::get('/disclaimer', fn() => view('legal.disclaimer'))->name('disclaimer');
+
 Route::get('/leden', 'UserController@index')->name('users.index');
 Route::delete('/leden/{user}', 'UserController@destroy')->name('users.destroy');
 Route::get('/leden/{user}/bewerken', 'UserController@edit')->name('users.edit');
