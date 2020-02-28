@@ -101,6 +101,7 @@
         @php
           $featured = App\Gallery::featured();
         @endphp
+        @if($featured)
         <div class="col-12 order-2 col-lg-8 order-lg-1 mt-5 mt-lg-0 bg-cdbg-opaque rounded p-3">
           <div class="latest-images">
             <div class="latest-images__title text-center pl-lg-3 pb-2">
@@ -128,6 +129,7 @@
             <button class="btn btn-outline-primary d-block w-100 mt-2">Bekijk {{ $featured->title }}</button>
           </div>
         </div>
+        @endif
       </div>
     </div>
   </div>
