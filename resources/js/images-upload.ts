@@ -6,8 +6,10 @@ import ImageUpload from './image-upload';
 export default class ImagesUpload {
   // A reference to all our imageupload objects
   private imageUploads: ImageUpload[];
+
   // Element to render new image uploads in
   private boxWrapper: HTMLDivElement;
+
   // Reference to the load more button
   private loadMoreBtn: HTMLAnchorElement;
 
@@ -19,33 +21,39 @@ export default class ImagesUpload {
    * @param label - Label for the upload image button
    * @param rowSize - How many image uploads to add on load more button click
    */
-  constructor(private wrapper: Element, private initialImageUploads: number, private name: string, private label: string, private rowSize: number) {
+  constructor(
+    private wrapper: Element,
+    private initialImageUploads: number,
+    private name: string,
+    private label: string,
+    private rowSize: number,
+  ) {
     const boxWrapper = document.createElement('div');
     this.wrapper.append(boxWrapper);
     this.boxWrapper = boxWrapper;
     this.loadMoreBtn = this.initLoadMoreBtn();
     this.loadMoreBtn.addEventListener('click', () => this.imageUploads.push(...this.getImageUploads(this.rowSize)));
-    
+
     this.imageUploads = this.getImageUploads(this.initialImageUploads);
   }
 
   /**
    * Finds all elements with data-images-upload and initializes them
    */
-  static initialize() {
+  static initialize(): void {
     const wrappers = document.querySelectorAll('[data-images-upload]') as NodeListOf<HTMLDivElement>;
-    wrappers.forEach(wrapper => {
-      const initialImageUploads = parseInt(wrapper.dataset.initialBoxes || '1');
-      const name = wrapper.dataset.name;
-      const label = wrapper.dataset.label;
-      const rowSize = parseInt(wrapper.dataset.rowSize || '1');
-      
-      if(!label) {
+    wrappers.forEach((wrapper) => {
+      const initialImageUploads = parseInt(wrapper.dataset.initialBoxes || '1', 10);
+      const { name } = wrapper.dataset;
+      const { label } = wrapper.dataset;
+      const rowSize = parseInt(wrapper.dataset.rowSize || '1', 10);
+
+      if (!label) {
         console.error('Images Upload needs the property data-label');
         return;
       }
 
-      if(!name) {
+      if (!name) {
         console.error('Images Upload needs the property data-name');
         return;
       }
@@ -60,7 +68,7 @@ export default class ImagesUpload {
    */
   private getImageUploads(amount: number): ImageUpload[] {
     const toReturn: ImageUpload[] = [];
-    for (let i = 0; i < amount; i++) {
+    for (let i = 0; i < amount; i += 1) {
       toReturn.push(
         new ImageUpload(
           this.addWrapper(),
@@ -72,7 +80,7 @@ export default class ImagesUpload {
           this.label,
           // Don't allow destroy itself when index is 0, otherwise allow it
           !(((this.imageUploads?.length || 0) + i) === 0),
-        )
+        ),
       );
     }
     return toReturn;
@@ -85,7 +93,7 @@ export default class ImagesUpload {
   private initLoadMoreBtn(): HTMLAnchorElement {
     const loadMore = document.createElement('a');
     loadMore.classList.add('text-center', 'w-100', 'text-primary', 'd-block');
-    loadMore.innerHTML = `Laad meer foto's <i class="fas fa-caret-down"></i>`;
+    loadMore.innerHTML = 'Laad meer foto\'s <i class="fas fa-caret-down"></i>';
     loadMore.href = '#';
     this.wrapper.append(loadMore);
     return loadMore;

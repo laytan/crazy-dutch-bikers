@@ -27,13 +27,71 @@ class Event extends Model
                 $ret .= ' tot ' . formatFullDate($carb_end);
 
                 if (!$this->full_day) {
-                    $ret .= ' van ' . $carb_end->format('H:i');
+                    $ret .= ' ' . $carb_end->format('H:i');
                 }
             } else {
                 $ret .= ' tot ' . $carb_end->format('H:i');
             }
         }
         return $ret;
+    }
+
+    public function getStartTimeAttribute()
+    {
+        $carb = new Carbon($this->timestamp);
+        $ret = formatFullDate($carb);
+        if (!$this->full_day) {
+            $ret .= ' ' . $carb->format('H:i');
+        }
+        return $ret;
+    }
+
+    public function getEndTimeAttribute()
+    {
+        if ($this->timestamp_end !== null) {
+            $ret = '';
+            $carb_end = new Carbon($this->timestamp_end);
+            $carb = new Carbon($this->timestamp);
+
+            $start_day = $carb->format('Y-m-d');
+            $end_day = $carb_end->format('Y-m-d');
+
+            if ($start_day !== $end_day) {
+                $ret .= ' ' . formatFullDate($carb_end);
+
+                if (!$this->full_day) {
+                    $ret .= ' ' . $carb_end->format('H:i');
+                }
+            } else {
+                $ret .= ' ' . $carb_end->format('H:i');
+            }
+            return $ret;
+        } else {
+            return false;
+        }
+    }
+
+    public function getDayAttribute()
+    {
+        $carb = new Carbon($this->timestamp);
+        $day = $carb->day;
+        if ($day < 10) {
+            $day = '0' . $day;
+        }
+        return $day;
+    }
+
+    public function getMonthAttribute()
+    {
+        $carb = new Carbon($this->timestamp);
+        $month = $carb->locale('nl')->shortMonthName;
+        return strtoupper($month);
+    }
+
+    public function getYearAttribute()
+    {
+        $carb = new Carbon($this->timestamp);
+        return $carb->year;
     }
 
     public function uploadPicture($pictureFile)

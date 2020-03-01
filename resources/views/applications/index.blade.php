@@ -20,7 +20,7 @@
             <tr scope="row">
                 <td>{{ $application->name }}</td>
                 <td>{{ $application->phone }}</td>
-                <td>{{ $application->created_at }}</td>
+                <td>{{ formatTimeForDisplay($application->created_at) }}</td>
                 <td>
                     <a href="{{ route('applications.show', ['application' => $application->id]) }}" class="btn btn-primary btn-sm">
                         Bekijken
