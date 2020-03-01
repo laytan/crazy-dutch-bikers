@@ -27,7 +27,6 @@ class SendApplicationEmailNotification implements ShouldQueue
     public function handle(ApplicationCreated $event)
     {
         $receivers = parseConfigReceivers(config('app.application_receivers'));
-        var_dump($receivers);
         foreach ($receivers as $receiver) {
             Mail::to($receiver['email'], $receiver['name'])
                 ->send(new \App\Mail\ApplicationCreated($event->application));
