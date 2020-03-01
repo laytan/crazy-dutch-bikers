@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container text-light">
+  {{ Aire::summary()->verbose() }}
   <div class="d-flex align-items-center mb-4">
     @component('components.title', ['icon' => 'fas fa-calendar-alt'])
     Evenementen
@@ -83,8 +84,8 @@
                   @endif
                 </p>
                 @endif
-                @can('manage')
                 <hr class="border-cdblg">
+                @can('manage')
                 <a href="{{ route('events.edit', ['event' => $event->id]) }}" class="btn btn-warning"><i
                     class="fas fa-edit"></i> Bewerken</a>
                 <button class="btn btn-danger" data-toggle="modal" data-target="#remove-event-{{ $event->id }}-modal">
@@ -99,6 +100,18 @@
                 {{ Aire::close() }}
                 @endslot
                 @endcomponent
+                @else
+                <details>
+                  <summary class="font-weight-bold">Meld je aan <span class="ml-2 badge badge-primary">{{ $event->eventApplications->count() }}</span></summary>
+                  {{ Aire::open()
+                    ->class('form-inline')
+                    ->route('eventApplications.store', ['event' => $event->id])
+                    ->validate('App\Http\Requests\CreateEventApplicationRequest') }}
+                  {{ Aire::input('name', 'Naam') }}
+                  {{ Aire::input('phone', 'Telefoonnr') }}
+                  {{ Aire::submit('Ik wil mee!') }}
+                  {{ Aire::close() }}
+                </details>
                 @endcan
                 @endforeach
               </div>
