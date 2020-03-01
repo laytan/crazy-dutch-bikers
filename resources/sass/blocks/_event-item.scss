@@ -1,0 +1,27 @@
+.event-item {
+  .form-inline  {
+    align-items: flex-end;
+
+    .invalid-feedback, .valid-feedback {
+      display: none !important;
+    }
+  
+    .form-group {
+      flex-direction: column;
+      align-items: flex-start;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+
+    button[type="submit"] {
+      margin-bottom: 1rem;
+    }
+    
+    @include media-breakpoint-up(lg) {
+      .form-group {
+        width: auto;
+        margin-right: 1rem;
+      }
+    }
+  }
+}
