@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^7.2",
+        "php": "^7.4",
         "benjamincrozat/laravel-dropbox-driver": "^2.0",
         "doctrine/dbal": "^2.10",
         "eduardokum/laravel-mail-auto-embed": "^1.0",
