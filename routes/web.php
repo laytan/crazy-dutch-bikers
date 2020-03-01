@@ -12,6 +12,10 @@
  */
 
 // All auth routes except registration, reset and verify
+
+use App\EventApplication;
+use App\Mail\EventApplicationCreated;
+
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
@@ -23,8 +27,8 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/privacybeleid', fn() => view('legal.privacy'))->name('privacy');
-Route::get('/disclaimer', fn() => view('legal.disclaimer'))->name('disclaimer');
+Route::get('/privacybeleid', fn () => view('legal.privacy'))->name('privacy');
+Route::get('/disclaimer', fn () => view('legal.disclaimer'))->name('disclaimer');
 
 Route::get('/leden', 'UserController@index')->name('users.index');
 Route::delete('/leden/{user}', 'UserController@destroy')->name('users.destroy');
@@ -68,3 +72,5 @@ Route::get('/aanmelden', 'ApplicationController@create')->name('applications.cre
 Route::get('/aanmeldingen', 'ApplicationController@index')->name('applications.index');
 Route::get('/aanmeldingen/{application}', 'ApplicationController@show')->name('applications.show');
 Route::post('/aanmelden', 'ApplicationController@store')->name('applications.store');
+
+Route::post('/evenementen/{event}/aanmelden', 'EventApplicationController@store')->name('eventApplications.store');
