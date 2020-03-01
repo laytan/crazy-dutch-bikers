@@ -9,6 +9,11 @@ class Event extends Model
 {
     protected $fillable = ['title', 'description', 'location', 'location_link', 'facebook_link'];
 
+    public function eventApplications()
+    {
+        return $this->hasMany('App\EventApplication');
+    }
+
     public function getFormattedTimeAttribute()
     {
         $carb = new Carbon($this->timestamp);
@@ -101,7 +106,10 @@ class Event extends Model
 
     public static function getFutureOrdered()
     {
-        $all_events = Event::where('timestamp', '>', now())->orderBy('timestamp', 'ASC')->get();
+        $all_events = Event::with('eventApplications')
+            ->where('timestamp', '>', now())
+            ->orderBy('timestamp', 'ASC')
+            ->get();
         return Event::order($all_events);
     }
 
