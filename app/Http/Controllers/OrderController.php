@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Mail\OrderConfirmed;
+use App\Mail\OrderReceived;
 use App\Order;
 use App\OrderHasProduct;
 use Auth;
+use Illuminate\Http\Request;
 use Mail;
-use App\Mail\OrderReceived;
-use App\Mail\OrderConfirmed;
 
 class OrderController extends Controller
 {
@@ -67,7 +67,7 @@ class OrderController extends Controller
         ]);
 
         // Create a new order
-        $order          = new Order;
+        $order = new Order;
         $order->user_id = Auth::user()->id;
 
         $order->save();
@@ -75,15 +75,15 @@ class OrderController extends Controller
         // Add all products to the order
         $ids = explode(',', $validatedData['product-ids']);
         foreach ($ids as $productId) {
-            $orderHasProduct             = new OrderHasProduct;
+            $orderHasProduct = new OrderHasProduct;
             $orderHasProduct->product_id = $productId;
-            $orderHasProduct->order_id   = $order->id;
+            $orderHasProduct->order_id = $order->id;
 
             $orderHasProduct->save();
         }
 
         // Email admins about order
-        $receivers = config('app.order_receivers');
+        $receivers = parseConfigReceivers(config('app.order_receivers'));
         foreach ($receivers as $receiver) {
             Mail::to($receiver['email'], $receiver['name'])
                 ->queue(new OrderReceived($order));

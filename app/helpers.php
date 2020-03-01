@@ -79,7 +79,7 @@ if (!function_exists('parseConfigReceivers')) {
      */
     function parseConfigReceivers(string $configLine): array
     {
-        return array_map(fn ($receiver) => [
+        return array_map(fn($receiver) => [
             'name' => trim(explode('<', $receiver)[0]),
             'email' => trim(str_replace('>', '', explode('<', $receiver)[1])),
         ], explode(',', $configLine));

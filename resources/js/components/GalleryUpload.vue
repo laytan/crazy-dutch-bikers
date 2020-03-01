@@ -61,11 +61,11 @@ export default {
       progress: 0,
     },
   }),
-  components: {
+  components:{
     ImageUpload,
   },
   methods: {
-    // Add the amount specified of objects 
+    // Add the amount specified of objects
     addMore: function(add) {
       const l = this.images.length;
       for (let i = l; i < l + add; i++) {
