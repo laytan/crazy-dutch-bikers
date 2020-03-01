@@ -28,21 +28,29 @@ interface ProductElement extends Element {
   dataset: ProductDataset,
 }
 
+interface Modal extends JQuery<Element> {
+  modal(opts:string): Function;
+}
+
 /**
  * Simple Cart implementation
  */
 export default class Cart {
-
   // The products
   private productElements: NodeListOf<ProductElement>;
+
   // Elements that take the total price
   private totalReceiver: Element|null;
+
   // Where to render our cart
   private itemsContainer: Element|null;
+
   // The products currently in the cart
   private cart: Product[];
+
   // Add to cart button selector
   private addToCartSelector: string;
+
   private shouldConfirmOrder: boolean;
 
   /**
@@ -56,7 +64,7 @@ export default class Cart {
     cartItemsContainerSelector = '.js-cart-items',
     orderBtn = '.js-order-btn',
     clearCartBtn = '.js-clear-cart-btn',
-    confirmOrder = true
+    confirmOrder = true,
   }: CartOptions) {
     this.productElements = wrapper.querySelectorAll(productsSelector);
     this.totalReceiver = wrapper.querySelector(totalReceiverSelector);
@@ -72,9 +80,61 @@ export default class Cart {
     this.productElements.forEach(this.bindProductEvents.bind(this));
 
     // Call onchange when we have initial products
-    if(this.cart.length > 0) {
+    if (this.cart.length > 0) {
       this.onCartChange();
     }
+  }
+
+  /**
+   * Converts cents to display friendly euros
+   * @param cents Cents to convert
+   */
+  static centsToEuro(cents: number) {
+    const euro = cents / 100;
+    return euro.toLocaleString('nl-NL', { style: 'currency', currency: 'EUR' });
+  }
+
+  /**
+   * Returns the given string with a maximum of 25 chars + ...
+   * @param description description string
+   */
+  static shortenDescription(description: string|null): string {
+    if (!description) {
+      return '';
+    }
+
+    return description.length > 25 ? `${description.substring(0, 25)}...` : description;
+  }
+
+  /**
+   * Show confirm modal and wait for a decision
+   */
+  static confirm(): Promise<Boolean> {
+    return new Promise((resolve) => {
+      const modal = document.querySelector('.modal#confirm-order-modal');
+      // If there is no modal just return true
+      if (!modal) {
+        resolve(true);
+        return;
+      }
+
+      // Turn into jquery modal
+      const jModal = $(modal) as Modal;
+
+      // Return false when the modal is hidden
+      jModal.on('hidden.bs.modal', () => {
+        resolve(false);
+      });
+
+      // Return true when the .order-btn is clicked
+      const btn = modal.querySelector('.order-btn');
+      btn?.addEventListener('click', () => {
+        jModal.modal('hide');
+        resolve(true);
+      });
+
+      jModal.modal('show');
+    });
   }
 
   /**
@@ -83,11 +143,11 @@ export default class Cart {
    */
   bindProductEvents(productElement: ProductElement) {
     const addToCartButton = productElement.querySelector(this.addToCartSelector);
-    if(!addToCartButton) {
+    if (!addToCartButton) {
       return;
     }
 
-    addToCartButton.addEventListener('click', _ => {
+    addToCartButton.addEventListener('click', () => {
       const product: Product = JSON.parse(productElement.dataset.product);
       this.addToCart(product);
     });
@@ -100,6 +160,10 @@ export default class Cart {
   addToCart(product: Product) {
     this.cart.push(product);
     this.onCartChange();
+
+    if (window.innerWidth < 1164) {
+      this.itemsContainer?.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 
   /**
@@ -116,8 +180,8 @@ export default class Cart {
    */
   removeProduct(product: Product) {
     // Loop untill we find the product with this id, remove it and break so we only remove it once
-    for(let i = 0; i < this.cart.length; i++) {
-      if(this.cart[i].id === product.id) {
+    for (let i = 0; i < this.cart.length; i += 1) {
+      if (this.cart[i].id === product.id) {
         this.cart.splice(i, 1);
         break;
       }
@@ -128,9 +192,14 @@ export default class Cart {
   /**
    * Confirm order if we should and then submit the form
    */
-  order() {
-    if(this.shouldConfirmOrder === false || confirm('Bestelling plaatsen?')) {
-      // TODO: Remove JQuery
+  async order() {
+    if (this.shouldConfirmOrder) {
+      const shouldOrder = await Cart.confirm();
+      if (shouldOrder) {
+        const form = $(this.productIdsReceiver).parents('form');
+        form.submit();
+      }
+    } else {
       const form = $(this.productIdsReceiver).parents('form');
       form.submit();
     }
@@ -149,15 +218,15 @@ export default class Cart {
    * Clears the cartItemsContainer and adds all products in the cart to it
    */
   renderItems() {
-    if(!this.itemsContainer) {
-      console.error(`No cart items container found`);
+    if (!this.itemsContainer) {
+      console.error('No cart items container found');
       return;
     }
 
     this.itemsContainer.innerHTML = '';
-    this.cart.forEach(product => {
+    this.cart.forEach((product) => {
       const el = this.getElement(product);
-      if(el) {
+      if (el) {
         this.itemsContainer?.appendChild(el);
       }
     });
@@ -167,28 +236,19 @@ export default class Cart {
    * Calculates the total price and sets it on the element
    */
   renderTotal() {
-    if(!this.totalReceiver) {
+    if (!this.totalReceiver) {
       return;
     }
 
-    const total = this.centsToEuro(this.cart.reduce((prev, curr) => prev + curr.price, 0));
+    const total = Cart.centsToEuro(this.cart.reduce((prev, curr) => prev + curr.price, 0));
     this.totalReceiver.textContent = total;
-  }
-
-  /**
-   * Converts cents to display friendly euros
-   * @param cents Cents to convert
-   */
-  centsToEuro(cents: number) {
-    let euro = cents / 100;
-    return euro.toLocaleString("nl-NL", {style:"currency", currency:"EUR"});
   }
 
   /**
    * Puts a comma seperated list of all product ids into the ids element
    */
   updateProductIds() {
-    this.productIdsReceiver.value = this.cart.reduce((prev, curr) => prev.length > 0 ? prev + ',' + curr.id : prev + curr.id, '');
+    this.productIdsReceiver.value = this.cart.reduce((prev, curr) => (prev.length > 0 ? `${prev}, ${curr.id}` : prev + curr.id), '');
   }
 
   /**
@@ -201,9 +261,9 @@ export default class Cart {
     <div class="cart-item d-flex align-items-center justify-content-between mt-2">
       <div class="d-flex flex-column">
         <span class="cart-item__title">${product.title}</span>
-        <small class="cart-item__description">${this.getShortDescription(product.description)}</small>
+        <small class="cart-item__description">${Cart.shortenDescription(product.description)}</small>
       </div>
-      <span class="cart-item__price">${this.centsToEuro(product.price)}</span>
+      <span class="cart-item__price">${Cart.centsToEuro(product.price)}</span>
       <i class="fas fa-trash hover-primary"></i>
     </div>
     `;
@@ -215,13 +275,5 @@ export default class Cart {
     trashIcon?.addEventListener('click', () => this.removeProduct(product));
 
     return element;
-  }
-
-  getShortDescription(description: string|null): string {
-    if(!description) {
-      return '';
-    }
-
-    return description.length > 25 ? description.substring(0, 25) + '...' : description;
   }
 }

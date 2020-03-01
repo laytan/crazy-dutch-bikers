@@ -3,16 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Event;
-use Illuminate\Http\Request;
-use Carbon\Carbon;
 use App\Http\Requests\CreateEventRequest;
+use App\Http\Requests\UpdateEventRequest;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Storage;
 
 class EventController extends Controller
 {
-    public function __constructor()
+    public function __construct()
     {
-        $this->middleware('auth')->except('index');
-        $this->middleware('can:manage')->except('index');
+        $this->middleware(['auth', 'can:manage'])->except('index');
     }
 
     private function dateTimeFieldsToTimestamp($date, $time)
@@ -72,8 +73,8 @@ class EventController extends Controller
             $event->timestamp_end = $this->dateTimeFieldsToTimestamp($validatedData['end_date'], $endTime);
         }
 
-        $event->timestamp   = $this->dateTimeFieldsToTimestamp($validatedData['date'], $time);
-        $event->full_day    = $fullDay;
+        $event->timestamp = $this->dateTimeFieldsToTimestamp($validatedData['date'], $time);
+        $event->full_day = $fullDay;
 
         $event->uploadPicture($request->file('picture'));
 
@@ -90,7 +91,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('events.edit', compact('event'));
     }
 
     /**
@@ -100,9 +101,47 @@ class EventController extends Controller
      * @param  \App\Event  $event
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event)
     {
-        //
+        $validatedData = $request->validated();
+
+        // Remove null fields from array
+        $event->fill(
+            array_filter(
+                $validatedData,
+                fn($data) => $data !== null
+            )
+        );
+
+        if ($validatedData['date'] !== null) {
+            $fullDay = true;
+            $time = '00:00';
+            if ($validatedData['time'] !== null) {
+                $time = $validatedData['time'];
+                $fullDay = false;
+            }
+
+            $endTime = '00:00';
+            if ($validatedData['end_time'] !== null) {
+                $endTime = $validatedData['end_time'];
+            }
+
+            if ($validatedData['end_date'] !== null) {
+                $event->timestamp_end = $this->dateTimeFieldsToTimestamp($validatedData['end_date'], $endTime);
+            } else {
+                $event->timestamp_end = null;
+            }
+
+            $event->timestamp = $this->dateTimeFieldsToTimestamp($validatedData['date'], $time);
+            $event->full_day = $fullDay;
+        }
+
+        if ($request->file('picture') !== null) {
+            $event->uploadPicture($request->file('picture'));
+        }
+
+        $event->save();
+        return redirect()->route('events.index')->with('success', 'Evenement bewerkt');
     }
 
     /**
@@ -113,6 +152,8 @@ class EventController extends Controller
      */
     public function destroy(Event $event)
     {
-        //
+        Storage::disk('public')->delete($event->picture);
+        $event->delete();
+        return redirect()->route('events.index')->with('success', 'Evenement verwijderd');
     }
 }
