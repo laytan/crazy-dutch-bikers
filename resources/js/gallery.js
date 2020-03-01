@@ -1,8 +1,8 @@
 import Vue from 'vue';
-import ImageUpload from './components/ImageUpload';
-import GalleryUpload from './components/GalleryUpload';
+import ImageUpload from './components/ImageUpload.vue';
+import GalleryUpload from './components/GalleryUpload.vue';
 
-const app = new Vue({
+new Vue({
   el: '#vue',
   components: {
     ImageUpload,

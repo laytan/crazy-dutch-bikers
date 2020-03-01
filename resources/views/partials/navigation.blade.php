@@ -12,7 +12,14 @@
                     @endcan
                 @endguest
             </ul>
-            @yield('nav-end')
+            <div class="audio-player d-flex align-items-end position-lg-absolute position-xl-relative d-lg-block" data-audio-player="" data-song-name="Wild Ride">
+                <audio>
+                    <source src="{{ url('/audio/theme.mpeg') }}" type="audio/mpeg">
+                </audio>
+                <div class="js-render">
+                    {{-- The actual audio element will render here --}}
+                </div>
+            </div>
         </div>
     </div>
     <div class="bg-cdbb w-100 navbar-text d-flex justify-content-between pl-3 pr-1 w-lg-auto order-lg-1">
@@ -39,6 +46,6 @@
         <span class="navigation-toggler__bar"></span>
     </button>
 </div>
-</nav>
 {{-- Login modal --}}
 @include('partials.login')
+</nav>

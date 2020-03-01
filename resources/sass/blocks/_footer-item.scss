@@ -1,0 +1,17 @@
+.footer-item {
+  &__title {
+    font-size: 2rem;
+  }
+
+  ul {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+  }
+
+  &--no-title {
+    @include media-breakpoint-up(sm) {
+      padding-top: 2.5rem;
+    }
+  }
+}
