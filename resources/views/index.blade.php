@@ -125,8 +125,8 @@
           <p>Bekijk hier een paar foto's van onze laatste gallerij.</p>
           <p>De Crazy Dutch Bikers zijn in voor feestjes en laten dat ook zien. Door middel van foto's kijken wij terug op alle gezellige feestjes, ritjes en evenementen.</p>
           <div>
-            <button class="btn btn-primary d-block w-100">Bekijk alle foto's</button>
-            <button class="btn btn-outline-primary d-block w-100 mt-2">Bekijk {{ $featured->title }}</button>
+            <a href="{{ route('galleries.index') }}" class="btn btn-primary d-block w-100">Bekijk alle foto's</a>
+            <a href="{{ route('galleries.show', ['gallery' => $featured->title]) }}" class="btn btn-outline-primary d-block w-100 mt-2">Bekijk {{ $featured->title }}</a>
           </div>
         </div>
         @endif
