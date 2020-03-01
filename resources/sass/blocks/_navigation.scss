@@ -21,43 +21,57 @@
 }
 
 .navigation-toggler {
-  width: 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-evenly;
-  transition: transform .3s ease-in-out;
+    // Override bootstrap
+    border: none !important;
+    background: transparent !important;
+    outline: none !important;
 
-  &__bar {
-    display: block;
-    width: 100%;
-    height: calc(1rem / 3);
-    background-color: map-get($theme-colors, 'cdblg');
-    border-radius: 1px;
-    transition: transform .3s ease-in-out;
-  }
+    // Transform as x sign
+    &__bar {
+        width: 22px;
+        transition: transform .2s, opacity .2s;
+        display: block;
+        background: map-get($theme-colors, 'cdblg');
+        height: 3px;
 
-  // Animate the bars so when the navigation is shown it is an x sign and if it is not shown a regular hamburger icon
-  &:not(.collapsed) {
-    // The other transforms make it a plus sign, rotate a plus sign 45 degrees and you get an x
-    transform: rotateZ(45deg);
+        // Top bar
+        &:nth-child(1) {
+            transform: rotate(45deg);
+            transform-origin: 10% 10%;
+            margin-bottom: 0;
+        }
 
-    .navigation-toggler__bar {
-      &:nth-child(1) {
-        // Translate out of the screen
-        transform: translateX(100px);
-      }
+        // Middle bar
+        &:nth-child(2) {
+            opacity: 0;
+        }
 
-      &:nth-child(2) {
-        // Rotate so it is a vertical bar
-        transform: rotateZ(90deg);
-      }
-
-      &:nth-child(3) {
-        // Translate this bar to the center of the other bar
-        transform: translateY(-150%);
-      }
+        // Bottom bar
+        &:nth-child(3) {
+            transform: rotate(-45deg);
+            transform-origin: 10% 90%;
+            margin-top: 6px;
+        }
     }
-  }
+
+    // Transform as 3 bars
+    &.collapsed {
+        // Top bar
+        .navigation-toggler__bar:nth-child(1) {
+            transform: rotate(0);
+            margin-bottom: 6px;
+        }
+
+        // Middle bar
+        .navigation-toggler__bar:nth-child(2) {
+            opacity: 1;
+        }
+
+        // Bottom bar
+        .navigation-toggler__bar:nth-child(3) {
+            transform: rotate(0);
+        }
+    }
 }
 
 .brand-text {
