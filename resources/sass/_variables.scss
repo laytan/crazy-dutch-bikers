@@ -23,7 +23,7 @@ $theme-colors: (
     );
 
 // Typography
-$font-size-base: 1.1rem;
+$font-size-base: 1.2rem;
 
 $font-family-sans-serif: 'Nunito', sans-serif;
 $headings-font-family: 'Cloister';
@@ -35,16 +35,19 @@ $headings-color: #e9ecef; // Gray 200
 $paragraph-margin-bottom: 1.5rem;
 
 $link-hover-decoration: none;
-$link-hover-color: lighten($cdb-red, 5%);
+$link-color: #dc2a2a;
+$link-hover-color: darken(#dc2a2a, 5%);
 
-$line-height-lg: 1.7;
-$line-height-sm: 1.7;
+$line-height-lg: 1.55;
+$line-height-sm: 1.55;
+$headings-line-height: 1;
 $h1-font-size:                $font-size-base * 3.2;
 $h2-font-size:                $font-size-base * 3;
 $h3-font-size:                $font-size-base * 2.75;
 $h4-font-size:                $font-size-base * 2.5;
 $h5-font-size:                $font-size-base * 2.25;
 $h6-font-size:                $font-size-base * 2;
+$h7-font-size: 1.8rem;
 
 // Navbar
 $navbar-brand-font-size:     2.5rem;
@@ -80,3 +83,14 @@ $pagination-disabled-bg:            darken(map-get($theme-colors, 'cdbg'), 10%);
 $pagination-disabled-border-color: rgba($cdb-gray, 0.5);
 
 $pagination-active-border-color:    rgba($cdb-gray, 0.5);
+
+$box-shadow:                  0 .5rem 1rem rgba($cdb-black, .3);
+
+// Tabs
+
+$nav-tabs-link-active-color:        $cdb-gray;
+$nav-tabs-link-active-bg:          #212529;
+// Can't be overwritten with variables
+.nav-tabs .nav-link:not(.active) {
+  color: $cdb-gray !important;
+}

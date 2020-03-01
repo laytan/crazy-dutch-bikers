@@ -1,5 +1,6 @@
 @component('components.modal', ['title' => 'Inloggen', 'id' => 'login'])
 {{ Aire::open()->route('login')->method('POST')->id('loginForm')->validate('App\Http\Requests\LoginRequest') }}
+@honeypot
 <p>
   Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
 </p>
@@ -16,7 +17,10 @@
 @if(($errors->has('email') || $errors->has('password')) || session('showLogin'))
 <script type="text/javascript">
   window.onload = function() {
-      $('#login').modal('show');
+      // Set timeout so it does not interfere with our copyModalsToFooter function
+      setTimeout(() => {
+          $('#login').modal('show');
+      }, 500);
   };
 </script>
 @endif
