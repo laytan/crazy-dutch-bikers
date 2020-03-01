@@ -109,7 +109,7 @@ class EventController extends Controller
         $event->fill(
             array_filter(
                 $validatedData,
-                fn($data) => $data !== null
+                fn ($data) => $data !== null
             )
         );
 
