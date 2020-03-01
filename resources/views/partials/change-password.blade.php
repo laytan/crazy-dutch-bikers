@@ -13,7 +13,10 @@
 @if(($errors->has('password-old') || $errors->has('password-new')) || session('showChangePassword'))
 <script type="text/javascript">
   window.onload = function() {
-      $('#password-change').modal('show');
+    // Set timeout so it does not interfere with our copyModalsToFooter function
+      setTimeout(function() {
+          $('#password-change').modal('show');
+      }, 500);
   };
 </script>
 @endif
