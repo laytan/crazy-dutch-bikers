@@ -117,15 +117,19 @@ class UserController extends Controller
             $user->profile_picture = $picture;
         }
 
-        // TODO: Exact same if else statement as the store method, DRY
         // If the role field has been set
         if (isset($validatedData['role']) && $validatedData['role'] !== null) {
-            // If the user is assigned admin and the authorized user can to do that
-            if ($validatedData['role'] === 'admin' && Gate::allows('make-admin', $user)) {
-                $user->role = 'admin';
+            if ($validatedData['role'] === 'admin') {
+                if (Gate::allows('make-admin', $user)) {
+                    $user->role = 'admin';
+                } else {
+                    return redirect()
+                        ->route('users.index')
+                        ->with('error', 'Als beheerder kun je geen beheerders aanmaken');
+                }
+            } else {
+                $user->role = 'member';
             }
-        } else {
-            $user->role = 'member';
         }
 
         $user->save();
@@ -160,24 +164,31 @@ class UserController extends Controller
         }
 
         // Add to the database
-        $user = User::create([
+        $user = new User([
             'name' => $validatedData['name'],
             'email' => $validatedData['email'],
             'password' => \Hash::make($password),
-            'description' => $validatedData['description'],
+            'description' => isset($validatedData['description']) ? $validatedData['description'] : '',
             'profile_picture' => $picture,
             'api_token' => \Str::random(60),
         ]);
 
+        $user->role = 'member';
+
         // If the role field has been set
         if (isset($validatedData['role']) && $validatedData['role'] !== null) {
-            // If the user is assigned admin and the authorized user can to do that
-            if ($validatedData['role'] === 'admin' && Gate::allows('make-admin', $user)) {
-                $user->role = 'admin';
+            if ($validatedData['role'] === 'admin') {
+                if (Gate::allows('make-admin', $user)) {
+                    $user->role = 'admin';
+                } else {
+                    return redirect()
+                        ->route('users.index')
+                        ->with('error', 'Als beheerder kun je geen beheerders aanmaken');
+                }
             }
-        } else {
-            $user->role = 'member';
         }
+
+        $user->save();
 
         // Send Mail
         Mail::to($validatedData['email'], $validatedData['name'])
