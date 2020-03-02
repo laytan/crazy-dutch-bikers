@@ -2,9 +2,15 @@
 
 @section('content')
 <div class="container-fluid text-light">
+  {{ Aire::summary()->verbose() }}
+  <div class="d-flex justify-content-between align-items-center">
     @component('components.title', ['icon' => 'fas fa-users'])
     Leden
     @endcomponent
+    @can('manage')
+    <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
+    @endcan
+  </div>
   <div class="row">
     @foreach ($users as $user)
       <div class="col-12 col-sm-6 col-md-4">
