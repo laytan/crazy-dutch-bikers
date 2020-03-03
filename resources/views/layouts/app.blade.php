@@ -108,7 +108,7 @@
         </div>
         <div class="copyright py-3 bg-cdblg mt-4">
             <p class="text-center text-cdbg m-0">
-                Powered by <a target="_BLANK" href="https://nl.linkedin.com/in/laytan" rel="noreferrer noopener">Laytan Laats</a>
+                Powered by <a target="_BLANK" href="https://laytanlaats.com/" rel="noreferrer noopener">Laytan Laats</a>
             </p>
         </div>
         @yield('footer')
