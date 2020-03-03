@@ -1,8 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container-fluid text-light">
-  {{ Aire::summary()->verbose() }}
+<div class="container text-light">
   <div class="d-flex justify-content-between align-items-center">
     @component('components.title', ['icon' => 'fas fa-users'])
     Leden
@@ -11,34 +10,39 @@
     <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
     @endcan
   </div>
-  <div class="row">
+  <div class="users">
     @foreach ($users as $user)
-      <div class="col-12 col-sm-6 col-md-4">
-        <div class="card text-dark mb-5">
-          <img src="{{ $user->profile_picture }}" alt="Geen profiel foto" class="card-img-top member-profile-picture">
+      <div class="users__user mb-3">
+        <div class="card bg-cdbg-opaque">
+          <div class="user__image-wrap"  style="padding-bottom: {{ $user->profilePictureDimensions[1] / $user->profilePictureDimensions[0] * 100 }}%;">
+            <img class="card-img-top lazy" data-src="{{ $user->profile_picture }}" alt="{{ $user->name }}">
+          </div>
           <div class="card-body">
             <h5 class="card-title">
               {{ $user->name }}
             </h5>
             <p class="card-text">
-              <p>
-                {{ $user->description }}
-              </p>
-              <small class="text-muted">{{ $user->email }}</small>
+              {{ $user->description }}
             </p>
-            @can('update-user', $user)
-              <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-warning">Bewerken</a>
-            @endcan
-            @can('destroy-user', $user)
-              {{ Aire::open()->route('users.destroy', ['user' => $user->id]) }}
-              {{ Aire::input('user')->type('hidden')->value($user->id) }}
-              {{ Aire::submit('Verwijder') }}
-              {{ Aire::close() }}
+            @can('manage')
+            <hr class="border-cdblg">
+
+            <a href="{{ route('users.edit', ['user' => $user->id]) }}" class="btn btn-info btn-sm w-100">
+              <i class="fas fa-edit"></i> Bewerken
+            </a>
+              @can('destroy-user', $user)
+              <button data-submit="#destroy-{{ $user->id }}-user" class="btn w-100 btn-danger btn-sm mt-2">
+                <i class="fas fa-trash"></i> Verwijderen
+              </button>
+              {{ Aire::open()->id("destroy-{$user->id}-user")->route('users.destroy', ['user' => $user->id])->class('d-none') }}
+              {{ aire::close() }}
+              @endcan
             @endcan
           </div>
         </div>
       </div>
     @endforeach
   </div>
+  {{ $users->links() }}
 </div>
 @endsection

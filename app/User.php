@@ -2,10 +2,10 @@
 
 namespace App;
 
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Gate;
 use Hash;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'description', 'profile_picture', 'api_token'
+        'name', 'email', 'password', 'description', 'profile_picture', 'api_token',
     ];
 
     /**
@@ -46,6 +46,18 @@ class User extends Authenticatable
     public function products()
     {
         return $this->hasMany('App\Product');
+    }
+
+    public function getProfilePictureDimensionsAttribute()
+    {
+        if ($this->getOriginal('profile_picture') == null) {
+            list($width, $height, $type, $attr) =
+                getimagesize(public_path('images/profile-placeholder.png'));
+        } else {
+            list($width, $height, $type, $attr) =
+                getimagesize(storage_path('app/public/' . $this->getOriginal('profile_picture')));
+        }
+        return [$width, $height];
     }
 
     public function hasRole(string $role)

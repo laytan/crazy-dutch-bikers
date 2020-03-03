@@ -32,7 +32,7 @@ class UserController extends Controller
      */
     public function index($message_type = null, $message = null)
     {
-        $users = resolveProfilePics(User::all());
+        $users = resolveProfilePics(User::orderBy('id', 'ASC')->paginate(20));
 
         if (strlen($message_type) > 0) {
             return view('users.index', ['users' => $users, $message_type => $message]);
