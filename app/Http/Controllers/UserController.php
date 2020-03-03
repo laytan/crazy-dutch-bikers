@@ -45,6 +45,11 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // Remove profile picture
+        if ($user->getOriginal('profile_picture') !== null) {
+            Storage::disk('public')->delete($user->getOriginal('profile_picture'));
+        }
+
         $user->delete();
 
         // Send users that delete their own account back to the homepage
