@@ -1,6 +1,7 @@
 /node_modules
 /public/hot
 /public/storage
+/public/css/*
 /storage/*.key
 /vendor
 .env
@@ -14,3 +15,4 @@ yarn-error.log
 password.md
 
 .vscode
+!/public/css/.gitkeep
