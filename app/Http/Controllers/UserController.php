@@ -72,36 +72,38 @@ class UserController extends Controller
     {
         // Validate request
         $validatedData = $request->validate([
-            'name' => 'nullable|string|max:255',
-            'email' => 'nullable|email|max:255|string',
-            'old_password' => 'nullable|min:8|string',
-            'password' => 'nullable|min:8|string',
-            'description' => 'nullable|string',
-            'profile_picture' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'role' => 'nullable|in:member,admin',
+            'name' => 'string|max:100',
+            'email' => 'email|max:255|string',
+            'password' => 'min:8|string',
+            'old_password' => 'min:8|string',
+            'description' => 'string',
+            'profile_picture' => 'image',
+            'role' => 'in:member,admin',
         ]);
 
         // Name
-        if ($validatedData['name'] !== null) {
+        if (isset($validatedData['name']) && $validatedData['name'] !== null) {
             $user->name = $validatedData['name'];
         }
 
         // Email
-        if ($validatedData['email'] !== null && $user->email !== $validatedData['email']) {
+        if (isset($validatedData['email']) && $validatedData['email'] !== null
+            && $user->email !== $validatedData['email']) {
             if (User::whereEmail($validatedData['email'])->count() === 0) {
                 $user->email = $validatedData['email'];
             }
         }
 
         // Password
-        if ($validatedData['password'] !== null && $validatedData['old_password'] !== null) {
+        if (isset($validatedData['password']) && $validatedData['password'] !== null &&
+            isset($validatedData['old_password']) && $validatedData['old_password'] !== null) {
             if (!$user->updatePassword($validatedData['old_password'], $validatedData['password'])) {
                 return back()->with('error', 'Wachtwoord is niet juist');
             }
         }
 
         // Description
-        if ($validatedData['description'] !== null) {
+        if (isset($validatedData['description']) && $validatedData['description'] !== null) {
             $user->description = $validatedData['description'];
         }
 
@@ -125,7 +127,7 @@ class UserController extends Controller
                 } else {
                     return redirect()
                         ->route('users.index')
-                        ->with('error', 'Als beheerder kun je geen beheerders aanmaken');
+                        ->with('error', 'Je kunt deze gebruiker geen beheerder maken');
                 }
             } else {
                 $user->role = 'member';
@@ -134,7 +136,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return redirect()->route('users.index')->with('success', 'Lid is bewerkt');
+        return redirect()->route('users.index')->with('success', 'Lid is bijgewerkt');
     }
 
     // Render form for adding new users

@@ -2,15 +2,12 @@
 
 namespace App\Providers;
 
+use App\Order;
+use App\User;
+use Hash;
+use Illuminate\Auth\Access\Response;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Auth\Access\Response;
-use App\User;
-use App\Product;
-use App\Order;
-use app\Picture;
-use App\Event;
-use Hash;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -41,7 +38,7 @@ class AuthServiceProvider extends ServiceProvider
          * Implicitly grant "Super Admin" role all permission
          * when Response::deny has not yet been returned in the gates before
          */
-        Gate::after(fn (User $user) => $user->hasRole('super-admin') ? true : Response::deny($this->message));
+        Gate::after(fn(User $user) => $user->hasRole('super-admin') ? true : Response::deny($this->message));
 
         Gate::define('manage-roles', function (User $user) {
             if ($user->hasRole('super-admin')) {
@@ -61,7 +58,11 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         Gate::define('make-admin', function (User $user, User $otherUser) {
-            return !$otherUser->hasRole('super-admin') && $user->hasRole('super-admin');
+            // Only dissalow when the other user is a super admin,
+            // else return null which means super-admin true, else false
+            if ($otherUser->hasRole('super-admin')) {
+                return false;
+            }
         });
 
         Gate::define('destroy-user', function (User $user, User $otherUser) {
