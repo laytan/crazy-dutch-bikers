@@ -28,7 +28,6 @@
         "barryvdh/laravel-debugbar": "^3.2",
         "facade/ignition": "^1.4",
         "fzaninotto/faker": "^1.4",
-        "laravel/dusk": "^5.9",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^3.0",
         "phpunit/phpunit": "^8.0"
@@ -41,7 +40,6 @@
     "extra": {
         "laravel": {
             "dont-discover": [
-              "laravel/dusk"
             ]
         }
     },

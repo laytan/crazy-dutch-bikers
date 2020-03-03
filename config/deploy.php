@@ -61,7 +61,7 @@ return [
             'artisan:view:clear',
             'artisan:cache:clear',
             'artisan:config:cache',
-            'artisan:migrate',
+            // 'artisan:migrate',
         ],
 
         // Deployment is done and live
@@ -109,9 +109,9 @@ return [
      */
 
     'hosts' => [
-        '178.62.236.120' => [
+        'crazy-deployer' => [
             'deploy_path' => '/var/www/html',
-            'user' => 'root',
+            'user' => 'deployer',
         ],
     ],
 
