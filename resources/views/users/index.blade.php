@@ -10,7 +10,7 @@
     <a href="{{ route('users.create') }}" class="btn btn-primary"><i class="fas fa-plus"></i></a>
     @endcan
   </div>
-  <div class="users">
+  <div class="users mb-4">
     @foreach ($users as $user)
       <div class="users__user mb-3">
         <div class="card bg-cdbg-opaque">
