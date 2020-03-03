@@ -132,10 +132,13 @@ return [
             'not_regex' => 'Er is een fout opgetreden bij het bestellen, probeer alstublieft opnieuw.',
         ],
         'postal_code' => [
-            'regex' => 'De postcode is niet geldig, een geldige postcode ziet er uit als 0000AA',
+            'regex' => 'De postcode is niet geldig, een geldige postcode ziet er uit als 0000AA.',
         ],
         'address' => [
             'regex' => 'Dit adres is ongeldig, ben je geen huisnummer vergeten?',
+        ],
+        'password' => [
+            'required_unless' => ':Attribute is verplicht tenzij :other aangevinkt is.',
         ],
     ],
     /*
@@ -192,6 +195,7 @@ return [
         'year' => 'jaar',
         'password-old' => 'oud wachtwoord',
         'password-new' => 'nieuw wachtwoord',
+        'generate-password' => 'genereer een willekeurig wachtwoord',
         'location' => 'locatie',
         'location_link' => 'locatie link',
         'facebook_link' => 'facebook link',

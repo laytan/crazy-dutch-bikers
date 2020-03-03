@@ -24,13 +24,13 @@ class CreateUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'              => 'required|string|max:255',
-            'email'             => 'required|unique:users|email|max:255|string',
-            'password'          => 'required_unless:generate-password,on|nullable|min:8|string',
+            'name' => 'required|string|max:100',
+            'email' => 'required|unique:users|email|max:255|string',
+            'password' => 'required_unless:generate-password,1|nullable|min:8|string',
             'generate-password' => 'nullable',
-            'description'       => 'nullable|string',
-            'profile_picture'   => 'required|image',
-            'role'              => 'nullable|in:member,admin',
+            'description' => 'required|string',
+            'profile_picture' => 'required|image',
+            'role' => 'required|in:member,admin',
         ];
     }
 }

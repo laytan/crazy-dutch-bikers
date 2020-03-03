@@ -6,6 +6,7 @@
     Lid Toevoegen
     @endcomponent
     {{ Aire::open()->route('users.store')->validate('App\Http\Requests\CreateUserRequest')->multipart() }}
+    {{ Aire::summary()->verbose() }}
     <div class="row">
       <div class="col-12 col-md-6">
         {{ Aire::input('name', 'Naam') }}

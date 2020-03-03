@@ -139,6 +139,7 @@ return [
         'description' => 'beschrijving',
         'postal_code' => 'postcode',
         'town' => 'plaats',
+        'generate-password' => 'Genereer een willekeurig wachtwoord',
     ],
 
     /*

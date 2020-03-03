@@ -18,16 +18,16 @@ class UsersTest extends TestCase
         return [
             'name' => 'Bob',
             'email' => 'mail@example.com',
-            'password' => '',
-            'generate-password' => true,
+            'password' => null,
+            'generate-password' => '1',
             'profile_picture' => UploadedFile::fake()->image('test.jpg'),
+            'description' => 'Cool guy',
             'role' => 'member',
         ];
     }
 
     public function testAdminCanCreateMember()
     {
-        $this->withoutExceptionHandling();
         $user = factory(User::class)->create([
             'role' => 'admin',
         ]);
