@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Gate;
 use Hash;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,12 +51,17 @@ class User extends Authenticatable
 
     public function getProfilePictureDimensionsAttribute()
     {
-        if ($this->getOriginal('profile_picture') == null) {
-            list($width, $height, $type, $attr) =
-                getimagesize(public_path('images/profile-placeholder.png'));
-        } else {
-            list($width, $height, $type, $attr) =
-                getimagesize(storage_path('app/public/' . $this->getOriginal('profile_picture')));
+        try {
+            if ($this->getOriginal('profile_picture') == null) {
+                list($width, $height, $type, $attr) =
+                    getimagesize(public_path('images/profile-placeholder.png'));
+            } else {
+                list($width, $height, $type, $attr) =
+                    getimagesize(storage_path('app/public/' . $this->getOriginal('profile_picture')));
+            }
+        } catch (Exception $e) {
+            // Image was probably deleted
+            return [1, 1];
         }
         return [$width, $height];
     }
