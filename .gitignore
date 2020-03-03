@@ -2,6 +2,7 @@
 /public/hot
 /public/storage
 /public/css/*
+/public/js/*
 /storage/*.key
 /vendor
 .env
@@ -16,3 +17,4 @@ password.md
 
 .vscode
 !/public/css/.gitkeep
+!/public/js/.gitkeep
