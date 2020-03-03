@@ -5,7 +5,7 @@
   @component('components.title', ['icon' => 'fas fa-edit'])
   Profiel bewerken
   @endcomponent
-  {{ Aire::open()->route('users.update', ['user' => $user->id])->multipart()->bind($user) }}
+  {{ Aire::open()->route('users.update', ['user' => $user->id])->multipart() }}
   {{ Aire::input('name', 'Naam') }}
   {{ Aire::input('email', 'E-Mail') }}
   {{ Aire::textarea('description', 'Beschrijving') }}
@@ -13,7 +13,7 @@
       <div
         class="col-12 col-md-8 col-lg-6"
         data-image-upload="true"
-        data-start-image="{{ $user->profile_picture }}"
+        data-start-image=""
         data-name="profile_picture"
         data-id="profile_picture"
         @error('profile_picture') data-invalid="true" @enderror

@@ -72,13 +72,13 @@ class UserController extends Controller
     {
         // Validate request
         $validatedData = $request->validate([
-            'name' => 'string|max:100',
-            'email' => 'email|max:255|string',
-            'password' => 'min:8|string',
-            'old_password' => 'min:8|string',
-            'description' => 'string',
-            'profile_picture' => 'image',
-            'role' => 'in:member,admin',
+            'name' => 'nullable|string|max:100',
+            'email' => 'nullable|email|max:255|string',
+            'password' => 'nullable|min:8|string',
+            'old_password' => 'nullable|min:8|string',
+            'description' => 'nullable|string',
+            'profile_picture' => 'nullable|image',
+            'role' => 'nullable|in:member,admin',
         ]);
 
         // Name
