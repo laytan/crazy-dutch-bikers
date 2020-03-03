@@ -21,7 +21,9 @@
       ></div>
   </div>
   @can('manage-roles')
-  {{ Aire::select(['member' => 'Lid', 'admin' => 'Beheer'], 'role', 'Rol') }}
+    @if(!$user->hasRole('super-admin'))
+      {{ Aire::select(['member' => 'Lid', 'admin' => 'Beheer'], 'role', 'Rol') }}
+    @endif
   @endcan
   {{ Aire::password('old_password', 'Oud wachtwoord')->helpText('Laat leeg om niet te veranderen') }}
   {{ Aire::password('password', 'Nieuw wachtwoord')->helpText('Laat leeg om niet te veranderen') }}
