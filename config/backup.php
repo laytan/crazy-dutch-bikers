@@ -33,13 +33,13 @@ return [
                     base_path('laradock-crazy-dutch-bikers'),
                     base_path('.git'),
                     base_path('storage/app/backup-temp'),
-                    base_path('storage/app/Crazy-Dutch-Bikers')
+                    base_path('storage/app/Crazy-Dutch-Bikers'),
                 ],
 
                 /*
                  * Determines if symlinks should be followed.
                  */
-                'follow_links' => false,
+                'follow_links' => true,
             ],
 
             /*
@@ -175,15 +175,15 @@ return [
         ],
 
         /*
-        [
-            'name' => 'name of the second app',
-            'disks' => ['local', 's3'],
-            'health_checks' => [
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
-                \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
-            ],
-        ],
-        */
+    [
+    'name' => 'name of the second app',
+    'disks' => ['local', 's3'],
+    'health_checks' => [
+    \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumAgeInDays::class => 1,
+    \Spatie\Backup\Tasks\Monitor\HealthChecks\MaximumStorageInMegabytes::class => 5000,
+    ],
+    ],
+     */
     ],
 
     'cleanup' => [
