@@ -59,11 +59,13 @@ $navbar-dark-active-color:   darken( $body-color, 20% );
 $navbar-dark-disabled-color: rgba( $body-color, .3 );
 
 // Dropdown
-$dropdown-min-width:                15rem;
-$dropdown-bg:                       #212529; // Gray 900
+$dropdown-min-width:                1rem;
+$dropdown-bg:                       lighten($dark, 5%);
 $dropdown-link-color:               $body-color;
 $dropdown-link-hover-color:         darken($body-color, 10%);
 $dropdown-link-hover-bg:            $dropdown-bg;
+$dropdown-item-padding-y:           .25rem;
+$dropdown-item-padding-x:           1rem;
 
 // Modals
 $modal-content-color:                  $body-color;
