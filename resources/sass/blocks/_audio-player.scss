@@ -1,4 +1,5 @@
 .audio-player {
+  background: map-get($theme-colors, 'cdbb');
 
   .js-render {
     width: 150px;
@@ -18,11 +19,10 @@
     }
   }
 
-    .js-audio-player {
-        background: rgba(map-get($theme-colors, 'cdbb'), 0.5);
-    }
-
     .alert {
+        position: absolute;
+        top: -70%;
+
         @include media-breakpoint-up(lg) {
             min-width: 400px;
         }

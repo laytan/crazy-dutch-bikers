@@ -237,7 +237,7 @@ export default class AudioTheme {
 
     return `
     <div class="alert alert-warning alert-dismissible fade show position-lg-absolute m-3 right-0" role="alert">
-        <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert, zet hem hierboven aan!
+        <strong>Let op!</strong> De achtergrondmuziek is op mute gezet omdat je browser het blokkeert. Je kunt hem bij de speler alsnog aanzetten.
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
