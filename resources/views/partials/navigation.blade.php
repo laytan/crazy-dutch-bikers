@@ -32,7 +32,7 @@
             </h1>
         </a>
 				@auth
-					<div class="align-center">
+					<div class="align-center d-lg-none">
 						Hallo, {{ Auth::user()->name }}
 					</div>
 				@else
