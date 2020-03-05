@@ -54,7 +54,7 @@
       </div>
     </div>
   </div>
-  <div class="container-fluid p-0">
+  <div class="container-fluid">
     <div class="row bg-primary p-5 my-6">
       <div class="col-12 col-lg-4 text-center border-bottom border-cdbg border-4 border-lg-0 pb-4 pb-lg-0">
         <h2 class="h4 h-sm-2">Broederschap</h2>
