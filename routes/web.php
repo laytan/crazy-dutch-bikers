@@ -37,9 +37,6 @@ Route::patch('/leden/{user}/bewerken', 'UserController@update')->name('users.upd
 Route::get('/leden/aanmaken', 'UserController@create')->name('users.create');
 Route::post('/leden', 'UserController@store')->name('users.store');
 
-Route::get('/change-password', 'ChangePasswordController@index');
-Route::patch('/change-password', 'ChangePasswordController@update')->name('change-password');
-
 Route::get('/merchandise', 'ProductController@index')->name('products.index');
 Route::get('/merchandise/aanmaken', 'ProductController@create')->name('products.create');
 Route::post('/merchandise', 'ProductController@store')->name('products.store');

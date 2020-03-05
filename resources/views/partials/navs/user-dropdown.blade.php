@@ -1,6 +1,5 @@
 @component('components.dropdown', ['id' => 'user-dropdown', 'title' => Auth::user()->name, 'right' => false])
-	<a href="{{ route('users.edit', ['user' => Auth::user()->id]) }}" class="dropdown-item">Profiel</a>
-	@include('partials.change-password')
+	<a href="{{ route('users.edit', ['user' => Auth::user()->id]) }}" class="dropdown-item">Profiel bewerken</a>
 	<a
 	class="dropdown-item"
 	href="#"
