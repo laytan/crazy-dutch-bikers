@@ -67,6 +67,7 @@ return [
         // Deployment is done and live
         'done' => [
             'fpm:reload',
+            'artisan:queue:restart',
         ],
 
         // Deployment succeeded.
@@ -142,7 +143,7 @@ return [
      */
 
     'include' => [
-        //
+        'recipes/cdb-recipe.php',
     ],
 
     'keep_releases' => 2,
