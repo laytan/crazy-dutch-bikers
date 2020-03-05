@@ -155,6 +155,7 @@ export default class AudioTheme {
   }
 
   private syncAudioElement(prevState: State) {
+    this.audioElement.muted = false;
     switch (this.state.status) {
       case Status.Muted:
         this.audioElement.muted = true;
@@ -169,8 +170,6 @@ export default class AudioTheme {
       case Status.Playing:
         if (prevState.status === Status.Ended) {
           this.audioElement.currentTime = 0;
-        } else if (prevState.status === Status.Muted) {
-          this.audioElement.muted = false;
         }
         this.audioElement.play();
         break;
