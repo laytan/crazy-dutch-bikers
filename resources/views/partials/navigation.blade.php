@@ -31,9 +31,15 @@
                 Cra<span class="brand-text__z">Z</span>y Dutch Bikers
             </h1>
         </a>
-        <button class="btn btn-primary btn-sm align-self-center d-lg-none" data-toggle="modal" data-target="#login">
-            <i class="fas fa-user-lock"></i> Members only
-        </button>
+				@auth
+					<div class="align-center">
+						Hallo, {{ Auth::user()->name }}
+					</div>
+				@else
+					<button class="btn btn-primary btn-sm align-self-center d-lg-none" data-toggle="modal" data-target="#login">
+							<i class="fas fa-user-lock"></i> Members only
+					</button>
+				@endauth
         <button
         class="navbar-toggler border-0 collapsed navigation-toggler"
         aria-expanded="false"
