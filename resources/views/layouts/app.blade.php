@@ -50,7 +50,7 @@
                   <a href="{{ route('login') }}">Login</a>
                 </li>
                 <li>
-                  <a href="{{ route('applications.index') }}">Aanmelden</a>
+                  <a href="{{ route('applications.create') }}">Aanmelden</a>
                 </li>
                 <li>Over ons</li>
                 <li>
