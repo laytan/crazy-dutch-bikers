@@ -105,6 +105,10 @@ window.Cart = Cart;
       const wrap = $(e.target).parents('.gallery-grid__image-wrap');
       wrap.toggleClass('gallery-grid__image-wrap--full');
     });
+
+		// Fix janky mobile with view heights
+		$('.welcome-background').css('min-height', $('.welcome-background').height());
+
     matchHeights();
     pulsateLogo();
 
