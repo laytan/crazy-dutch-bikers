@@ -8,17 +8,19 @@
             {{ $gallery->title }}
             @endcomponent
         </div>
-        <div>
-            @component('components.modal', ['id' => 'remove-gallery-modal', 'title' => 'Gallerij verwijderen?'])
-                {{ Aire::open()->class('d-none')->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form') }}
-                {{ Aire::close() }}
-                @slot('footer')
-                    <button class="btn-danger" data-submit="#gallery-destroy-form">Verwijderen</button>
-                @endslot
-            @endcomponent
-            <button class="btn btn-warning" data-toggle="modal" data-target="#remove-gallery-modal">Verwijderen</button>
-            <a href="{{ route('galleries.edit', ['gallery' => $gallery->title]) }}" class="btn btn-primary">Bewerken</a>
-        </div>
+        @can('manage')
+          <div>
+              @component('components.modal', ['id' => 'remove-gallery-modal', 'title' => 'Gallerij verwijderen?'])
+                  {{ Aire::open()->class('d-none')->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form') }}
+                  {{ Aire::close() }}
+                  @slot('footer')
+                      <button class="btn-danger" data-submit="#gallery-destroy-form">Verwijderen</button>
+                  @endslot
+              @endcomponent
+              <button class="btn btn-warning" data-toggle="modal" data-target="#remove-gallery-modal">Verwijderen</button>
+              <a href="{{ route('galleries.edit', ['gallery' => $gallery->title]) }}" class="btn btn-primary">Bewerken</a>
+          </div>
+        @endcan
     </div>
     <div class="gallery-grid">
         @foreach($gallery->picture_columns as $column)
@@ -27,13 +29,13 @@
             <div class="gallery-grid__image-wrap bg-cdbg" style="padding-bottom: {{ $picture->dimensions[1] / $picture->dimensions[0] * 100 }}%;">
                 <img class="lazy" data-src="{{ Storage::url($picture->url) }}">
                 <div class="gallery-grid__icon-bar">
-                  @auth
+                  @can('manage')
                     <button class="btn btn-warning btn-sm">
                       <i class="fa fa-trash" data-submit="#destroy-{{ $picture->id }}"></i>
                     </button>
                     {{ Aire::open()->route('pictures.destroy', ['picture' => $picture->id])->id("destroy-$picture->id")->class('d-none') }}
                     {{ Aire::close() }}
-                  @endauth
+                  @endcan
                   <button class="btn btn-primary btn-sm">
                     <i class="fa fa-close"></i>
                   </button>
