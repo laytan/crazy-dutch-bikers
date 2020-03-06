@@ -101,7 +101,12 @@
               </ul>
             </div>
             <div class="col-12 col-sm-6 col-lg-3 mt-3 footer-item footer-item--no-title">
-              <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Cum laudantium maxime sunt nesciunt velit quidem vitae atque! Perspiciatis deserunt, doloremque debitis nihil aut vero nisi numquam optio esse, sunt quibusdam aliquid impedit? Labore provident corporis soluta culpa inventore sint natus? Omnis deserunt tempora quod illum error nobis et quos harum?</p>
+              <p>
+                Wij zijn een Motor Touring Club dat graag zijn passie voor motoren en motorrijden deelt met andere motorrijders.
+              </p>
+              <p class="mb-2">
+                Volg ons op social media:
+              </p>
               <a href="https://facebook.com/groups/crazydutchbikers" target="_BLANK" rel="noreferrer noopener"><i class="fab fa-facebook fa-2x"></i></a>
             </div>
           </div>
