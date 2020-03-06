@@ -80,9 +80,6 @@ window.Cart = Cart;
     if (audio && logo) {
       const pulse = (60 / Number(audio.dataset.bpm)) * 1000;
 
-      // audio.play();
-      // audio.classList.add('playing');
-
       pulsing(logo, pulse);
       setInterval(() => { pulsing(logo, pulse); }, pulse);
     }
@@ -106,8 +103,8 @@ window.Cart = Cart;
       wrap.toggleClass('gallery-grid__image-wrap--full');
     });
 
-		// Fix janky mobile with view heights
-		$('.welcome-background').css('min-height', $('.welcome-background').height());
+    // Fix janky mobile with view heights
+    $('.welcome-background').css('min-height', $('.welcome-background').height());
 
     matchHeights();
     pulsateLogo();
