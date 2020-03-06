@@ -7,6 +7,11 @@
   @endcomponent
   <div class="row js-products">
     <div class="col-12 col-md-9 order-2 order-md-1 mt-5 mt-md-0">
+      @error('product-ids')
+        @component('components.alert', ['type' => 'danger'])
+        Er is een fout opgetreden met de bestelling. Neem alstublieft contact op.
+        @endcomponent
+      @enderror
       <div class="row">
         @foreach($products as $product)
         <div class="col-12 col-md-6 col-lg-4">

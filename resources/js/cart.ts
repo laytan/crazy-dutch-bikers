@@ -248,7 +248,7 @@ export default class Cart {
    * Puts a comma seperated list of all product ids into the ids element
    */
   updateProductIds() {
-    this.productIdsReceiver.value = this.cart.reduce((prev, curr) => (prev.length > 0 ? `${prev}, ${curr.id}` : prev + curr.id), '');
+    this.productIdsReceiver.value = this.cart.reduce((prev, curr) => (prev.length > 0 ? `${prev},${curr.id}` : prev + curr.id), '');
   }
 
   /**
