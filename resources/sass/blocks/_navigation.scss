@@ -7,15 +7,25 @@
     }
   }
 
+  .nav-item {
+    padding-top: .3rem;
+    padding-bottom: .3rem;
+  }
+
   .nav-link {
-    padding-top: .8rem;
-    padding-bottom: 0;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
     color: map-get($theme-colors, 'cdblg');
   }
 
   @include media-breakpoint-up(lg) {
     .nav-item {
         display: inline-block;
+    }
+
+    .nav-item {
+      padding-top: 0;
+      padding-bottom: 0;
     }
   }
 }
@@ -80,4 +90,11 @@
     &__z {
         font-size: 1.4rem;
     }
+}
+
+
+.navbar-brand {
+  margin-bottom: .55rem;
+  padding-top: 0;
+  padding-bottom: 0;
 }
