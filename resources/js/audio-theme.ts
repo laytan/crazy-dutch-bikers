@@ -40,7 +40,17 @@ export default class AudioTheme {
 
     this.duration = this.audioElement.duration;
 
-    this.start();
+    this.audioElement.addEventListener('ended', () => this.setState({ status: Status.Ended }));
+    setInterval(this.updateTime.bind(this), 1000);
+
+    const sessionStatus = AudioTheme.stringToStatus(localStorage.getItem('audioStatus') || 'PLAYING');
+    const sessionCurrentTime = parseInt(localStorage.getItem('audioCurrentTime') || '0', 10);
+    if (sessionStatus === Status.Muted || sessionStatus === Status.Playing) {
+      this.setState({ currentTime: sessionCurrentTime });
+      this.start();
+    } else {
+      this.setState({ status: sessionStatus, currentTime: sessionCurrentTime });
+    }
   }
 
   static stringToStatus(status: string) : Status {
@@ -103,20 +113,21 @@ export default class AudioTheme {
    * Try to autoplay the audio, if it didn't work mute and play it that way
    */
   private start() {
-    this.audioElement.addEventListener('ended', () => this.setState({ status: Status.Ended }));
-    const sessionCurrentTime = parseInt(localStorage.getItem('audioCurrentTime') || '0', 10);
-
     this.audioElement.play()
       .then(() => {
-        const sessionStatus = localStorage.getItem('audioStatus') || 'PLAYING';
-        this.setState({ status: AudioTheme.stringToStatus(sessionStatus) });
+        this.setState({ status: Status.Playing });
       })
       .catch(() => {
         // Autoplay did not work, mute audio and play again
         this.setState({ status: Status.Muted, shouldHint: true });
-      }).finally(() => {
-        this.setState({ currentTime: sessionCurrentTime });
-        setInterval(this.updateTime.bind(this), 1000);
+      });
+  }
+
+  private playOrMute() {
+    this.audioElement.play()
+      .catch(() => {
+        // Autoplay did not work, mute audio and play again
+        this.setState({ status: Status.Muted, shouldHint: true });
       });
   }
 
@@ -155,7 +166,6 @@ export default class AudioTheme {
   }
 
   private syncAudioElement(prevState: State) {
-    this.audioElement.muted = false;
     switch (this.state.status) {
       case Status.Muted:
         this.audioElement.muted = true;
@@ -168,10 +178,11 @@ export default class AudioTheme {
         this.audioElement.pause();
         break;
       case Status.Playing:
+        this.audioElement.muted = false;
         if (prevState.status === Status.Ended) {
           this.audioElement.currentTime = 0;
         }
-        this.audioElement.play();
+        this.playOrMute();
         break;
       default:
     }
