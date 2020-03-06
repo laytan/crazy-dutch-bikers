@@ -8,13 +8,13 @@
         @component('components.nav-button', ['engine' => '1', 'link' => route('galleries.index')])
           Gallery
         @endcomponent
-        @component('components.nav-button-right', ['engine' => '1', 'link' => route('events.index')])
+        @component('components.nav-button-right', ['engine' => '2', 'link' => route('events.index')])
           Events
         @endcomponent
-        @component('components.nav-button', ['engine' => '1', 'link' => route('login')])
+        @component('components.nav-button', ['engine' => '3', 'link' => route('login')])
           <span dusk="home-login-btn">Members</span>
         @endcomponent
-        @component('components.nav-button-right', ['engine' => '1', 'link' => url('/aanmelden')])
+        @component('components.nav-button-right', ['engine' => '4', 'link' => url('/aanmelden')])
           Join
         @endcomponent
       </ul>
