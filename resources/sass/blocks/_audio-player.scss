@@ -16,6 +16,7 @@
 
     progress {
       width: auto;
+      min-width: 130px; // Chrome does not work with auto
     }
   }
 
