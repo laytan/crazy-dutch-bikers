@@ -41,15 +41,19 @@ $gridSpacing: 10px;
     position: absolute;
   }
 
-  i {
-    display: none;
-    color: map-get($map: $theme-colors, $key: "danger");
+  .gallery-grid__icon-bar {
     position: absolute;
     right: 0;
     top: 0;
-    margin: 1rem;
-    cursor: pointer;
-    font-size: 2rem;
+    padding: .75rem;
+    padding-right: 0;
+    background: lighten(map-get($theme-colors, 'cdbg'), 10%);
+    display: none;
+    border-radius: 0 0 0 5px;
+
+    button {
+      margin-right: .75rem;
+    }
   }
 }
 
@@ -72,7 +76,7 @@ $gridSpacing: 10px;
     object-fit: contain;
   }
 
-  i {
-    display: block;
+  .gallery-grid__icon-bar {
+    display: flex;
   }
 }

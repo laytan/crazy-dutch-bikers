@@ -26,10 +26,18 @@
             @foreach($column as $picture)
             <div class="gallery-grid__image-wrap bg-cdbg" style="padding-bottom: {{ $picture->dimensions[1] / $picture->dimensions[0] * 100 }}%;">
                 <img class="lazy" data-src="{{ Storage::url($picture->url) }}">
-                <i class="fa fa-trash d-block" data-submit="#destroy-{{ $picture->id }}"></i>
-                {{ Aire::open()->route('pictures.destroy', ['picture' => $picture->id])->id("destroy-$picture->id") }}
-                {{ Aire::close() }}
-                <i class="fa fa-close"></i>
+                <div class="gallery-grid__icon-bar">
+                  @auth
+                    <button class="btn btn-warning btn-sm">
+                      <i class="fa fa-trash" data-submit="#destroy-{{ $picture->id }}"></i>
+                    </button>
+                    {{ Aire::open()->route('pictures.destroy', ['picture' => $picture->id])->id("destroy-$picture->id")->class('d-none') }}
+                    {{ Aire::close() }}
+                  @endauth
+                  <button class="btn btn-primary btn-sm">
+                    <i class="fa fa-close"></i>
+                  </button>
+                </div>
             </div>
             @endforeach
         </div>
