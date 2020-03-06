@@ -60,7 +60,7 @@ $navbar-dark-disabled-color: rgba( $body-color, .3 );
 
 // Dropdown
 $dropdown-min-width:                1rem;
-$dropdown-bg:                       lighten($dark, 5%);
+$dropdown-bg:                       #212529;
 $dropdown-link-color:               $body-color;
 $dropdown-link-hover-color:         darken($body-color, 10%);
 $dropdown-link-hover-bg:            $dropdown-bg;
