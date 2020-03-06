@@ -4,8 +4,8 @@
 <p>
   Inloggen alleen mogelijk als lid van Crazy Dutch Bikers
 </p>
-{{ Aire::email('email', 'E-Mail') }}
-{{ Aire::password('password', 'Wachtwoord') }}
+{{ Aire::email('email', 'E-Mail')->autocomplete('email') }}
+{{ Aire::password('password', 'Wachtwoord')->autocomplete('current-password') }}
 {{ Aire::checkbox('remember', 'Onthoud mijn gegevens')->checked(old('remember') ? true : false) }}
 {{ Aire::close() }}
 @slot('footer')
