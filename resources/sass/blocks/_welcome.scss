@@ -1,10 +1,9 @@
 .welcome-background {
-  background-image: linear-gradient(black, black), url('/images/background-2.jpeg');
+  background-image: url('/images/background-2.jpeg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   min-height: 100vh;
-  background-blend-mode: saturation;
 }
 
 .welcome {
