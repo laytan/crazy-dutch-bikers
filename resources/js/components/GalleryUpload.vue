@@ -13,7 +13,7 @@
           <span>Uploaden</span>
           <i v-if="isUploading()" class="fas fa-spinner fa-spin ml-2"></i>
         </button>
-        <progress class="ml-3 mb-0 w-100" v-if="isUploading()" min="0" :max="uploadProgress.max" :value="uploadProgress.progress"></progress>
+        <progress class="ml-3 mb-0 w-100 h-auto" v-if="isUploading()" min="0" :max="uploadProgress.max" :value="uploadProgress.progress"></progress>
       </div>
     </form>
   </div>
