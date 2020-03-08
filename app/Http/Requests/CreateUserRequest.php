@@ -30,7 +30,7 @@ class CreateUserRequest extends FormRequest
             'generate-password' => 'nullable',
             'description' => 'required|string',
             'profile_picture' => 'nullable|image',
-            'role' => 'required|in:member,admin',
+            'role' => 'nullable|in:member,admin',
         ];
     }
 }
