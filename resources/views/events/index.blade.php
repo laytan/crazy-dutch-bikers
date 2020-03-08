@@ -70,7 +70,7 @@
                   </span>
                 </p>
                 @if($event->facebook_link || $event->location_link)
-                <p class="d-flex justify-content-between">
+                <p class="d-flex justify-content-between mt-2">
                   @auth
                   @if($event->facebook_link)
                   <a href="{{ $event->facebook_link }}" target="_BLANK" rel="noopener noreferrer" class="btn btn-primary">
@@ -169,7 +169,7 @@
                   </span>
                 </p>
                 @if($event->facebook_link || $event->location_link)
-                <p class="d-flex justify-content-between">
+                <p class="d-flex justify-content-between mt-2">
                   @auth
                   @if($event->facebook_link)
                   <a href="{{ $event->facebook_link }}" target="_BLANK" rel="noopener noreferrer" class="btn btn-primary">
