@@ -73,14 +73,14 @@
                 <p class="d-flex justify-content-between">
                   @auth
                   @if($event->facebook_link)
-                  <a href="#" class="btn btn-primary">
+                  <a href="{{ $event->facebook_link }}" target="_BLANK" rel="noopener noreferrer" class="btn btn-primary">
                     <i class="fab fa-facebook-square"></i>
                     Bekijk op Facebook
                   </a>
                   @endif
                   @endauth
                   @if($event->location_link)
-                  <a href="#" class="btn btn-primary">Bekijk Locatie</a>
+                  <a href="{{ $event->location_link }}" target="_BLANK" rel="noopener noreferrer" class="btn btn-primary">Bekijk Locatie</a>
                   @endif
                 </p>
                 @endif
@@ -172,14 +172,14 @@
                 <p class="d-flex justify-content-between">
                   @auth
                   @if($event->facebook_link)
-                  <a href="#" class="btn btn-primary">
+                  <a href="{{ $event->facebook_link }}" target="_BLANK" rel="noopener noreferrer" class="btn btn-primary">
                     <i class="fab fa-facebook-square"></i>
                     Bekijk op Facebook
                   </a>
                   @endif
                   @endauth
                   @if($event->location_link)
-                  <a href="#" class="btn btn-primary">Bekijk Locatie</a>
+                  <a href="{{ $event->location_link }}" target="_BLANK" rel="noopener noreferrer" class="btn btn-primary">Bekijk Locatie</a>
                   @endif
                 </p>
                 @endif
