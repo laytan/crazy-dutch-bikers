@@ -60,7 +60,7 @@
           </button>
           <hr class="border-cdblg">
           <p class="text-right w-100 mb-3 pr-2">Totaal: <span class="js-cart-total">&euro; 0,00</span></p>
-          <button class="btn btn-success w-100 js-order-btn">Bestelling plaatsen</button>
+          <button class="btn btn-primary w-100 js-order-btn">Bestelling plaatsen</button>
           {{ Aire::open()->route('orders.store')->class('d-none') }}
           {{ Aire::hidden('product-ids') }}
           {{ Aire::close() }}
