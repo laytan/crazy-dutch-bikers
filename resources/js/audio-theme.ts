@@ -166,6 +166,10 @@ export default class AudioTheme {
   }
 
   private syncAudioElement(prevState: State) {
+    if (Number.isNaN(this.duration)) {
+      this.duration = this.audioElement.duration;
+    }
+
     switch (this.state.status) {
       case Status.Muted:
         this.audioElement.muted = true;
