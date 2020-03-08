@@ -157,7 +157,7 @@ class UserController extends Controller
         $validatedData = $request->validated();
 
         // Generated password?
-        if (array_key_exists('generate-password', $validatedData) && $validatedData['generate-password'] == "on") {
+        if (array_key_exists('generate-password', $validatedData) && $validatedData['generate-password'] == "1") {
             // Generate password
             $password = \Str::random(8);
         } else {
