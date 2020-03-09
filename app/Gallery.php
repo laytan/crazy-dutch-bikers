@@ -19,7 +19,7 @@ class Gallery extends Model
      */
     public function addPictures(array $pictures)
     {
-        return array_map(fn ($picture) => $this->addPicture($picture), $pictures);
+        return array_map(fn($picture) => $this->addPicture($picture), $pictures);
     }
 
     /**
@@ -53,7 +53,7 @@ class Gallery extends Model
         if (Gate::allows('see-private-galleries')) {
             return Gallery::with('pictures')->get();
         } else {
-            return Gallery::with(['pictures' => fn ($q) => $q->where('is_private', '=', '0')])
+            return Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
                 ->where('is_private', '=', '0')
                 ->get();
         }
@@ -64,8 +64,9 @@ class Gallery extends Model
         if (Gate::allows('see-private-galleries')) {
             return Gallery::with('pictures')->where('title', '=', $galleryTitle)->firstOrFail();
         } else {
-            return Gallery::with(['pictures' => fn ($q) => $q->where('is_private', '=', '0')])
+            return Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
                 ->where('is_private', '=', '0')
+                ->where('title', '=', $galleryTitle)
                 ->firstOrFail();
         }
     }
@@ -78,7 +79,7 @@ class Gallery extends Model
         if (Gate::allows('see-private-galleries')) {
             return Gallery::take($amt)->get();
         } else {
-            return Gallery::with(['pictures' => fn ($q) => $q->where('is_private', '=', '0')])
+            return Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
                 ->where('is_private', '=', '0')
                 ->take(5)
                 ->get();
@@ -91,8 +92,8 @@ class Gallery extends Model
     public static function featured()
     {
         // Eager load public pictures
-        $publicOrderedGalleries = Gallery::with(['pictures' => fn ($q) => $q->where('is_private', '=', '0')])
-            ->withCount(['pictures' => fn ($q) => $q->where('is_private', '=', '0')]) // Query picture count
+        $publicOrderedGalleries = Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
+            ->withCount(['pictures' => fn($q) => $q->where('is_private', '=', '0')]) // Query picture count
             ->where('is_private', '=', '0') // Only take public galleries
             ->orderBy('created_at', 'DESC') // Order newest first
             ->get();

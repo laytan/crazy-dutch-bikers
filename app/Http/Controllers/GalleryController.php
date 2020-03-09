@@ -6,7 +6,6 @@ use App\Gallery;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
 use Storage;
-use Auth;
 
 class GalleryController extends Controller
 {
@@ -19,7 +18,7 @@ class GalleryController extends Controller
     {
         $galleries = Gallery::allCheckPrivate();
         // Limit to 5 pictures per gallery
-        $galleries = $galleries->map(fn ($gallery) => $gallery->setRelation('pictures', $gallery->pictures->take(5)));
+        $galleries = $galleries->map(fn($gallery) => $gallery->setRelation('pictures', $gallery->pictures->take(5)));
         return view('galleries.index', compact('galleries'));
     }
 
