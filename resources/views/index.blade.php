@@ -38,7 +38,7 @@
   <div class="container-fluid text-light text-lg mb-6">
     <div class="row">
       <div class="col-12 d-none col-md-6 d-md-block p-0 overflow-hidden" data-match="#home-about-section">
-        <img class="w-100 h-100 object-fit-cover" src="{{ url('/images/background-2.jpeg') }}" alt="Motor">
+        <img class="w-100 h-100 object-fit-contain bg-cdbg-opaque" src="{{ url('/images/welcome.jpeg') }}" alt="Motor">
       </div>
       <div id="home-about-section" class="col-12 col-md-6 bg-cdbg-opaque">
         <div class="px-lg-5 py-5">
