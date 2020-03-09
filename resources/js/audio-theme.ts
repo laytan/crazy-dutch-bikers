@@ -38,7 +38,8 @@ export default class AudioTheme {
       shouldHint: false,
     };
 
-    this.duration = this.audioElement.duration;
+    // Some browsers return a set precision, we only care about seconds
+    this.duration = Math.round(this.audioElement.duration);
 
     this.audioElement.addEventListener('ended', () => this.setState({ status: Status.Ended }));
     setInterval(this.updateTime.bind(this), 1000);
@@ -167,7 +168,7 @@ export default class AudioTheme {
 
   private syncAudioElement(prevState: State) {
     if (Number.isNaN(this.duration)) {
-      this.duration = this.audioElement.duration;
+      this.duration = Math.round(this.audioElement.duration);
     }
 
     switch (this.state.status) {
@@ -209,7 +210,6 @@ export default class AudioTheme {
    * On click progress bar check the click percent and adjust current time
    * @param e progress bar click event
    */
-  // TODO: Does not work in chrome
   private seek(e: MouseEvent) {
     const target = e.target as HTMLProgressElement;
     const percent = e.offsetX / target.offsetWidth;
