@@ -42,10 +42,10 @@ class QueueFailed extends Notification
             ->to(config('app.error_receiver_token'))
             ->content(
                 '
-                A Queue job failed on [' . config('APP_URL') . '](' . config('APP_URL') . ') \n \n
-                *Job:* \n
+                A Queue job failed on [' . config('APP_URL') . '](' . config('APP_URL') . ')
+                *Job:*
                 ' . $this->job . '
-                *Exception:* \n
+                *Exception:*
                 ' . $this->exception . '
                 '
             );
