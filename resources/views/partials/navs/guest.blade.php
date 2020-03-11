@@ -9,7 +9,7 @@
 	</a>
 </li>
 <li class="nav-item">
-	<a href="#" class="nav-link">
+	<a href="{{ route('about') }}" class="nav-link">
 		Over ons
 	</a>
 </li>

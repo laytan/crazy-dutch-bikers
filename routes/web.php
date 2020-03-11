@@ -13,9 +13,6 @@
 
 // All auth routes except registration, reset and verify
 
-use App\EventApplication;
-use App\Mail\EventApplicationCreated;
-
 Auth::routes([
     'register' => false, // Registration Routes...
     'reset' => false, // Password Reset Routes...
@@ -27,8 +24,10 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/privacybeleid', fn () => view('legal.privacy'))->name('privacy');
-Route::get('/disclaimer', fn () => view('legal.disclaimer'))->name('disclaimer');
+Route::get('/over-ons', fn() => view('about'))->name('about');
+
+Route::get('/privacybeleid', fn() => view('legal.privacy'))->name('privacy');
+Route::get('/disclaimer', fn() => view('legal.disclaimer'))->name('disclaimer');
 
 Route::get('/leden', 'UserController@index')->name('users.index');
 Route::delete('/leden/{user}', 'UserController@destroy')->name('users.destroy');

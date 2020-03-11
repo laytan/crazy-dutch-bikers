@@ -49,7 +49,7 @@
           <p>
             Wij zijn een Motor Touring Club dat graag zijn passie voor motoren en motorrijden deelt met andere motorrijders.
           </p>
-          <button class="btn btn-primary">Meer informatie</button>
+          <a href="{{ route('about') }}" class="btn btn-primary">Meer informatie</a>
         </div>
       </div>
     </div>
