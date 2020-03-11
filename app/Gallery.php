@@ -51,10 +51,11 @@ class Gallery extends Model
     public static function allCheckPrivate()
     {
         if (Gate::allows('see-private-galleries')) {
-            return Gallery::with('pictures')->get();
+            return Gallery::with('pictures')->orderBy('created_at', 'DESC')->get();
         } else {
             return Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
                 ->where('is_private', '=', '0')
+                ->orderBy('created_at', 'DESC')
                 ->get();
         }
     }
@@ -77,10 +78,11 @@ class Gallery extends Model
     public static function latest($amt)
     {
         if (Gate::allows('see-private-galleries')) {
-            return Gallery::take($amt)->get();
+            return Gallery::take($amt)->orderBy('created_at', 'DESC')->get();
         } else {
             return Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
                 ->where('is_private', '=', '0')
+                ->orderBy('created_at', 'DESC')
                 ->take(5)
                 ->get();
         }
