@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('description', 'Blijf hier up-to-date met alle afgelopen en aankomende evenementen. Meld je aan voor een leuk evenement en we nemen contact op zodat je misschien mee kunt!')
+
 @section('content')
 <div class="container text-light">
   {{ Aire::summary()->verbose() }}

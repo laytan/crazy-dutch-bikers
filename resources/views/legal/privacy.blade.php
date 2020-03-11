@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('description', 'Op deze pagina kunt u het privacy beleid van https://crazydutchbikers.nl bekijken.')
+
 @section('content')
 <div class="container">
   @component('components.title', ['icon' => 'fas fa-user-secret'])

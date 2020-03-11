@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('description', 'Meld je aan bij de Crazy Dutch Bikers door ons een beeld te geven in jouw leven, wij nemen contact op en als het klikt hebben we je er graag bij.')
+
 @section('content')
 <div class="container">
     @component('components.title', ['icon' => 'fas fa-id-card'])

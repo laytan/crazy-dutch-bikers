@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('description', "Een collectie aan foto's die geschoten zijn bij het evenement/activiteit $gallery->title.")
+
 @section('content')
 <div class="container-fluid text-light">
     <div class="d-flex align-items-center justify-content-between">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('description', 'Een collectie van al onze gallerijen en foto\'s, kom hier meer te weten over de evenementen en activiteiten door middel van een visueel beeld.')
+
 @section('content')
 <div class="container text-light">
   <div class="d-flex align-items-center justify-content-between">

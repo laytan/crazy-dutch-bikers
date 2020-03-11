@@ -1,12 +1,15 @@
 @extends('layouts.app')
 
+@section('description', 'Op deze pagina vindt u de disclaimer van https://crazydutchbikers.nl, In deze disclaimer geven wij aan onder welk voorbehoud wij de informatie op onze website aan u aanbieden.')
+
 @section('content')
 <div class="container">
   @component('components.title', ['icon' => 'fas fa-user-secret'])
   Disclaimer
   @endcomponent
   <p>
-    Op deze pagina vindt u de disclaimer van <a href="https://crazydutchbikers.nl">https://crazydutchbikers.nl</a>, zoals deze beschikbaar is gesteld door Crazy
+    Op deze pagina vindt u de disclaimer van <a href="https://crazydutchbikers.nl">https://crazydutchbikers.nl</a>,
+    zoals deze beschikbaar is gesteld door Crazy
     Dutch Bikers. In deze disclaimer geven wij aan onder welk voorbehoud wij de informatie op onze website aan u
     aanbieden.
   </p>

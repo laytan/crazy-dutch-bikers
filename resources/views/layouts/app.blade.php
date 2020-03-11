@@ -12,9 +12,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Crazy Dutch Bikers') }}@yield('title')</title>
-    <meta name="title" content="{{ config('app.name', 'Crazy Dutch Bikers') }}@yield('title')">
 
-    <meta name="description" content="@yield('description', 'Wij zijn een Motor Touring Club dat graag zijn passie voor motoren en motorrijden deelt met andere motorrijders')">
+    <!-- Search engines -->
+    <meta name="title" content="{{ config('app.name', 'Crazy Dutch Bikers') }}@yield('title')">
+    <meta name="description" content="@yield('description', 'Wij zijn een Motor Touring Club dat graag zijn passie voor motoren en motorrijden deelt met andere motorrijders.')">
 
     <!-- Icon -->
     <link rel="shortcut icon" href="/favicon.png">
