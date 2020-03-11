@@ -22,11 +22,9 @@ export default class AudioTheme {
 
   private state: State;
 
-  private duration: number;
-
   private dismissedHint: boolean;
 
-  constructor(private wrapper: Element, private songName: string) {
+  constructor(private wrapper: Element, private songName: string, private duration: number) {
     [this.audioElement] = Array.from(wrapper.getElementsByTagName('audio'));
 
     // Get localstorage item or false and turn into boolean
@@ -37,9 +35,6 @@ export default class AudioTheme {
       currentTime: 0,
       shouldHint: false,
     };
-
-    // Some browsers return a set precision, we only care about seconds
-    this.duration = Math.round(this.audioElement.duration);
 
     this.audioElement.addEventListener('ended', () => this.setState({ status: Status.Ended }));
     setInterval(this.updateTime.bind(this), 1000);
@@ -101,12 +96,17 @@ export default class AudioTheme {
         console.error('Audio player should be a div element');
         return;
       }
-      const { songName } = player.dataset;
+      const { songName, duration } = player.dataset;
       if (!songName) {
         console.error('Audio element needs a data-song-name attribute');
         return;
       }
-      new AudioTheme(player, songName);
+
+      if (!duration) {
+        console.error('Audio element needs a data-duration attribute');
+        return;
+      }
+      new AudioTheme(player, songName, Math.round(parseFloat(duration)));
     });
   }
 
@@ -167,10 +167,6 @@ export default class AudioTheme {
   }
 
   private syncAudioElement(prevState: State) {
-    if (Number.isNaN(this.duration)) {
-      this.duration = Math.round(this.audioElement.duration);
-    }
-
     switch (this.state.status) {
       case Status.Muted:
         this.audioElement.muted = true;

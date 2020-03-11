@@ -12,7 +12,7 @@
                     @endcan
                 @endguest
             </ul>
-            <div class="audio-player d-flex align-items-end position-lg-absolute position-xl-relative d-lg-block" data-audio-player="" data-song-name="Wild Ride">
+            <div class="audio-player d-flex align-items-end position-lg-absolute position-xl-relative d-lg-block" data-audio-player="" data-song-name="Wild Ride" data-duration="176">
                 <audio class="js-audio-theme" data-bpm="74">
                     <source src="{{ url('/audio/theme.mpeg') }}" type="audio/mpeg">
                 </audio>
