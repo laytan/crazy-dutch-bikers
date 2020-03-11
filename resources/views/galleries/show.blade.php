@@ -16,7 +16,7 @@
                   {{ Aire::open()->class('d-none')->route('galleries.destroy', ['gallery' => $gallery->id])->id('gallery-destroy-form') }}
                   {{ Aire::close() }}
                   @slot('footer')
-                      <button class="btn-danger" data-submit="#gallery-destroy-form">Verwijderen</button>
+                      <button class="btn btn-danger" data-submit="#gallery-destroy-form">Verwijderen</button>
                   @endslot
               @endcomponent
               <button class="btn btn-warning" data-toggle="modal" data-target="#remove-gallery-modal">Verwijderen</button>
