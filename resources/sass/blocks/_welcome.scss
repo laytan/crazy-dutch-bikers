@@ -1,9 +1,11 @@
+$navigation-height: 85px;
+
 .welcome-background {
   background-image: url('/images/background-2.jpeg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  min-height: 100vh;
+  min-height: calc(100vh - #{$navigation-height});
 }
 
 .welcome {
@@ -37,7 +39,7 @@
 
   @include media-breakpoint-up(md) {
     grid-template-columns: repeat(4, 1fr);
-    min-height: 100vh;
+    min-height: calc(100vh - #{$navigation-height});
 
     &__item {
       grid-column: span 2;

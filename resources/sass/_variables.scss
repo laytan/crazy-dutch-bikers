@@ -19,7 +19,7 @@ $theme-colors: (
 
   $sizes: (
     'vw': 100vw,
-    'vh': 100vh
+    'vh': calc(100vh - 85px)
     );
 
 // Typography
