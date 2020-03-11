@@ -38,7 +38,7 @@ class QueueFailed extends Notification
 
     public function toTelegram($notifiable)
     {
-        return TelegramMessage::create($notifiable)
+        return TelegramMessage::create()
             ->to(config('app.error_receiver_token'))
             ->content(
                 '
