@@ -12,7 +12,7 @@
       <h2>
         <span class="h1 text-primary">Cra<span class="h5 text-primary">Z</span>y</span> Dutch Bikers
       </h2>
-      <p class="mb-0">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      <p class="mb-0">Een leuke groep crazy mensen die van een feestje houden.</p>
     </div>
   </div>
 </div>
