@@ -18,7 +18,6 @@ class UserUpdateTest extends TestCase
         foreach ($to_check as $property) {
             $this->assertEquals($user->$property, $other_user->$property);
         }
-        exit;
     }
 
     public function testAMemberCanNotUpdateItsName()
