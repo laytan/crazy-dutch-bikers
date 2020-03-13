@@ -18,13 +18,15 @@ class PictureTest extends TestCase
         $picture = factory(Picture::class)->create();
 
         $response = $this->actingAs($member)->patch(route('pictures.update', ['picture' => $picture->id]), [
-            'is_private' => true,
+            'is_private' => '1',
+            'is_featured' => '0',
         ]);
 
         $response->assertRedirect(route('index'));
         $response->assertSessionHas('error', 'Je kunt deze actie alleen als beheerder uitvoeren');
 
         $this->assertEquals($picture->fresh()->is_private, 0);
+        $this->assertEquals($picture->fresh()->is_featured, 0);
     }
 
     public function testAPictureCanBeEditedByAnAdmin()
@@ -34,6 +36,7 @@ class PictureTest extends TestCase
 
         $response = $this->actingAs($admin)->patch(route('pictures.update', ['picture' => $picture->id]), [
             'is_private' => true,
+            'is_featured' => true,
         ]);
 
         $updated_picture = Picture::first();
@@ -42,17 +45,17 @@ class PictureTest extends TestCase
         $response->assertSessionHas('success', 'Foto is bijgewerkt');
 
         $this->assertEquals($updated_picture->is_private, true);
+        $this->assertEquals($updated_picture->is_featured, true);
     }
 
     public function testAPictureCanBeMadeFeatured()
     {
-        $this->withoutExceptionHandling();
-
         $admin = factory(User::class)->create(['role' => 'admin']);
         $picture = factory(Picture::class)->create();
 
         $response = $this->actingAs($admin)->patch(route('pictures.update', ['picture' => $picture->id]), [
             'is_featured' => true,
+            'is_private' => false,
         ]);
 
         $response->assertRedirect(route('galleries.show', ['gallery' => $picture->gallery->title]));
@@ -84,6 +87,7 @@ class PictureTest extends TestCase
 
         $response = $this->actingAs($admin)->patch(route('pictures.update', ['picture' => $picture->id]), [
             'is_featured' => true,
+            'is_private' => false,
         ]);
 
         $response->assertRedirect(route('galleries.show', ['gallery' => $picture->gallery->title]));

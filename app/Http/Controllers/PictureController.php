@@ -43,26 +43,24 @@ class PictureController extends Controller
     {
         $validated = $request->validated();
 
-        $picture->is_private = (isset($validated['is_private']) && $validated['is_private'] !== null)
-        ? $validated['is_private'] : $picture->is_private;
+        $picture->is_private = false;
+        if (isset($validated['is_private'])) {
+            $picture->is_private = true;
+        }
 
-        // If is_featured is set to true and there are less than 3 featured images in the gallery set is_featured to tru
-        // If is_featured is set to false set it to false
-        if (isset($validated['is_featured']) && $validated['is_featured'] !== null) {
-            if ($validated['is_featured'] === false) {
-                $picture->is_featured = false;
-            } elseif ($validated['is_featured'] === true) {
-                if ($picture->gallery->featuredPictures()->count() < 3) {
-                    $picture->is_featured = true;
-                } else {
-                    return redirect()
-                        ->route('galleries.show', ['gallery' => $picture->gallery->title])
-                        ->with(
-                            'error',
-                            'Deze gallerij heeft al 3 uitgelichte foto\'s, verander eerst een foto naar niet uitgelicht'
-                        );
-                }
+        if (isset($validated['is_featured']) && !$picture->is_featured) {
+            if ($picture->gallery->featuredPictures()->count() < 3) {
+                $picture->is_featured = true;
+            } else {
+                return redirect()
+                    ->route('galleries.show', ['gallery' => $picture->gallery->title])
+                    ->with(
+                        'error',
+                        'Deze gallerij heeft al 3 uitgelichte foto\'s, verander eerst een foto naar niet uitgelicht'
+                    );
             }
+        } else {
+            $picture->is_featured = false;
         }
 
         $picture->save();
