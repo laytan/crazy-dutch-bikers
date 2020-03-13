@@ -88,14 +88,30 @@ class UserController extends Controller
 
         // Name
         if (isset($validatedData['name']) && $validatedData['name'] !== null) {
-            $user->name = $validatedData['name'];
+            // Only change when request comes from admin
+            if (Gate::allows('manage')) {
+                $user->name = $validatedData['name'];
+            } else {
+                return back()
+                    ->with('error', 'Als member kan je niet je naam veranderen, vraag een beheerder hiervoor');
+            }
         }
 
         // Email
         if (isset($validatedData['email']) && $validatedData['email'] !== null
             && $user->email !== $validatedData['email']) {
-            if (User::whereEmail($validatedData['email'])->count() === 0) {
-                $user->email = $validatedData['email'];
+            // Check if request comes from an admin
+            if (Gate::allows('manange')) {
+                // Check that the email entered is not used yet
+                if (User::whereEmail($validatedData['email'])->count() === 0) {
+                    $user->email = $validatedData['email'];
+                } else {
+                    return back()
+                        ->with('error', 'Deze email is al bezet');
+                }
+            } else {
+                return back()
+                    ->with('error', 'Als member kan je niet je email veranderen, vraag een beheerder hiervoor');
             }
         }
 

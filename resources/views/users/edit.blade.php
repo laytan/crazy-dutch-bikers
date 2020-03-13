@@ -8,9 +8,11 @@
   {{ Aire::open()->route('users.update', ['user' => $user->id])->multipart() }}
 	@component('components.alert', ['type' => 'secondary'])
 		Alle ingevulde velden worden veranderd, laat velden leeg die niet veranderd hoeven te worden.
-	@endcomponent
-  {{ Aire::input('name', 'Naam') }}
-  {{ Aire::input('email', 'E-Mail') }}
+  @endcomponent
+  @can('manage')
+    {{ Aire::input('name', 'Naam') }}
+    {{ Aire::input('email', 'E-Mail') }}
+  @endcan
   {{ Aire::textarea('description', 'Beschrijving') }}
   <div class="row">
       <div
