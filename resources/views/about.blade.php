@@ -60,7 +60,9 @@
       </a>
     </div>
     <div class="col-12 col-md-5">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-2.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      @if($nearest = App\Event::nearest(1)->first())
+        <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ Storage::url($nearest->picture) }}" alt="De Crazy Dutch Bikers leden">
+      @endif
     </div>
   </div>
   <div class="row mb-6">
