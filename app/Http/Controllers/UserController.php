@@ -92,7 +92,8 @@ class UserController extends Controller
             if (Gate::allows('manage')) {
                 $user->name = $validatedData['name'];
             } else {
-                return back()
+                return redirect()
+                    ->route('users.edit', ['user' => $user->id])
                     ->with('error', 'Als member kan je niet je naam veranderen, vraag een beheerder hiervoor');
             }
         }
@@ -101,16 +102,18 @@ class UserController extends Controller
         if (isset($validatedData['email']) && $validatedData['email'] !== null
             && $user->email !== $validatedData['email']) {
             // Check if request comes from an admin
-            if (Gate::allows('manange')) {
+            if (Gate::allows('manage')) {
                 // Check that the email entered is not used yet
                 if (User::whereEmail($validatedData['email'])->count() === 0) {
                     $user->email = $validatedData['email'];
                 } else {
-                    return back()
+                    return redirect()
+                        ->route('users.edit', ['user' => $user->id])
                         ->with('error', 'Deze email is al bezet');
                 }
             } else {
-                return back()
+                return redirect()
+                    ->route('users.edit', ['user' => $user->id])
                     ->with('error', 'Als member kan je niet je email veranderen, vraag een beheerder hiervoor');
             }
         }
