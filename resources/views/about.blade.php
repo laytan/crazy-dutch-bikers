@@ -5,7 +5,7 @@
 @section('content')
 <div class="h-vh position-relative">
   <div style="background: linear-gradient(45deg, rgba(33,37,41,1) 0%, rgba(33,37,41,1) 10%, rgba(33,37,41,0) 100%);" class="w-100 h-100 position-absolute"></div>
-  <img class="w-100 h-100 object-fit-cover pb-1 bg-cdbg" src="{{ url('images/over-ons-1.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+  <img class="w-100 h-100 object-fit-cover pb-1 bg-cdbg" src="{{ url('images/over-ons-2.jpeg') }}" alt="De Crazy Dutch Bikers leden">
   <div style="bottom: 10%; left: 5%;" class="position-absolute d-flex">
     <img style="height: 1px; padding-top: .5rem;" class="mr-3 d-none d-md-block" data-match="#overlay-text" src="{{ url('/images/cdb-logo.png') }}" alt="Crazy Dutch Bikers logo">
     <div id="overlay-text">
@@ -30,12 +30,12 @@
       </p>
     </div>
     <div class="col-12 col-md-5">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-2.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-welcome.jpeg') }}" alt="De Crazy Dutch Bikers leden">
     </div>
   </div>
   <div class="row mb-6">
     <div class="col-12 col-md-5 order-2 order-md-1">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-2.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-1.jpeg') }}" alt="De Crazy Dutch Bikers leden">
     </div>
     <div class="col-12 col-md-7 pl-md-5 order-1 order-md-2">
       <h2 class="pt-0 text-right">Standplaats</h2>
@@ -67,7 +67,7 @@
   </div>
   <div class="row mb-6">
     <div class="col-12 col-md-5 order-2 order-md-1">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-2.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-spontane-ritten.jpeg') }}" alt="De Crazy Dutch Bikers leden">
     </div>
     <div class="col-12 col-md-7 pl-md-5 order-1 order-md-2">
       <h2 class="pt-0 text-right">Spontane Ritten</h2>
