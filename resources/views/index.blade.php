@@ -113,7 +113,7 @@
                 <small>{{ $featured->created_at->setTimeZone('Europe/paris')->diffForHumans() }} <i class="fas fa-clock"></i></small>
               </div>
             </div>
-            @foreach($featured->pictures as $i => $pic)
+            @foreach($featured->featuredPictures() as $i => $pic)
             <div class="latest-images__{{ $i + 1 }} shadow">
               <img src="{{ Storage::url($pic->url) }}" class="rounded">
             </div>

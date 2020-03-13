@@ -93,28 +93,19 @@ class Gallery extends Model
      */
     public static function featured()
     {
-        // Eager load public pictures
-        $publicOrderedGalleries = Gallery::with(['pictures' => fn($q) => $q->where('is_private', '=', '0')])
-            ->withCount(['pictures' => fn($q) => $q->where('is_private', '=', '0')]) // Query picture count
-            ->where('is_private', '=', '0') // Only take public galleries
-            ->orderBy('created_at', 'DESC') // Order newest first
+        $galleriesWithFeatured = Gallery::with(['pictures' => fn($q) => $q->where('is_featured', '=', '1')])
+            ->withCount(['pictures'])
+            ->where('is_private', '=', '0')
+            ->orderBy('created_at', 'DESC')
             ->get();
 
-        $publicOrderedGalleryWithPictures = null;
-
-        // Get the first gallery with more then 2 pictures
-        foreach ($publicOrderedGalleries as $gallery) {
-            if ($gallery->pictures_count > 2) {
-                $publicOrderedGalleryWithPictures = $gallery;
+        foreach ($galleriesWithFeatured as $g) {
+            if ($g->featuredPictures()->count() > 2) {
+                return $g;
             }
         }
 
-        // Limit picture count to 3
-        if ($publicOrderedGalleryWithPictures) {
-            $publicOrderedGalleryWithPictures
-                ->setRelation('pictures', $publicOrderedGalleryWithPictures->pictures->take(3));
-            return $publicOrderedGalleryWithPictures;
-        }
+        return false;
     }
 
     public function featuredPictures()

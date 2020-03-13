@@ -80,3 +80,16 @@ $gridSpacing: 10px;
     display: flex;
   }
 }
+
+.gallery-grid__flairs {
+  position: absolute;
+  z-index: 2;
+  left: 0;
+  top: 0;
+  margin-left: .5rem;
+  margin-top: .2rem;
+
+  i {
+    color: $primary;
+  }
+}

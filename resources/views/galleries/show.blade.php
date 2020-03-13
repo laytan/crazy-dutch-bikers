@@ -30,6 +30,16 @@
         <div class="gallery-grid__column">
             @foreach($column as $picture)
             <div class="gallery-grid__image-wrap bg-cdbg" style="padding-bottom: {{ $picture->dimensions[1] / $picture->dimensions[0] * 100 }}%;">
+                <div class="gallery-grid__flairs">
+                  @if($picture->is_private)
+                    <i class="fas fa-lock"></i>
+                  @endif
+                  @can('manage')
+                    @if($picture->is_featured)
+                      <i class="fas fa-home"></i>
+                    @endif
+                  @endcan
+                </div>
                 <img class="lazy" data-src="{{ Storage::url($picture->url) }}">
                 <div class="gallery-grid__icon-bar">
                   @can('manage')
