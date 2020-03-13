@@ -63,6 +63,7 @@ Route::patch('/gallerij/{gallery}', 'GalleryController@update')->name('galleries
 Route::delete('/gallerij/{gallery}', 'GalleryController@destroy')->name('galleries.destroy');
 
 Route::delete('/pictures/{picture}', 'PictureController@destroy')->name('pictures.destroy');
+Route::patch('/pictures/{picture}', 'PictureController@update')->name('pictures.update');
 
 Route::get('/aanmelden', 'ApplicationController@create')->name('applications.create');
 Route::get('/aanmeldingen', 'ApplicationController@index')->name('applications.index');

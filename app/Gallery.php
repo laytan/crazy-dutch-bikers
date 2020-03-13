@@ -116,4 +116,9 @@ class Gallery extends Model
             return $publicOrderedGalleryWithPictures;
         }
     }
+
+    public function featuredPictures()
+    {
+        return $this->pictures->where('is_featured', 1);
+    }
 }
