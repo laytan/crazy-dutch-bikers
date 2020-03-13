@@ -30,12 +30,12 @@
       </p>
     </div>
     <div class="col-12 col-md-5">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-welcome.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1 lazy" data-src="{{ url('images/over-ons-welcome.jpeg') }}" alt="De Crazy Dutch Bikers leden">
     </div>
   </div>
   <div class="row mb-6">
     <div class="col-12 col-md-5 order-2 order-md-1">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-1.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1 lazy" data-src="{{ url('images/over-ons-1.jpeg') }}" alt="De Crazy Dutch Bikers leden">
     </div>
     <div class="col-12 col-md-7 pl-md-5 order-1 order-md-2">
       <h2 class="pt-0 text-right">Standplaats</h2>
@@ -61,13 +61,13 @@
     </div>
     <div class="col-12 col-md-5">
       @if($nearest = App\Event::nearest(1)->first())
-        <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ Storage::url($nearest->picture) }}" alt="De Crazy Dutch Bikers leden">
+        <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1 lazy" data-src="{{ Storage::url($nearest->picture) }}" alt="De Crazy Dutch Bikers leden">
       @endif
     </div>
   </div>
   <div class="row mb-6">
     <div class="col-12 col-md-5 order-2 order-md-1">
-      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1" src="{{ url('images/over-ons-spontane-ritten.jpeg') }}" alt="De Crazy Dutch Bikers leden">
+      <img class="w-100 h-100 object-fit-cover rounded-lg bg-cdbg p-1 lazy" data-src="{{ url('images/over-ons-spontane-ritten.jpeg') }}" alt="De Crazy Dutch Bikers leden">
     </div>
     <div class="col-12 col-md-7 pl-md-5 order-1 order-md-2">
       <h2 class="pt-0 text-right">Spontane Ritten</h2>
