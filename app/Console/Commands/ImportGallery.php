@@ -16,9 +16,9 @@ class ImportGallery extends Command
      *
      * @var string
      */
-    protected $signature = 'gallery:import 
-    {name : Gallery name} 
-    {path : Path where images are stored} 
+    protected $signature = 'gallery:import
+    {name : Gallery name}
+    {path : Path where images are stored}
     {--isPrivate : Private galleries will only be shown to logged in users}';
 
     /**
@@ -113,7 +113,7 @@ class ImportGallery extends Command
 
         mkdir($galleryFolder);
         $this->info('Created gallery: ' . $this->galleryName);
-        
+
         $this->calledCreateGalleryIfNotExists = true;
 
         return $galleryFolder;
@@ -144,7 +144,7 @@ class ImportGallery extends Command
      *
      * @return mixed
      */
-    public function handle()
+    public function handle(): int
     {
         $this->galleryName = $this->argument('name');
         $this->path = $this->argument('path');
@@ -155,7 +155,7 @@ class ImportGallery extends Command
 
         // Create specific gallery folder
         $galleryFolder = $this->createGalleryIfNotExists($this->galleryName, $galleriesFolder);
-        
+
         /**
          * Iterate over the directory
          */
@@ -165,7 +165,7 @@ class ImportGallery extends Command
         $this->info('Starting import');
         $bar = $this->output->createProgressBar(iterator_count($dir));
         $bar->start();
-        
+
         foreach ($dir as $fileinfo) {
             $fullPath = $fileinfo->getPath() . '/' . $fileinfo->getFileName();
             // If the file is not . (current directory), .. (up directory) and the file is an image
@@ -181,5 +181,6 @@ class ImportGallery extends Command
 
         $bar->finish();
         $this->info("\n" . 'Import succeeded');
+        return 0;
     }
 }

@@ -3,7 +3,7 @@
  */
 export default class ImageUpload {
   // Element to render the dynamic parts of the ImageUpload in
-  private renderEl: HTMLDivElement|undefined;
+  private renderEl: HTMLDivElement | undefined;
 
   /**
    * Initialize the ImageUpload
@@ -22,7 +22,7 @@ export default class ImageUpload {
     private id: string,
     private invalid: boolean,
     private label: string,
-    private canBeRemoved: boolean,
+    private canBeRemoved: boolean
   ) {
     this.initInput();
     this.render();
@@ -32,27 +32,29 @@ export default class ImageUpload {
    * Get all the data-image-upload elements and initialize as ImageUpload objects
    */
   static initialize() {
-    const wrappers = document.querySelectorAll('[data-image-upload]') as NodeListOf<HTMLDivElement>;
+    const wrappers = document.querySelectorAll(
+      "[data-image-upload]"
+    ) as NodeListOf<HTMLDivElement>;
     if (!wrappers) return;
 
     wrappers.forEach((wrapper) => {
-      const image = wrapper.dataset.startImage || '';
+      const image = wrapper.dataset.startImage || "";
 
       const invalid = Boolean(wrapper.dataset.invalid);
 
       const { name, id, label } = wrapper.dataset;
       if (!name) {
-        console.error('Image upload needs a data-name property');
+        console.error("Image upload needs a data-name property");
         return;
       }
 
       if (!id) {
-        console.error('Image upload needs a data-id property');
+        console.error("Image upload needs a data-id property");
         return;
       }
 
       if (!label) {
-        console.error('Image upload needs a data-label property');
+        console.error("Image upload needs a data-label property");
         return;
       }
 
@@ -65,18 +67,18 @@ export default class ImageUpload {
    * and add a listener for when a user selects an image
    */
   private initInput() {
-    const renderDiv = document.createElement('div');
-    renderDiv.classList.add('js-render');
-    const input = document.createElement('input');
-    input.classList.add('js-image-upload__input');
-    input.classList.add('d-none');
-    input.setAttribute('type', 'file');
-    input.accept = 'image/*';
+    const renderDiv = document.createElement("div");
+    renderDiv.classList.add("js-render");
+    const input = document.createElement("input");
+    input.classList.add("js-image-upload__input");
+    input.classList.add("d-none");
+    input.setAttribute("type", "file");
+    input.accept = "image/*";
     input.id = `${this.id}-input`;
     input.name = this.name;
     this.wrapper.append(renderDiv, input);
     this.renderEl = renderDiv;
-    input.addEventListener('change', this.onImage.bind(this));
+    input.addEventListener("change", this.onImage.bind(this));
   }
 
   /**
@@ -90,7 +92,7 @@ export default class ImageUpload {
     const reader = new FileReader();
     reader.onload = (loadEvent) => {
       const src = loadEvent.target?.result;
-      if (typeof src === 'string') {
+      if (typeof src === "string") {
         this.setImage(src);
       }
     };
@@ -103,7 +105,7 @@ export default class ImageUpload {
    */
   private removeImage() {
     if (this.image.length > 0) {
-      this.setImage('');
+      this.setImage("");
     } else if (this.canBeRemoved) {
       this.wrapper.remove();
     }
@@ -127,21 +129,31 @@ export default class ImageUpload {
       return;
     }
     this.renderEl.innerHTML = `
-      <div id="${this.id}" class="${this.invalid ? 'is-invalid' : ''} w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
+      <div id="${this.id}" class="${
+      this.invalid ? "is-invalid" : ""
+    } w-100 h-100 image-upload position-relative bg-cdbb d-flex justify-content-center align-items-center">
           <i class="image-upload__remove-icon h-100 text-danger position-absolute top-0 right-0 mt-2 mr-2 fas fa-trash"></i>
-          <img alt="" class="${this.image ? '' : 'd-none'} w-100 h-100 object-fit-cover position-absolute" src="${this.image}">
+          <img alt="" class="${
+            this.image ? "" : "d-none"
+          } w-100 h-100 object-fit-cover position-absolute" src="${this.image}">
           <div class="js-upload-button">
-              <label for="${this.id}-input" class="${this.image ? 'd-none' : ''} js-label btn btn-primary"><i class="fas fa-upload mr-2"></i>
+              <label for="${this.id}-input" class="${
+      this.image ? "d-none" : ""
+    } js-label btn btn-primary"><i class="fas fa-upload mr-2"></i>
               <span class="v-align-middle">
                   ${this.label}
               </span>
               </label>
           </div>
       </div>
-      ${this.invalid ? '<div class="text-danger text-sm mb-2">Dit is geen geldige foto</div>' : '<div class="mb-2"></div>'}
+      ${
+        this.invalid
+          ? '<div class="text-danger text-sm mb-2">Dit is geen geldige foto</div>'
+          : '<div class="mb-2"></div>'
+      }
     `;
 
-    const trashIcon = this.wrapper.querySelector('.image-upload__remove-icon');
-    trashIcon?.addEventListener('click', this.removeImage.bind(this));
+    const trashIcon = this.wrapper.querySelector(".image-upload__remove-icon");
+    trashIcon?.addEventListener("click", this.removeImage.bind(this));
   }
 }

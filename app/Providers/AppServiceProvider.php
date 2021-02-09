@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Pagination\Paginator;
 use App\Notifications\QueueFailed;
 use Illuminate\Queue\Events\JobFailed;
 use Illuminate\Support\Facades\Notification;
@@ -41,5 +42,7 @@ class AppServiceProvider extends ServiceProvider
             Notification::route(TelegramChannel::class, config('app.error_receiver_token'))
                 ->notify(new QueueFailed($event->job, $event->exception));
         });
+
+        Paginator::useBootstrap();
     }
 }

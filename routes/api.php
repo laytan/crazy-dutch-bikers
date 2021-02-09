@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\PictureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,4 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/pictures', 'PictureController@store');
+Route::post('/pictures', [PictureController::class, 'store']);
