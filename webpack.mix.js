@@ -1,5 +1,4 @@
 const mix = require('laravel-mix');
-require('laravel-mix-purgecss');
 
 /*
 |--------------------------------------------------------------------------
@@ -17,10 +16,6 @@ mix.options({ processCssUrls: false });
 mix.js('resources/js/app.js', 'public/js')
   .js('resources/js/gallery.js', 'public/js').vue()
   .sass('resources/sass/app.scss', 'public/css')
-  .purgeCss({
-        whitelist: ['modal-backdrop', 'text-cdblg', 'custom-checkbox', 'custom-select', 'gallery-grid__flairs', 'fas', 'fa-lock', 'fa-home'],
-        whitelistPatterns: [/-active$/, /-enter$/, /-leave-to$/, /form/, /alert/, /carousel/, /item/, /custom-control/, /textarea/, /latest-images/],
-    })
   .copy('node_modules/@fortawesome/fontawesome-free/webfonts', 'public/webfonts')
   .webpackConfig({
         module: {
