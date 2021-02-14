@@ -100,6 +100,7 @@ export default {
       console.log(file);
       if (!file) return;
       this.imageSrc = URL.createObjectURL(file);
+      this.imageFile = file;
       console.log(this.imageSrc);
     },
     hasImg: function () {
