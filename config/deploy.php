@@ -95,7 +95,7 @@ return [
     'options' => [
         'application' => env('APP_NAME', 'Laravel'),
         'repository' => 'https://github.com/laytan/crazy-dutch-bikers.git',
-        'php_fpm_service' => 'php7.4-fpm',
+        'php_fpm_service' => 'php8.0-fpm',
     ],
 
     /*

@@ -4,6 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Http;
+use Image;
+use Storage;
 
 class Picture extends Model
 {
@@ -20,6 +23,16 @@ class Picture extends Model
 
     public function uploadPicture(UploadedFile $file)
     {
-        $this->url = $file->store('galleries/' . $this->gallery->title, ['disk' => 'public']);
+        // Resize to a max of 2000x2000 without upscaling or altering aspect ratio
+        $img = Image::make($file->path());
+        $img->resize(2000, 2000, function ($constraints) {
+            $constraints->aspectRatio();
+            $constraints->upsize();
+        });
+
+        // Save the image
+        $dest = 'galleries/' . $this->gallery->title . '/' . $file->hashName();
+        Storage::disk('public')->put($dest, $img->encode(null, 95));
+        $this->url = $dest;
     }
 }
