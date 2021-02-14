@@ -29,6 +29,7 @@ class Picture extends Model
             $constraints->aspectRatio();
             $constraints->upsize();
         });
+        $img->orientate();
 
         // Save the image
         $dest = 'galleries/' . $this->gallery->title . '/' . $file->hashName();
