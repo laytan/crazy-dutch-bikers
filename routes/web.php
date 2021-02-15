@@ -39,16 +39,20 @@ Route::get('/disclaimer', fn() => view('legal.disclaimer'))->name('disclaimer');
 Route::get('/leden', [UserController::class, 'index'])->name('users.index');
 Route::delete('/leden/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 Route::get('/leden/{user}/bewerken', [UserController::class, 'edit'])->name('users.edit');
-Route::patch('/leden/{user}/bewerken', [UserController::class, 'update'])->name('users.update');
 Route::get('/leden/aanmaken', [UserController::class, 'create'])->name('users.create');
-Route::post('/leden', [UserController::class, 'store'])->name('users.store');
+Route::middleware(['image.process:profile_picture'])->group(function () {
+    Route::post('/leden', [UserController::class, 'store'])->name('users.store');
+    Route::patch('/leden/{user}/bewerken', [UserController::class, 'update'])->name('users.update');
+});
 
 Route::get('/merchandise', [ProductController::class, 'index'])->name('products.index');
 Route::get('/merchandise/aanmaken', [ProductController::class, 'create'])->name('products.create');
-Route::post('/merchandise', [ProductController::class, 'store'])->name('products.store');
 Route::get('/merchandise/{product}/bewerken', [ProductController::class, 'edit'])->name('products.edit');
-Route::patch('/merchandise/{product}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/merchandise/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::middleware(['image.process:product_picture'])->group(function () {
+    Route::post('/merchandise', [ProductController::class, 'store'])->name('products.store');
+    Route::patch('/merchandise/{product}', [ProductController::class, 'update'])->name('products.update');
+});
 
 Route::post('/bestellingen', [OrderController::class, 'store'])->name('orders.store');
 Route::get('/bestellingen', [OrderController::class, 'index'])->name('orders.index');
@@ -57,10 +61,12 @@ Route::patch('/bestellingen/{order}', [OrderController::class, 'update'])->name(
 
 Route::get('/evenementen', [EventController::class, 'index'])->name('events.index');
 Route::get('/evenementen/aanmaken', [EventController::class, 'create'])->name('events.create');
-Route::post('/evenementen', [EventController::class, 'store'])->name('events.store');
 Route::delete('/evenementen/{event}', [EventController::class, 'destroy'])->name('events.destroy');
 Route::get('/evenementen/{event}/bewerken', [EventController::class, 'edit'])->name('events.edit');
-Route::patch('/evenementen/{event}', [EventController::class, 'update'])->name('events.update');
+Route::middleware(['image.process:picture'])->group(function () {
+    Route::post('/evenementen', [EventController::class, 'store'])->name('events.store');
+    Route::patch('/evenementen/{event}', [EventController::class, 'update'])->name('events.update');
+});
 
 Route::get('/gallerij', [GalleryController::class, 'index'])->name('galleries.index');
 Route::post('/gallerij', [GalleryController::class, 'store'])->name('galleries.store');

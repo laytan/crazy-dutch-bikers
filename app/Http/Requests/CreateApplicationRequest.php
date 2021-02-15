@@ -33,8 +33,8 @@ class CreateApplicationRequest extends FormRequest
             'phone' => 'required|string',
             'date_of_birth' => 'required|date',
             'description' => 'required|string',
-            'person_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
-            'bike_picture' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+            'person_picture' => 'required|image',
+            'bike_picture' => 'required|image',
         ];
     }
 }

@@ -23,17 +23,6 @@ class Picture extends Model
 
     public function uploadPicture(UploadedFile $file)
     {
-        // Resize to a max of 2000x2000 without upscaling or altering aspect ratio
-        $img = Image::make($file->path());
-        $img->resize(2000, 2000, function ($constraints) {
-            $constraints->aspectRatio();
-            $constraints->upsize();
-        });
-        $img->orientate();
-
-        // Save the image
-        $dest = 'galleries/' . $this->gallery->title . '/' . $file->hashName();
-        Storage::disk('public')->put($dest, $img->encode(null, 95));
-        $this->url = $dest;
+        $this->url = $file->store('galleries', ['disk' => 'public']);
     }
 }
