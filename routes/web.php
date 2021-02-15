@@ -84,4 +84,5 @@ Route::get('/aanmeldingen/{application}', [ApplicationController::class, 'show']
 Route::post('/aanmelden', [ApplicationController::class, 'store'])->name('applications.store');
 
 Route::post('/evenementen/{event}/aanmelden', [EventApplicationController::class, 'store'])
-    ->name('eventApplications.store');
+    ->name('eventApplications.store')
+    ->middleware('image.process:bike_picture,person_picture');
