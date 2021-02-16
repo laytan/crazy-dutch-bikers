@@ -25,9 +25,17 @@
                     <a href="{{ route('applications.show', ['application' => $application->id]) }}" class="btn btn-primary btn-sm mr-2">
                         Bekijken
                     </a>
-                    <a href="{{ route('applications.destroy', ['application' => $application->id]) }}" class="btn btn-warning btn-sm">
-                        Verwijderen
-                    </a>
+                    <button class="btn btn-warning" data-toggle="modal" data-target="#remove-application-{{ $application->id }}-modal">
+                      <i class="fas fa-trash"></i> Verwijderen
+                    </button>
+                    @component('components.modal', ['id' => 'remove-application-' . $application->id . '-modal', 'title' => 'Aanmelding Verwijderen'])
+                    Weet u zeker dat de aanmelding van {{ $application->name }} verwijderd moet worden?
+                    @slot('footer')
+                    {{ Aire::open()->route('applications.destroy', ['application' => $application>id])->class('m-0 p-0') }}
+                    {{ Aire::submit('Verwijderen') }}
+                    {{ Aire::close() }}
+                    @endslot
+                    @endcomponent
                 </td>
             </tr>
             @endforeach
