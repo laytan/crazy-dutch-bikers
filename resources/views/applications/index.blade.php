@@ -25,8 +25,8 @@
                     <a href="{{ route('applications.show', ['application' => $application->id]) }}" class="btn btn-primary btn-sm mr-2">
                         Bekijken
                     </a>
-                    <button class="btn btn-warning" data-toggle="modal" data-target="#remove-application-{{ $application->id }}-modal">
-                      <i class="fas fa-trash"></i> Verwijderen
+                    <button class="btn btn-warning btn-sm" data-toggle="modal" data-target="#remove-application-{{ $application->id }}-modal">
+                      Verwijderen
                     </button>
                     @component('components.modal', ['id' => 'remove-application-' . $application->id . '-modal', 'title' => 'Aanmelding Verwijderen'])
                     Weet u zeker dat de aanmelding van {{ $application->name }} verwijderd moet worden?
