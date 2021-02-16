@@ -215,7 +215,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         Hafael\LaraFlake\LaraFlakeServiceProvider::class,
         // Barryvdh\Debugbar\ServiceProvider::class,
-
     ],
 
     /*

@@ -82,6 +82,7 @@ Route::get('/aanmelden', [ApplicationController::class, 'create'])->name('applic
 Route::get('/aanmeldingen', [ApplicationController::class, 'index'])->name('applications.index');
 Route::get('/aanmeldingen/{application}', [ApplicationController::class, 'show'])->name('applications.show');
 Route::post('/aanmelden', [ApplicationController::class, 'store'])->name('applications.store');
+Route::delete('/aanmeldingen/{application}', [ApplicationController::class, 'destroy'])->name('applications.destroy');
 
 Route::post('/evenementen/{event}/aanmelden', [EventApplicationController::class, 'store'])
     ->name('eventApplications.store')

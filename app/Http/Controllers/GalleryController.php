@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Gallery;
 use App\Http\Requests\CreateGalleryRequest;
 use App\Http\Requests\UpdateGalleryRequest;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Storage;
 
 class GalleryController extends Controller
@@ -14,7 +16,7 @@ class GalleryController extends Controller
         $this->middleware(['auth', 'can:manage'])->except(['index', 'show']);
     }
 
-    public function index()
+    public function index(): View
     {
         $galleries = Gallery::allCheckPrivate();
         // Limit to 5 pictures per gallery
@@ -22,13 +24,13 @@ class GalleryController extends Controller
         return view('galleries.index', compact('galleries'));
     }
 
-    public function show($galleryName)
+    public function show($galleryName): View
     {
         $gallery = Gallery::checkPrivate($galleryName);
         return view('galleries.show', compact('gallery'));
     }
 
-    public function store(CreateGalleryRequest $request)
+    public function store(CreateGalleryRequest $request): RedirectResponse
     {
         $validated = $request->validated();
 
@@ -42,13 +44,13 @@ class GalleryController extends Controller
             ->with('success', 'Gallerij aangemaakt, voeg hier foto\'s toe!');
     }
 
-    public function edit($gallery)
+    public function edit($gallery): View
     {
         $gallery = Gallery::where('title', '=', $gallery)->firstOrFail();
         return view('galleries.edit', compact('gallery'));
     }
 
-    public function update(UpdateGalleryRequest $request, Gallery $gallery)
+    public function update(UpdateGalleryRequest $request, Gallery $gallery): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -66,7 +68,7 @@ class GalleryController extends Controller
         return redirect()->route('galleries.index')->with('success', 'Gallerij is bijgewerkt');
     }
 
-    public function destroy(Gallery $gallery)
+    public function destroy(Gallery $gallery): RedirectResponse
     {
         // Remove all pictures
         foreach ($gallery->pictures as $picture) {

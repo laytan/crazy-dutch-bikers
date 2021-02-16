@@ -6,7 +6,10 @@ use App\Event;
 use App\Http\Requests\CreateEventRequest;
 use App\Http\Requests\UpdateEventRequest;
 use Carbon\Carbon;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
+use Illuminate\View\View;
 use Storage;
 
 class EventController extends Controller
@@ -16,7 +19,7 @@ class EventController extends Controller
         $this->middleware(['auth', 'can:manage'])->except('index');
     }
 
-    private function dateTimeFieldsToTimestamp($date, $time)
+    private function dateTimeFieldsToTimestamp($date, $time): Carbon
     {
         $dateParts = explode('-', $date);
         $timeParts = explode(':', $time);
@@ -25,10 +28,8 @@ class EventController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $futureEvents = Event::getFutureOrdered();
         $pastEvents = Event::getPastOrdered();
@@ -37,21 +38,16 @@ class EventController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         return view('events.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(CreateEventRequest $request)
+    public function store(CreateEventRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -85,23 +81,16 @@ class EventController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function edit(Event $event)
+    public function edit(Event $event): View
     {
         return view('events.edit', compact('event'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function update(UpdateEventRequest $request, Event $event)
+    public function update(UpdateEventRequest $request, Event $event): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -146,11 +135,8 @@ class EventController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  \App\Event  $event
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Event $event)
+    public function destroy(Event $event): RedirectResponse
     {
         Storage::disk('public')->delete($event->picture);
         $event->delete();

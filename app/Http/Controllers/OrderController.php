@@ -7,7 +7,9 @@ use App\Mail\OrderReceived;
 use App\Order;
 use App\OrderHasProduct;
 use Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Mail;
 
 class OrderController extends Controller
@@ -22,7 +24,7 @@ class OrderController extends Controller
     /**
      * Admin view for all orders
      */
-    public function index()
+    public function index(): View
     {
         $non_fulfilled = Order::with('user')->where('fulfilled', '=', false)->get();
         $fulfilled = Order::with('user')->where('fulfilled', '=', true)->get();
@@ -32,7 +34,7 @@ class OrderController extends Controller
     /**
      * Details about own order or admin view of order with option to fulfill
      */
-    public function show(Request $request, Order $order)
+    public function show(Request $request, Order $order): View
     {
         return view('orders.show', compact('order'));
     }
@@ -40,7 +42,7 @@ class OrderController extends Controller
     /**
      * Ability to set fulfilled
      */
-    public function update(Request $request, Order $order)
+    public function update(Request $request, Order $order): RedirectResponse
     {
         $validatedData = $request->validate([
             'fulfilled' => 'nullable|in:1,0,toggle',
@@ -59,7 +61,7 @@ class OrderController extends Controller
         return back()->with('success', 'Bestelling bewerkt');
     }
 
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $validatedData = $request->validate([
             // Don't allow anything other than: 1,1,2,33,4544,324,12

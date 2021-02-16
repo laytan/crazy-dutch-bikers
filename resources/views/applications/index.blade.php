@@ -22,8 +22,11 @@
                 <td>{{ $application->phone }}</td>
                 <td>{{ formatTimeForDisplay($application->created_at) }}</td>
                 <td>
-                    <a href="{{ route('applications.show', ['application' => $application->id]) }}" class="btn btn-primary btn-sm">
+                    <a href="{{ route('applications.show', ['application' => $application->id]) }}" class="btn btn-primary btn-sm mr-2">
                         Bekijken
+                    </a>
+                    <a href="{{ route('applications.destroy', ['application' => $application->id]) }}" class="btn btn-warning btn-sm">
+                        Verwijderen
                     </a>
                 </td>
             </tr>

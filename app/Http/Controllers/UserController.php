@@ -6,8 +6,10 @@ use App\Http\Requests\CreateUserRequest;
 use App\Mail\UserRegistered;
 use App\User;
 use Auth;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\View\View;
 use Mail;
 use Storage;
 
@@ -30,7 +32,7 @@ class UserController extends Controller
     /**
      * View all users
      */
-    public function index($message_type = null, $message = null)
+    public function index($message_type = null, $message = null): View
     {
         $users = resolveProfilePics(User::orderBy('id', 'ASC')->paginate(20));
 
@@ -43,7 +45,7 @@ class UserController extends Controller
     /**
      * Put a user in the trash
      */
-    public function destroy(User $user)
+    public function destroy(User $user): RedirectResponse
     {
         // Remove profile picture
         if ($user->getOriginal('profile_picture') !== null) {
@@ -63,7 +65,7 @@ class UserController extends Controller
     /**
      * View to edit a user
      */
-    public function edit(User $user)
+    public function edit(User $user): View
     {
         // Add placeholder image if there is no profile picture
         $user = resolveProfilePic($user);
@@ -73,7 +75,7 @@ class UserController extends Controller
     /**
      * Update user
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, User $user): RedirectResponse
     {
         // Validate request
         $validatedData = $request->validate([
@@ -164,13 +166,13 @@ class UserController extends Controller
     }
 
     // Render form for adding new users
-    public function create()
+    public function create(): View
     {
         return view('users.create');
     }
 
     // On submit of register form
-    public function store(CreateUserRequest $request)
+    public function store(CreateUserRequest $request): RedirectResponse
     {
         // Validate request
         $validatedData = $request->validated();

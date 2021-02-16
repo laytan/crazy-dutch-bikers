@@ -6,6 +6,7 @@ use App\Gallery;
 use App\Http\Requests\CreatePictureRequest;
 use App\Http\Requests\UpdatePictureRequest;
 use App\Picture;
+use Illuminate\Http\RedirectResponse;
 use Storage;
 
 class PictureController extends Controller
@@ -17,7 +18,10 @@ class PictureController extends Controller
         $this->middleware('can:manage');
     }
 
-    public function store(CreatePictureRequest $request)
+    /**
+     * API Controller
+     */
+    public function store(CreatePictureRequest $request): Picture
     {
         $validated = $request->validated();
 
@@ -30,7 +34,7 @@ class PictureController extends Controller
         return $picture;
     }
 
-    public function destroy(Picture $picture)
+    public function destroy(Picture $picture): RedirectResponse
     {
         Storage::disk('public')->delete($picture->url);
         $picture->delete();
@@ -39,7 +43,7 @@ class PictureController extends Controller
             ->with('success', 'Foto verwijderd');
     }
 
-    public function update(UpdatePictureRequest $request, Picture $picture)
+    public function update(UpdatePictureRequest $request, Picture $picture): RedirectResponse
     {
         $validated = $request->validated();
 

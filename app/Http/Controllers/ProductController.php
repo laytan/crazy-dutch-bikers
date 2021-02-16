@@ -6,6 +6,8 @@ use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Product;
 use Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Storage;
 
 class ProductController extends Controller
@@ -19,7 +21,7 @@ class ProductController extends Controller
     /**
      * Show all products
      */
-    public function index()
+    public function index(): View
     {
         $products = Product::all();
         return view('products.index', compact('products'));
@@ -28,7 +30,7 @@ class ProductController extends Controller
     /**
      * Show a creation form
      */
-    public function create()
+    public function create(): View
     {
         return view('products.create');
     }
@@ -36,7 +38,7 @@ class ProductController extends Controller
     /**
      * Store new product in database
      */
-    public function store(CreateProductRequest $request)
+    public function store(CreateProductRequest $request): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -54,12 +56,12 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product aangemaakt');
     }
 
-    public function edit(Product $product)
+    public function edit(Product $product): View
     {
         return view('products.edit', compact('product'));
     }
 
-    public function update(UpdateProductRequest $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
         $validatedData = $request->validated();
 
@@ -90,7 +92,7 @@ class ProductController extends Controller
         return redirect()->route('products.index')->with('success', 'Product bewerkt');
     }
 
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         // Remove picture
         if ($product->product_picture !== null) {
