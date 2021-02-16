@@ -31,7 +31,7 @@
                     @component('components.modal', ['id' => 'remove-application-' . $application->id . '-modal', 'title' => 'Aanmelding Verwijderen'])
                     Weet u zeker dat de aanmelding van {{ $application->name }} verwijderd moet worden?
                     @slot('footer')
-                    {{ Aire::open()->route('applications.destroy', ['application' => $application>id])->class('m-0 p-0') }}
+                    {{ Aire::open()->route('applications.destroy', ['application' => $application->id])->class('m-0 p-0') }}
                     {{ Aire::submit('Verwijderen') }}
                     {{ Aire::close() }}
                     @endslot
